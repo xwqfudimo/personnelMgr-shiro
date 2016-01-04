@@ -38,16 +38,16 @@ public class JiabanServiceImpl implements JiabanService {
 	public List<Jiaban> getListByEmpId(int empId, String filter) {
 		String hql = "";
 		if(filter == null || filter.equals("all-apply")) {
-			hql = "from Jiaban j where j.employee.id = ? order by j.startTime desc";
+			hql = "from Jiaban j where j.employee.id = ? order by j.submitTime desc";
 		}
 		else if(filter.equals("null-apply")) {
-			hql = "from Jiaban j where j.employee.id = ? and j.auditStatus is null order by j.startTime desc";
+			hql = "from Jiaban j where j.employee.id = ? and j.auditStatus is null order by j.submitTime desc";
 		}
 		else if(filter.equals("yes-apply")) {
-			hql = "from Jiaban j where j.employee.id = ? and j.auditStatus = 1 order by j.startTime desc";
+			hql = "from Jiaban j where j.employee.id = ? and j.auditStatus = 1 order by j.submitTime desc";
 		}
 		else {
-			hql = "from Jiaban j where j.employee.id = ? and j.auditStatus = 0 order by j.startTime desc";
+			hql = "from Jiaban j where j.employee.id = ? and j.auditStatus = 0 order by j.submitTime desc";
 		}
 		
 		return this.jiabanDao.getList(hql, empId);

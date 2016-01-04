@@ -6,9 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.model.YjReport;
 import com.xwq.util.DateUtil;
@@ -57,7 +60,7 @@ public class YjReportController extends BaseController {
 			
 			YjReport yjReport = new YjReport();
 			yjReport.setAudited(false);
-			yjReport.setDate(DateUtil.getToday());
+			yjReport.setSubmitDate(DateUtil.getToday());
 			yjReport.setDeptName(session.getAttribute("deptName").toString());
 			yjReport.setEmployee(this.employeeService.get(Integer.parseInt(session.getAttribute("empId").toString())));
 			yjReport.setEmpName(session.getAttribute("empName").toString());
@@ -68,6 +71,60 @@ public class YjReportController extends BaseController {
 			this.employeeService.addYjReport(yjReport);
 		}
 		
-		return "redirect:/column/yjReport";
+		return "redirect:/yjReport";
+	}
+	
+	
+	/**
+	 * 查看业绩报告
+	 */
+	@RequestMapping(value="/yjReport/{id}", method=RequestMethod.GET)
+	public String yjReportShow(@PathVariable int id, Model model) {
+		infoSetting("yjReport", model);
+		
+		YjReport report = this.employeeService.getYjReport(id);
+		model.addAttribute("report", report);
+		
+		return "yjReport_show";
+	}
+	
+	/**
+	 * 修改业绩报告
+	 */
+	@RequestMapping(value="/yjReport_edit/{id}", method=RequestMethod.GET)
+	public String yjReportEdit(@PathVariable int id, Model model) {
+		infoSetting("yjReport", model);
+		
+		YjReport report = this.employeeService.getYjReport(id);
+		model.addAttribute("report", report);
+		
+		return "yjReport_edit";
+	}
+	
+	/**
+	 * 修改提交业绩报告
+	 */
+	@RequestMapping(value="/yjReport_edit_submit", method=RequestMethod.POST)
+	public String yjReportEditSubmit(HttpServletRequest request) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		YjReport report = this.employeeService.getYjReport(id);
+		report.setTitle(request.getParameter("title"));
+		report.setFinishState(request.getParameter("finish_state"));
+		report.setJobSummary(request.getParameter("job_summary"));
+		
+		this.employeeService.updateYjReport(report);
+		
+		return "redirect:/yjReport";
+	}
+	
+	/**
+	 * 删除业绩报告
+	 */
+	@RequestMapping(value="/yjReport_del/{id}", method=RequestMethod.GET)
+	public @ResponseBody boolean yjReportDel(@PathVariable int id) {
+		this.employeeService.deleteYjReport(id);
+		
+		return true;
 	}
 }

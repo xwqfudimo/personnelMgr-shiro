@@ -18,4 +18,7 @@ public interface EmployeeService {
 	
 	public List<YjReportVo> getYjReportListByEmpId(int empId, String filter);
 	public void addYjReport(YjReport yjReport);
+	public YjReport getYjReport(int id);
+	public void updateYjReport(YjReport report);
+	public void deleteYjReport(int id);
 }

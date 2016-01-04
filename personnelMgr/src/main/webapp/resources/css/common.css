@@ -129,3 +129,5 @@ textarea:focus,input[type="text"]:focus,input[type="password"]:focus,input[type=
 .list-title {margin:5px 0px;}
 .title_a, .title_a:VISITED {text-decoration: underline;color:blue;}
 .title_a:hover {color:orange;}
+
+.menu-jt { float: right;}

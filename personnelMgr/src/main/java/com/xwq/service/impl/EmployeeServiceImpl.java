@@ -70,13 +70,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<YjReportVo> getYjReportListByEmpId(int empId, String filter) {
 		String hql = "";
 		if(filter == null || "all".equals(filter)) {
-			hql = "select id, title, date, audited from YjReport yj where yj.employee.id = ?";
+			hql = "select id, title, submitDate, audited from YjReport yj where yj.employee.id = ?";
 		}
 		else if("yes".equals(filter)) {
-			hql = "select id, title, date, audited from YjReport yj where yj.employee.id = ? and yj.audited = 1";
+			hql = "select id, title, submitDate, audited from YjReport yj where yj.employee.id = ? and yj.audited = 1";
 		}
 		else {
-			hql = "select id, title, date, audited from YjReport yj where yj.employee.id = ? and yj.audited = 0";
+			hql = "select id, title, submitDate, audited from YjReport yj where yj.employee.id = ? and yj.audited = 0";
 		}
 		
 		List<Object[]> list = (List<Object[]>) this.yjReportDao.queryList(hql, empId);
@@ -85,7 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			YjReportVo vo = new YjReportVo();
 			vo.setId(Integer.parseInt(os[0].toString()));
 			vo.setTitle(os[1].toString());
-			vo.setDate(os[2].toString());
+			vo.setSubmitDate(os[2].toString());
 			vo.setAudited(Boolean.parseBoolean(os[3].toString()));
 			
 			voList.add(vo);
@@ -97,6 +97,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void addYjReport(YjReport yjReport) {
 		this.yjReportDao.add(yjReport);
+	}
+
+	@Override
+	public YjReport getYjReport(int id) {
+		return this.yjReportDao.get(id);
+	}
+
+	@Override
+	public void updateYjReport(YjReport report) {
+		this.yjReportDao.update(report);
+	}
+
+	@Override
+	public void deleteYjReport(int id) {
+		this.yjReportDao.delete(id);
 	}
 	
 }

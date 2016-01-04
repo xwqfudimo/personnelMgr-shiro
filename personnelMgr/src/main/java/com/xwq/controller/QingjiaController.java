@@ -7,11 +7,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.enums.QingjiaType;
 import com.xwq.model.Qingjia;
+import com.xwq.util.DateUtil;
 
 @Controller
 public class QingjiaController extends BaseController {
@@ -51,7 +54,7 @@ public class QingjiaController extends BaseController {
 		HttpSession session = request.getSession();
 		
 		Qingjia qj = new Qingjia();
-		qj.setQjType(QingjiaType.valueOf(QingjiaType.class, request.getParameter("type")));
+		qj.setQjType(QingjiaType.valueOf(request.getParameter("type")));
 		qj.setStartTime(request.getParameter("start_time"));
 		qj.setEndTime(request.getParameter("end_time"));
 		qj.setDayNum(Integer.parseInt(request.getParameter("day_num")));
@@ -60,9 +63,68 @@ public class QingjiaController extends BaseController {
 		qj.setEmployee(this.employeeService.get(Integer.parseInt(session.getAttribute("empId").toString())));
 		qj.setEmpName(session.getAttribute("empName").toString());
 		qj.setDeptName(session.getAttribute("deptName").toString());
+		qj.setSubmitTime(DateUtil.getCurrentTime());
 		
 		this.qingjiaService.add(qj);
 		
-		return "redirect:/column/qingjiaApply";
+		return "redirect:/qingjiaApply";
+	}
+	
+	/**
+	 * 查看请假申请
+	 */
+	@RequestMapping(value="/qingjiaApply/{id}", method=RequestMethod.GET)
+	public String viewQingjiaApply(@PathVariable int id, Model model) {
+		infoSetting("qingjiaApply", model);
+		
+		Qingjia qj = this.qingjiaService.get(id);
+		model.addAttribute("qj", qj);
+		
+		return "qingjiaApply_show";
+	}
+	
+	
+	/**
+	 * 请假申请修改
+	 */
+	@RequestMapping(value="/qingjiaApply_edit/{id}", method=RequestMethod.GET)
+	public String editQingjiaApply(@PathVariable int id, Model model) {
+		infoSetting("qingjiaApply", model);
+		
+		Qingjia qj = this.qingjiaService.get(id);
+		model.addAttribute("qj", qj);
+		
+		return "qingjiaApply_edit";
+	}
+	
+	/**
+	 * 请假申请修改提交
+	 */
+	@RequestMapping("/qingjiaApply_edit_submit")
+	public String editQingjiaApplySubmit(HttpServletRequest request) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Qingjia qj = this.qingjiaService.get(id);
+		qj.setStartTime(request.getParameter("start_time"));
+		qj.setEndTime(request.getParameter("end_time"));
+		qj.setDayNum(Integer.parseInt(request.getParameter("day_num")));
+		qj.setHourNum(Integer.parseInt(request.getParameter("hour_num")));
+		qj.setQjReason(request.getParameter("reason"));
+		qj.setQjType(QingjiaType.valueOf(request.getParameter("type")));
+		
+		this.qingjiaService.update(qj);
+		
+		return "redirect:/qingjiaApply";
+	}
+	
+	
+	/**
+	 * 请假申请删除
+	 */
+	@RequestMapping(value="/qingjiaApply_del/{id}", method=RequestMethod.GET)
+	public @ResponseBody boolean delQingjiaApply(@PathVariable int id, Model model) {
+		this.qingjiaService.delete(id);
+		
+		return true;
 	}
 }

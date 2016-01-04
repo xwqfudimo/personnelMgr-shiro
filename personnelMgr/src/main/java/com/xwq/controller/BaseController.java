@@ -1,7 +1,5 @@
 package com.xwq.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,8 +39,5 @@ public class BaseController {
 		Column column = this.columnService.getByHref(href);
 		model.addAttribute("columnName", column.getName());
 		
-		model.addAttribute("module", column.getModule());
-		List<Column> columns = this.columnService.getColumns(column.getModule().getId());
-		model.addAttribute("columns", columns);
 	}
 }

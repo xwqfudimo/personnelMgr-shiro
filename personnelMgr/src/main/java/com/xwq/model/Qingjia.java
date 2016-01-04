@@ -44,6 +44,9 @@ public class Qingjia {
 	@Column(name="audit_person")
 	private String auditPerson;
 	
+	@Column(name="submit_time")
+	private String submitTime;
+	
 	public int getId() {
 		return id;
 	}
@@ -115,6 +118,12 @@ public class Qingjia {
 	}
 	public void setAuditPerson(String auditPerson) {
 		this.auditPerson = auditPerson;
+	}
+	public String getSubmitTime() {
+		return submitTime;
+	}
+	public void setSubmitTime(String submitTime) {
+		this.submitTime = submitTime;
 	}
 	@Override
 	public String toString() {

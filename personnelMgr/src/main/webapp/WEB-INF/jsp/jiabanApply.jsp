@@ -11,45 +11,16 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/main.css"/>
     <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/modernizr.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/layer/layer.js"></script>
 </head>
 <body>
-<div class="topbar-wrap white">
-    <div class="topbar-inner clearfix">
-        <div class="topbar-logo-wrap clearfix">
-            <h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">后台管理</a></h1>
-            <ul class="navbar-list clearfix">
-            	<c:forEach items="${modules }" var="m">
-            		<li><a href="<%=request.getContextPath()%>/module/${m.id}"  <c:if test="${m.id == module.id }">class="on"</c:if>  >${m.name}</a></li>
-            	</c:forEach>
-            </ul>
-        </div>
-        <div class="top-info-wrap">
-            <ul class="top-info-list clearfix">
-                <li><a href="<%=request.getContextPath()%>/logout">退出</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+
+<jsp:include page="header.jsp"></jsp:include>
+
 <div class="container clearfix">
-    <div class="sidebar-wrap">
-        <div class="sidebar-title">
-            	欢迎你，${empName }
-        </div>
-        <div class="sidebar-content">
-            <ul class="sidebar-list">
-               	
-               	<li>
-               		<a href="#"><i class="icon-font">&#xe003;</i>菜单</a>
-               		<ul class="sub-menu">
-		               	<c:forEach items="${columns }" var="column">
-		               		 <li><a href="<%=request.getContextPath()%>/${column.href}">${column.name}</a></li>
-		               	</c:forEach>
-		            </ul>   	
-	            </li>   	
-                 
-            </ul>
-        </div>
-    </div>
+
+	<jsp:include page="left_nav.jsp"></jsp:include>
+	
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
@@ -78,11 +49,13 @@
                     <table class="result-tab grid-data" width="100%">
                         <tr>
                             <th width="50px">ID</th>
-                            <th width="200px">起始时间</th>
-                            <th width="200px">结束时间</th>
+                            <th width="180px">起始时间</th>
+                            <th width="180px">结束时间</th>
                             <th width="200px">总时间</th>
                             <th style="text-align:left;">加班理由</th>
+                            <th width="180px">提交时间</th>
                             <th width="150px">审批状态</th>
+                            <th width="200px">操作</th>
                         </tr>
 
                    		<c:forEach items="${jiabanList }" var="jb">
@@ -92,6 +65,7 @@
                    				<td><c:out value="${fn:substring(jb.endTime, 0, 19) }"/></td>
                    				<td>${jb.dayNum }天${jb.hourNum }小时</td>
                    				<td style="text-align:left;">${jb.jbReason }</td>
+                   				<td><c:out value="${fn:substring(jb.submitTime, 0, 19) }"/></td>
                    				<td>
                    					<c:set var="APPROVE" value="<%=AuditStatus.APPROVE %>"/>
                    					<c:choose>
@@ -100,6 +74,15 @@
                    						<c:otherwise><span class="against">✘不批准</span></c:otherwise>
                    					</c:choose>
                    				</td>
+                   				
+                   				<td>
+                   					<a class="link-update" target="_blank" href="<%=request.getContextPath() %>/jiabanApply/${jb.id}">查看</a>
+                   					
+                   					<c:if test="${jb.auditStatus == null }">
+                   					 	<a class="link-update" href="<%=request.getContextPath() %>/jiabanApply_edit/${jb.id}">修改</a>
+                                    	<a class="link-del" href="javascript:void(0)" onclick="del(${jb.id})">删除</a>
+                   					</c:if>
+                                </td>
                    			</tr>
                    		</c:forEach>
 
@@ -119,5 +102,14 @@ $(document).ready(function(){
 		$("form").submit();
 	});
 });
+
+function del(id) {
+	 layer.confirm('确定删除数据吗？', {title: '提示', btn:['确定', '取消']}, function(){
+         var url = '${pageContext.request.contextPath}/jiabanApply_del/'+ id;
+         $.get(url);
+         layer.msg('删除成功！', {time:2000});
+         window.location.reload();
+     });
+}
 </script>
 </html>

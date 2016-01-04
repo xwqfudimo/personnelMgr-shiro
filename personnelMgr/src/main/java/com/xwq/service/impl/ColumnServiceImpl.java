@@ -26,4 +26,9 @@ public class ColumnServiceImpl implements ColumnService {
 		return (Column)this.columnDao.query(hql, href);
 	}
 
+	@Override
+	public List<Column> getAllColumns() {
+		return this.columnDao.getList("from Column");
+	}
+
 }

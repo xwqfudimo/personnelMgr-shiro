@@ -38,16 +38,16 @@ public class QingjiaServiceImpl implements QingjiaService {
 	public List<Qingjia> getListByEmpId(int empId, String filter) {
 		String hql = "";
 		if(filter == null || filter.equals("all-apply")) {
-			hql = "from Qingjia j where j.employee.id = ? order by j.startTime desc";
+			hql = "from Qingjia j where j.employee.id = ? order by j.submitTime desc";
 		}
 		else if(filter.equals("null-apply")) {
-			hql = "from Qingjia j where j.employee.id = ? and j.auditStatus is null order by j.startTime desc";
+			hql = "from Qingjia j where j.employee.id = ? and j.auditStatus is null order by j.submitTime desc";
 		}
 		else if(filter.equals("yes-apply")) {
-			hql = "from Qingjia j where j.employee.id = ? and j.auditStatus = 1 order by j.startTime desc";
+			hql = "from Qingjia j where j.employee.id = ? and j.auditStatus = 1 order by j.submitTime desc";
 		}
 		else {
-			hql = "from Qingjia j where j.employee.id = ? and j.auditStatus = 0 order by j.startTime desc";
+			hql = "from Qingjia j where j.employee.id = ? and j.auditStatus = 0 order by j.submitTime desc";
 		}
 		
 		return this.qingjiaDao.getList(hql, empId);

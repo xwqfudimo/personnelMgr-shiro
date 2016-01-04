@@ -49,6 +49,9 @@ public class Jiaban {
 	@Column(name="audit_person")
 	private String auditPerson;
 	
+	@Column(name="submit_time")
+	private String submitTime;
+	
 	public int getId() {
 		return id;
 	}
@@ -115,5 +118,11 @@ public class Jiaban {
 	}
 	public void setAuditStatus(AuditStatus auditStatus) {
 		this.auditStatus = auditStatus;
+	}
+	public String getSubmitTime() {
+		return submitTime;
+	}
+	public void setSubmitTime(String submitTime) {
+		this.submitTime = submitTime;
 	}
 }

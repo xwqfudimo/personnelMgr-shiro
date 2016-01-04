@@ -7,6 +7,7 @@ import java.util.Date;
 public class DateUtil {
 	private static Calendar calendar = Calendar.getInstance();
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	private static SimpleDateFormat currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	//获取本月年份-月份
 	public static String getThisMonth() {
@@ -42,5 +43,9 @@ public class DateUtil {
 	
 	public static String getToday() {
 		return sdf.format(new Date());
+	}
+	
+	public static String getCurrentTime() {
+		return currentTime.format(new Date());
 	}
 }

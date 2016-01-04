@@ -28,8 +28,11 @@ public class YjReport {
 	@Column(name="job_summary")
 	private String jobSummary;
 	
-	private String date;
+	@Column(name="submit_date")
+	private String submitDate;
 	private boolean audited;
+	@Column(name="audit_person")
+	private String auditPerson;
 	
 	public int getId() {
 		return id;
@@ -62,11 +65,11 @@ public class YjReport {
 		this.jobSummary = jobSummary;
 	}
 	
-	public String getDate() {
-		return date;
+	public String getSubmitDate() {
+		return submitDate;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setSubmitDate(String submitDate) {
+		this.submitDate = submitDate;
 	}
 	public String getTitle() {
 		return title;
@@ -85,5 +88,11 @@ public class YjReport {
 	}
 	public void setFinishState(String finishState) {
 		this.finishState = finishState;
+	}
+	public String getAuditPerson() {
+		return auditPerson;
+	}
+	public void setAuditPerson(String auditPerson) {
+		this.auditPerson = auditPerson;
 	}
 }

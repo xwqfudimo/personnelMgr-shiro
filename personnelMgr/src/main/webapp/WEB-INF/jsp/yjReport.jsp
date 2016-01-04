@@ -10,45 +10,16 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/main.css"/>
     <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/modernizr.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/layer/layer.js"></script>
 </head>
 <body>
-<div class="topbar-wrap white">
-    <div class="topbar-inner clearfix">
-        <div class="topbar-logo-wrap clearfix">
-            <h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">后台管理</a></h1>
-            <ul class="navbar-list clearfix">
-            	<c:forEach items="${modules }" var="m">
-            		<li><a href="<%=request.getContextPath()%>/module/${m.id}"  <c:if test="${m.id == module.id }">class="on"</c:if>  >${m.name}</a></li>
-            	</c:forEach>
-            </ul>
-        </div>
-        <div class="top-info-wrap">
-            <ul class="top-info-list clearfix">
-                <li><a href="<%=request.getContextPath()%>/logout">退出</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+
+<jsp:include page="header.jsp"></jsp:include>
+
 <div class="container clearfix">
-    <div class="sidebar-wrap">
-        <div class="sidebar-title">
-            	欢迎你，${empName }
-        </div>
-        <div class="sidebar-content">
-            <ul class="sidebar-list">
-               	
-               	<li>
-               		<a href="#"><i class="icon-font">&#xe003;</i>菜单</a>
-               		<ul class="sub-menu">
-		               	<c:forEach items="${columns }" var="column">
-		               		 <li><a href="<%=request.getContextPath()%>/${column.href}">${column.name}</a></li>
-		               	</c:forEach>
-		            </ul>   	
-	            </li>   	
-                 
-            </ul>
-        </div>
-    </div>
+  	
+  	<jsp:include page="left_nav.jsp"></jsp:include>
+    
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
@@ -83,8 +54,8 @@
 
                    		<c:forEach items="${yjList }" var="yj">
                    			<tr>
-                   				<td style="text-align:left;"><a href="<%=request.getContextPath() %>/column/yjReport/${yj.id}" class="title_a">${yj.title }</a></td>
-                   				<td>${yj.date }</td>
+                   				<td style="text-align:left;"><a target="_blank" href="<%=request.getContextPath() %>/yjReport/${yj.id}" class="title_a">${yj.title }</a></td>
+                   				<td>${yj.submitDate }</td>
                    				<td>
                    					<c:choose>
                    						<c:when test="${yj.audited == true }">
@@ -96,11 +67,11 @@
                    					</c:choose>
                    				</td>
                    				<td>
-                   					<a class="link-update" href="<%=request.getContextPath() %>/column/yjReport/${yj.id}">查看</a>
+                   					<a class="link-update" target="_blank" href="<%=request.getContextPath() %>/yjReport/${yj.id}">查看</a>
                    					
                    					<c:if test="${yj.audited == false }">
-                   					 	<a class="link-update" href="<%=request.getContextPath() %>/column/yjReport_edit/${yj.id}">修改</a>
-                                    	<a class="link-del" href="javascript:void(0)" onclick="del_yjReport(${yj.id}})">删除</a>
+                   					 	<a class="link-update" href="<%=request.getContextPath() %>/yjReport_edit/${yj.id}">修改</a>
+                                    	<a class="link-del" href="javascript:void(0)" onclick="del(${yj.id})">删除</a>
                    					</c:if>
                                 </td>
                    			</tr>
@@ -122,5 +93,14 @@ $(document).ready(function(){
 		$("form").submit();
 	});
 });
+
+function del(id) {
+	 layer.confirm('确定删除数据吗？', {title: '提示', btn:['确定', '取消']}, function(){
+       var url = '${pageContext.request.contextPath}/yjReport_del/'+ id;
+       $.get(url);
+       layer.msg('删除成功！', {time:2000});
+       window.location.reload();
+   });
+}
 </script>
 </html>

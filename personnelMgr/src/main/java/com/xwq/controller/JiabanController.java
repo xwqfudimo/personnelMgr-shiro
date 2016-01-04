@@ -7,10 +7,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.model.Jiaban;
+import com.xwq.util.DateUtil;
 
 @Controller
 public class JiabanController extends BaseController {
@@ -61,11 +64,68 @@ public class JiabanController extends BaseController {
 		jiaban.setEmployee(this.employeeService.get(Integer.parseInt(session.getAttribute("empId").toString())));
 		jiaban.setEmpName(session.getAttribute("empName").toString());
 		jiaban.setDeptName(session.getAttribute("deptName").toString());
+		jiaban.setSubmitTime(DateUtil.getCurrentTime());
 		
 		this.jiabanService.add(jiaban);
 		
-		return "redirect:/column/jiabanApply";
+		return "redirect:/jiabanApply";
 	}
 	
 	
+	/**
+	 * 查看加班申请
+	 */
+	@RequestMapping(value="/jiabanApply/{id}", method=RequestMethod.GET)
+	public String viewJiabanApply(@PathVariable int id, Model model) {
+		infoSetting("jiabanApply", model);
+		
+		Jiaban jb = this.jiabanService.get(id);
+		model.addAttribute("jb", jb);
+		
+		return "jiabanApply_show";
+	}
+	
+	
+	/**
+	 * 加班申请修改
+	 */
+	@RequestMapping(value="/jiabanApply_edit/{id}", method=RequestMethod.GET)
+	public String editJiabanApply(@PathVariable int id, Model model) {
+		infoSetting("jiabanApply", model);
+		
+		Jiaban jb = this.jiabanService.get(id);
+		model.addAttribute("jb", jb);
+		
+		return "jiabanApply_edit";
+	}
+	
+	/**
+	 * 加班申请修改提交
+	 */
+	@RequestMapping("/jiabanApply_edit_submit")
+	public String editJiabanApplySubmit(HttpServletRequest request) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Jiaban jb = this.jiabanService.get(id);
+		jb.setStartTime(request.getParameter("start_time"));
+		jb.setEndTime(request.getParameter("end_time"));
+		jb.setDayNum(Integer.parseInt(request.getParameter("day_num")));
+		jb.setHourNum(Integer.parseInt(request.getParameter("hour_num")));
+		jb.setJbReason(request.getParameter("reason"));
+		
+		this.jiabanService.update(jb);
+		
+		return "redirect:/jiabanApply";
+	}
+	
+	
+	/**
+	 * 加班申请删除
+	 */
+	@RequestMapping(value="/jiabanApply_del/{id}", method=RequestMethod.GET)
+	public @ResponseBody boolean delJiabanApply(@PathVariable int id, Model model) {
+		this.jiabanService.delete(id);
+		
+		return true;
+	}
 }

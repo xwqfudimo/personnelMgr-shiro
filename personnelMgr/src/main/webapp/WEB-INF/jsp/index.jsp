@@ -9,40 +9,16 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/main.css"/>
     <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/modernizr.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery-1.11.3.min.js"></script> 
 </head>
 <body>
-<div class="topbar-wrap white">
-    <div class="topbar-inner clearfix">
-        <div class="topbar-logo-wrap clearfix">
-            <h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">后台管理</a></h1>
-            <ul class="navbar-list clearfix">
-            	<c:forEach items="${modules }" var="m">
-            		<li><a href="<%=request.getContextPath()%>/module/${m.id}">${m.name}</a></li>
-            	</c:forEach>
-            </ul>
-        </div>
-        <div class="top-info-wrap">
-            <ul class="top-info-list clearfix">
-                <li><a href="<%=request.getContextPath()%>/logout">退出</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+
+<jsp:include page="header.jsp"></jsp:include>
+
 <div class="container clearfix">
-    <div class="sidebar-wrap">
-        <div class="sidebar-title">
-            	欢迎你，${empName }
-        </div>
-        <div class="sidebar-content">
-            <ul class="sidebar-list">
-               
-                  <li><a href="design.html">作品管理</a></li>
-                  <li><a href="design.html">博文管理</a></li>
-                  <li><a href="design.html">分类管理</a></li>
-               
-            </ul>
-        </div>
-    </div>
+  
+  	<jsp:include page="left_nav.jsp"></jsp:include>
+  
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
@@ -78,4 +54,6 @@
     <!--/main-->
 </div>
 </body>
+
+
 </html>

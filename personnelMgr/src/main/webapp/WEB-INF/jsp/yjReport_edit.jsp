@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${columnName }</title>
+<title>修改业绩报告</title>
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/main.css"/>
     <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/modernizr.min.js"></script>
@@ -27,21 +27,22 @@
         
       	<div class="result-wrap">
       		<div class="result-title">
-                <h1>新增业绩报告</h1>
+                <h1>修改业绩报告</h1>
             </div>
-            <form method="post">
-                	标题：<input type="text" class="common-text" name="title" size="50">
+            <form method="post" action="<%=request.getContextPath() %>/yjReport_edit_submit">
+                	标题：<input type="text" class="common-text" name="title" size="50" value="${report.title }">
                 	<br><br>
                 	<div>
                 		<div style="display:inline-block;vertical-align: top;">本月完成情况：</div>
-                		<div style="display:inline-block;vertical-align: top;"><textarea name="finish_state" class="common-textarea" cols="50" rows="8"></textarea></div>
+                		<div style="display:inline-block;vertical-align: top;"><textarea name="finish_state" class="common-textarea" cols="50" rows="8">${report.finishState }</textarea></div>
                 	</div>
                 	<br>
                 	<div>
                 		<div style="display:inline-block;vertical-align: top;">月工作总结：</div>
-                		<div style="display:inline-block;vertical-align: top;"><textarea name="job_summary" class="common-textarea" cols="50"></textarea></div>
+                		<div style="display:inline-block;vertical-align: top;"><textarea name="job_summary" class="common-textarea" cols="50">${report.jobSummary }</textarea></div>
                 	</div>
                 	<br>
+                	 <input type="hidden" name="id" value="${report.id }">
                 	 <input class="btn btn-primary btn6 mr10" value="提交" type="submit">
                      <input class="btn btn6" onclick="history.go(-1)" value="返回" type="button">
             </form>
