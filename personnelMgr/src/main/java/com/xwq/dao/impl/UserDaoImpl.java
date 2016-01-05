@@ -31,7 +31,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
 	@Override
 	public User getByUsername(String username) {
-		String hql = "from User u join fetch u.employee join fetch u.employee.department join fetch u.employee.role where u.username = ?";
+		String hql = "from User u join fetch u.employee join fetch u.employee.department where u.username = ?";
 		User user = (User)this.getSession().createQuery(hql).setParameter(0, username).uniqueResult();
 		
 		return user;

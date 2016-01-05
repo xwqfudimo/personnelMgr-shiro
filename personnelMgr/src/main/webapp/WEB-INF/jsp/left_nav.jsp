@@ -8,14 +8,17 @@
        </div>
        <div class="sidebar-content">
            <ul class="sidebar-list">
-              	<c:forEach items="${modules }" var="m">
+              	<c:forEach items="${menus }" var="m">
                 <li>
-                    <a href="#" class="menu">${m.module.name } <span class="menu-jt">▲</span></a>
-                    <ul class="sub-menu">
-                    	<c:forEach items="${m.columns }" var="c">
-                        	<li><a href="<%=request.getContextPath()%>/${c.href}">${c.name }</a></li>
-                        </c:forEach>
-                    </ul>
+                    <a href="<%=request.getContextPath()%>${m.module.href}" class="menu">${m.module.name } <span class="menu-jt">▲</span></a>
+                    
+                    <c:if test="${m.children != null }">
+	                    <ul class="sub-menu">
+	                    	<c:forEach items="${m.children }" var="c">
+	                        	<li><a href="<%=request.getContextPath()%>${c.href}">${c.name }</a></li>
+	                        </c:forEach>
+	                    </ul>
+                    </c:if>
                 </li>
               	</c:forEach>
            </ul>

@@ -28,6 +28,12 @@ public class UserController {
 		return "login";
 	}
 	
+	/**
+	 * 用户登录提交
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(HttpServletRequest request, Model model) {
 		String username = request.getParameter("username");

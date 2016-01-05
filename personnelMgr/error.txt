@@ -142,4 +142,5 @@ Caused by: java.lang.Error: Unresolved compilation problem:
 	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
 	... 59 more
 2016-01-04 17:02:03Data truncation: Incorrect datetime value: '' for column 'end_time' at row 1
+  2016-01-05 10:39:52Unknown column 'roleresour4_.res_id' in 'where clause'
   

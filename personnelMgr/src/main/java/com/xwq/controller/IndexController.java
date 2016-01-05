@@ -1,7 +1,6 @@
 package com.xwq.controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,15 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.xwq.comparator.ModuleComparator;
-import com.xwq.model.Column;
 import com.xwq.model.Employee;
-import com.xwq.model.Module;
-import com.xwq.model.Role;
+import com.xwq.model.Resource;
 import com.xwq.model.User;
-import com.xwq.service.ColumnService;
+import com.xwq.service.ResourceService;
 import com.xwq.service.UserService;
-import com.xwq.vo.ModuleColumnVo;
+import com.xwq.vo.MenuVo;
 
 @Controller
 @SessionAttributes({"empId", "empName", "deptName", "modules"})
@@ -27,7 +23,7 @@ public class IndexController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private ColumnService columnService;
+	private ResourceService resourceService;
 
 	/**
 	 * 管理首页
@@ -40,33 +36,34 @@ public class IndexController {
 		
 		User user = this.userService.getByUsername(username);
 		Employee emp = user.getEmployee();
-		Role role = emp.getRole();
-		List<Module> modules = role.getModules();
-		Collections.sort(modules, new ModuleComparator());
-		
-		List<Column> columns = this.columnService.getAllColumns();
-		
-		List<ModuleColumnVo> voList = new ArrayList<ModuleColumnVo>();
-		
-		for(Module m : modules) {
-			ModuleColumnVo vo = new ModuleColumnVo();
-			vo.setModule(m);
-			
-			List<Column> cols = new ArrayList<Column>();
-			for(Column c : columns) {
-				if(c.getModule().getId() == m.getId()) {
-					cols.add(c);
-				}
-			}
-			
-			vo.setColumns(cols);
-			voList.add(vo);
-		}
 		
 		session.setAttribute("empId", emp.getId());
 		session.setAttribute("empName", emp.getName());
 		session.setAttribute("deptName", emp.getDepartment().getName());
-		session.setAttribute("modules", voList);
+		
+		
+		List<Resource> resList = this.resourceService.listByUserId(user.getId());
+		List<MenuVo> menus = new ArrayList<MenuVo>();
+		
+		for(Resource res : resList) {
+			if(res.getLevel() == 1) {
+				MenuVo vo = new MenuVo();
+				vo.setModule(res);
+				
+				List<Resource> children = new ArrayList<Resource>();
+				for(Resource r : resList) {
+					if(r.getLevel() == 2 && r.getParent().getId() == res.getId()) {
+						children.add(r);
+					}
+				}
+				
+				if(children.size() > 0) vo.setChildren(children);
+				
+				menus.add(vo);
+			}
+		}
+		
+		session.setAttribute("menus", menus);
 		
 		return "index";
 	}

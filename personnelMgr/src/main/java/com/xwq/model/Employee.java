@@ -2,7 +2,6 @@ package com.xwq.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -44,10 +43,6 @@ public class Employee {
 	@Column(name="self_intro")
 	private String selfIntro;
 	private String beizhu;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="role_id")
-	private Role role;
 	
 	public int getId() {
 		return id;
@@ -151,12 +146,7 @@ public class Employee {
 	public void setBeizhu(String beizhu) {
 		this.beizhu = beizhu;
 	}
-	public Role getRole() {
-		return role;
-	}
-	public void setRole(Role role) {
-		this.role = role;
-	}
+	
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + ", department="
@@ -165,6 +155,6 @@ public class Employee {
 				+ ", marriage=" + marriage + ", address=" + address + ", rzsj="
 				+ rzsj + ", xl=" + xl + ", phone=" + phone + ", email=" + email
 				+ ", card=" + card + ", resume=" + resume + ", selfIntro="
-				+ selfIntro + ", beizhu=" + beizhu + ", role=" + role + "]";
+				+ selfIntro + ", beizhu=" + beizhu + "]";
 	}
 }

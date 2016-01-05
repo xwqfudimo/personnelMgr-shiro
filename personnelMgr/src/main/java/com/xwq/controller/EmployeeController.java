@@ -142,7 +142,6 @@ public class EmployeeController extends BaseController {
 	@RequestMapping(value="/emp/{id}", produces="text/html;charset=UTF-8")
 	public @ResponseBody Object get(@PathVariable int id) {
 		Employee emp = this.employeeService.get(id);
-		emp.setRole(null);
 		
 		return JsonUtil.toJson(emp);
 	}
