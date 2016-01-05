@@ -80,8 +80,6 @@
     </div>
     <!--/main-->
 </div>
-</body>
-
 
 <script type="text/javascript">
 var setting = {
@@ -154,6 +152,7 @@ $(document).ready(function(){
 });
 </script>
 
+</body>
 </html>
 
 

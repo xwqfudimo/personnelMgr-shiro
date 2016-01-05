@@ -6,20 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>管理首页</title>
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/main.css"/>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery-1.11.3.min.js"></script> 
+
 </head>
 <body>
-
-<jsp:include page="header.jsp"></jsp:include>
-
-<div class="container clearfix">
-  
-  	<jsp:include page="left_nav.jsp"></jsp:include>
-  
-    <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
             <div class="crumb-list"><i class="icon-font">&#xe06b;</i><span>欢迎使用人事管理系统</span></div>
@@ -51,9 +40,5 @@
         </div>
  
     </div>
-    <!--/main-->
-</div>
 </body>
-
-
 </html>

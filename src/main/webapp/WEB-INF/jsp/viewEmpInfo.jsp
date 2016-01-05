@@ -6,20 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${columnName }</title>
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/main.css"/>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 
-<jsp:include page="header.jsp"></jsp:include>
-
-<div class="container clearfix">
-	
-	<jsp:include page="left_nav.jsp"></jsp:include>
-
-    <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
             <div class="crumb-list"><i class="icon-font">&#xe000;</i><span>${columnName }</span></div>
@@ -84,7 +73,5 @@
         </div>
  
     </div>
-    <!--/main-->
-</div>
 </body>
 </html>

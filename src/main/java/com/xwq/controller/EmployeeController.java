@@ -57,7 +57,7 @@ public class EmployeeController extends BaseController {
 	/**
 	 * 修改登录密码提交
 	 */
-	@RequestMapping(value="/modifyPwd", method=RequestMethod.POST)
+	@RequestMapping(value="/modifyPwdSubmit", method=RequestMethod.POST)
 	public @ResponseBody int modifyPwd(HttpServletRequest request, Model model) {
 		String oldPwd = request.getParameter("oldPwd");
 		String newPwd = request.getParameter("newPwd");

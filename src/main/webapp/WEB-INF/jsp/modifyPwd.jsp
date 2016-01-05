@@ -6,20 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${columnName }</title>
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/main.css"/>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/layer/layer.js"></script>
 </head>
 <body>
-
-<jsp:include page="header.jsp"></jsp:include>
-
-<div class="container clearfix">
-
-	<jsp:include page="left_nav.jsp"></jsp:include>
-
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
@@ -44,11 +33,7 @@
         </div>
  
     </div>
-    <!--/main-->
-</div>
-</body>
-
-
+    
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#submit").click(function(){
@@ -56,7 +41,7 @@ $(document).ready(function() {
 		var newPwd = $("#newPwd").val();
 		var newPwd2 = $("#newPwd2").val();
 		
-		$.post("${pageContext.request.contextPath}/modifyPwd", 
+		$.post("${pageContext.request.contextPath}/modifyPwdSubmit", 
 				{'oldPwd':oldPwd, 'newPwd':newPwd, 'newPwd2':newPwd2}, function(data){
 					if(data == 1) {
 						layer.msg('修改成功！', {time: 2000});
@@ -70,7 +55,7 @@ $(document).ready(function() {
 	});
 });
 </script>
-
+</body>
 </html>
 
 
