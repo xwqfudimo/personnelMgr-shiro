@@ -138,6 +138,24 @@ CREATE TABLE `log` (
 
 /*Data for the table `log` */
 
+/*Table structure for table `menu` */
+
+DROP TABLE IF EXISTS `menu`;
+
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(8) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `href` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+
+/*Data for the table `menu` */
+
+insert  into `menu`(`id`,`name`,`level`,`parent_id`,`sort`,`href`) values (1,'员工信息',1,0,1,'#'),(2,'事务申请',1,0,2,'#'),(3,'考勤',1,0,3,'#'),(4,'薪资',1,0,4,'#'),(5,'业绩报告',1,0,5,'#'),(6,'我的资料',2,1,11,'/viewEmpInfo '),(7,'员工查询',2,1,12,'/empSearch '),(8,'修改登录密码',2,1,13,'/modifyPwd'),(9,'加班申请',2,2,21,'/jiabanApply '),(10,'请假申请',2,2,22,'/qingjiaApply'),(11,'我的考勤记录',2,3,31,'/viewKaoqingList'),(12,'我的业绩报告',2,5,51,'/yjReport'),(13,'系统管理',1,0,6,'#'),(14,'用户管理 ',2,13,61,'/userMgr '),(15,'角色管理',2,13,63,'/roleMgr'),(16,'权限管理',2,13,64,'/authMgr'),(17,'企业管理',1,0,7,'#'),(18,'员工管理',2,17,71,'/empMgr'),(19,'部门管理',2,17,72,'/deptMgr'),(20,'菜单管理',2,13,62,'/menuMgr'),(21,'系统日志',2,13,65,'/syslog');
+
 /*Table structure for table `module` */
 
 DROP TABLE IF EXISTS `module`;
@@ -178,7 +196,7 @@ CREATE TABLE `qingjia` (
 
 /*Data for the table `qingjia` */
 
-insert  into `qingjia`(`id`,`emp_id`,`emp_name`,`dept_name`,`start_time`,`end_time`,`day_num`,`hour_num`,`qj_type`,`qj_reason`,`submit_time`,`audit_status`,`audit_person`) values (2,2,'钟山','研发部','2015-12-28 09:00:00','2015-12-28 17:30:00',1,0,'病假','感冒','2016-01-04 13:30:08',NULL,NULL),(3,2,'钟山','研发部','2015-12-29 09:00:00','2015-12-30 09:00:00',1,0,'事假','老婆生孩子','2016-01-04 13:30:06','1','无');
+insert  into `qingjia`(`id`,`emp_id`,`emp_name`,`dept_name`,`start_time`,`end_time`,`day_num`,`hour_num`,`qj_type`,`qj_reason`,`submit_time`,`audit_status`,`audit_person`) values (3,2,'钟山','研发部','2015-12-29 09:00:00','2015-12-30 09:00:00',1,0,'事假','老婆生孩子','2016-01-04 13:30:06','1','无');
 
 /*Table structure for table `resource` */
 
@@ -187,17 +205,14 @@ DROP TABLE IF EXISTS `resource`;
 CREATE TABLE `resource` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(16) DEFAULT NULL,
-  `level` int(11) DEFAULT NULL,
-  `parent_id` int(11) DEFAULT NULL,
-  `href` varchar(32) DEFAULT NULL,
-  `sort` int(11) DEFAULT NULL,
-  `type` varchar(16) DEFAULT NULL,
+  `uri` varchar(32) DEFAULT NULL,
+  `group_name` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 /*Data for the table `resource` */
 
-insert  into `resource`(`id`,`name`,`level`,`parent_id`,`href`,`sort`,`type`) values (1,'员工资料',1,0,'#',1,'menu'),(2,'事务申请',1,0,'#',2,'menu'),(3,'考勤',1,0,'#',3,'menu'),(4,'薪资',1,0,'#',4,'menu'),(5,'业绩报告',1,0,'#',5,'menu'),(6,'我的资料',2,1,'/viewEmpInfo',11,'menu'),(7,'员工查询',2,1,'/empSearch',12,'menu'),(8,'修改登录密码',2,1,'/modifyPwd',13,'menu'),(9,'加班申请',2,2,'/jiabanApply',21,'menu'),(10,'请假申请',2,2,'/qingjiaApply',22,'menu'),(11,'我的考勤记录',2,3,'/viewKaoqingList',31,'menu'),(12,'我的业绩报告',2,5,'/yjReport',51,'menu'),(13,'角色管理',1,0,'/roleMgr',6,'menu'),(14,'权限管理',1,0,'/authMgr',7,'menu');
+insert  into `resource`(`id`,`name`,`uri`,`group_name`) values (1,'员工列表','emp/list','员工管理'),(2,'查询员工','emp/view','员工管理'),(3,'新增员工','emp/add','员工管理'),(4,'修改员工','emp/update','员工管理'),(5,'删除员工','emp/delete','员工管理'),(6,'部门列表','dept/list','部门管理'),(7,'查询部门','dept/view','部门管理'),(8,'新增部门','dept/add','部门管理'),(9,'修改部门','dept/update','部门管理'),(10,'删除部门','dept/delete','部门管理'),(11,'用户列表','user/list','用户管理'),(12,'新增用户','user/add','用户管理'),(13,'查询用户','user/view','用户管理'),(14,'修改用户','user/update','用户管理'),(15,'删除用户','user/delete','用户管理'),(16,'加班列表','jiaban/list','加班管理'),(17,'新增加班','jiaban/add','加班管理'),(18,'查询加班','jiaban/view','加班管理'),(19,'修改加班','jiaban/update','加班管理'),(20,'删除加班','jiaban/delete','加班管理'),(21,'请假列表','qingjia/list','请假管理'),(22,'查询请假','qingjia/view','请假管理'),(23,'新增请假','qingjia/add','请假管理'),(24,'修改请假','qingjia/update','请假管理'),(25,'删除请假','qingjia/delete','请假管理'),(26,'业绩列表','yj/list','业绩管理'),(27,'查询业绩','yj/view','业绩管理'),(28,'新增业绩','yj/add','业绩管理'),(29,'修改业绩','yj/update','业绩管理'),(30,'删除业绩','yj/delete','业绩管理'),(31,'角色列表','role/list','角色管理'),(32,'查询角色','role/view','角色管理'),(33,'新增角色','role/add','角色管理'),(34,'修改角色','role/update','角色管理'),(35,'删除角色','role/update','角色管理'),(36,'权限列表','auth/list','权限管理'),(37,'查询权限','auth/view','权限管理'),(38,'新增权限','auth/add','权限管理'),(39,'修改权限','auth/update','权限管理'),(40,'删除权限','auth/delete','权限管理');
 
 /*Table structure for table `role` */
 
@@ -213,6 +228,21 @@ CREATE TABLE `role` (
 /*Data for the table `role` */
 
 insert  into `role`(`id`,`name`,`role_desc`) values (1,'administrator','超级管理员'),(2,'employee','普通员工');
+
+/*Table structure for table `role_menu` */
+
+DROP TABLE IF EXISTS `role_menu`;
+
+CREATE TABLE `role_menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) DEFAULT NULL,
+  `menu_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+/*Data for the table `role_menu` */
+
+insert  into `role_menu`(`id`,`role_id`,`menu_id`) values (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,1,7),(8,1,8),(9,1,9),(10,1,10),(11,1,11),(12,1,12),(13,1,13),(14,1,14),(15,1,15),(16,1,16),(17,1,17),(18,1,18),(19,1,19),(20,1,20),(21,1,21);
 
 /*Table structure for table `role_resource` */
 
@@ -273,7 +303,7 @@ CREATE TABLE `user` (
 
 /*Data for the table `user` */
 
-insert  into `user`(`id`,`emp_id`,`username`,`password`) values (1,1,'xwq','202cb962ac59075b964b07152d234b70'),(2,2,'zs','202cb962ac59075b964b07152d234b70');
+insert  into `user`(`id`,`emp_id`,`username`,`password`) values (1,1,'xwq','698d51a19d8a121ce581499d7b701668'),(2,2,'zs','c4ca4238a0b923820dcc509a6f75849b');
 
 /*Table structure for table `user_role` */
 
@@ -330,11 +360,11 @@ CREATE TABLE `yj_report` (
   PRIMARY KEY (`id`),
   KEY `FK_Reference_yj_emp` (`emp_id`),
   CONSTRAINT `FK_Reference_yj_emp` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `yj_report` */
 
-insert  into `yj_report`(`id`,`emp_id`,`emp_name`,`dept_name`,`title`,`finish_state`,`job_summary`,`submit_date`,`audited`,`audit_person`) values (1,2,'钟山','研发部','10月工作报告',NULL,NULL,'2015-11-02',1,NULL),(2,2,'钟山','研发部','11月工作报告111','111','11','2015-12-04',0,NULL);
+insert  into `yj_report`(`id`,`emp_id`,`emp_name`,`dept_name`,`title`,`finish_state`,`job_summary`,`submit_date`,`audited`,`audit_person`) values (1,2,'钟山','研发部','10月工作报告',NULL,NULL,'2015-11-02',1,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
