@@ -12,9 +12,11 @@ public interface EmployeeService {
 	public void delete(int id);
 	public void update(Employee t);
 	public Employee get(int id);
+	public List<Employee> list();
 	
 	public List<Employee> getEmpsWithDept();
 	public List<EmpVo> getEmpsByName(String empName);
+	public List<EmpVo> getAllEmpVo();
 	
 	public List<YjReportVo> getYjReportListByEmpId(int empId, String filter);
 	public void addYjReport(YjReport yjReport);

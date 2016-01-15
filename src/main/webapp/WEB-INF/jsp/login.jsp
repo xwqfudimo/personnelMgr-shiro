@@ -5,11 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>系统登录</title>
- <link href="<%=request.getContextPath() %>/resources/css/admin_login.css" rel="stylesheet" type="text/css" />
+ <link href="${ctxPath }/resources/css/admin_login.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="admin_login_wrap">
-    <h1>人事后台管理</h1>
+    <h1>人事管理系统</h1>
     <div class="adming_login_border">
         <div class="admin_input">
             <form method="post">

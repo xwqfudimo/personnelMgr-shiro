@@ -11,7 +11,6 @@ public interface ResourceService {
 	public Resource get(int id);
 	public List<Resource> list();
 	
-	public String getColumnNameByHref(String href);
 	
 	public List<Resource> listByUserId(int userId);
 	public List<Resource> listByRoleId(int roleId);

@@ -24,12 +24,13 @@
     </bean>
     
     
-    <!-- <mvc:interceptors>
+    <mvc:interceptors>
     	<mvc:interceptor>
     		<mvc:mapping path="/**"/>
     		<mvc:exclude-mapping path="/login"/>
+    		<mvc:exclude-mapping path="/resources/**"/>
     		<bean class="com.xwq.interceptor.LoginInterceptor"/>
     	</mvc:interceptor>
     </mvc:interceptors>
-     -->
+    
 </beans>

@@ -33,7 +33,7 @@ public class YjReportController extends BaseController {
 		if(filter == null) filter = "all";
 		model.addAttribute("audited", filter);
 		
-		return "yjReport";
+		return "yjReport/list";
 	}
 	
 	
@@ -44,7 +44,7 @@ public class YjReportController extends BaseController {
 	public String yjReportAdd(HttpServletRequest request, Model model) {
 		infoSetting("yjReport", model);
 		
-		return "yjReport_add";
+		return "yjReport/add";
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class YjReportController extends BaseController {
 		YjReport report = this.employeeService.getYjReport(id);
 		model.addAttribute("report", report);
 		
-		return "yjReport_show";
+		return "yjReport/show";
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class YjReportController extends BaseController {
 		YjReport report = this.employeeService.getYjReport(id);
 		model.addAttribute("report", report);
 		
-		return "yjReport_edit";
+		return "yjReport/edit";
 	}
 	
 	/**

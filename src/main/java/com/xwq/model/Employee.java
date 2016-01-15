@@ -12,6 +12,9 @@ import org.hibernate.annotations.Type;
 
 import com.xwq.enums.Gender;
 
+/**
+ * 员工
+ */
 @Entity
 public class Employee {
 	@Id

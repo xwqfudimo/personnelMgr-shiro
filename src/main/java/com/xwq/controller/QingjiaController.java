@@ -33,7 +33,7 @@ public class QingjiaController extends BaseController {
 		if(filter == null) filter = "all-apply";
 		model.addAttribute("filter", filter);
 		
-		return "qingjiaApply";
+		return "qingjiaApply/list";
 	}
 	
 	/**
@@ -43,7 +43,7 @@ public class QingjiaController extends BaseController {
 	public String addQingjiaApply(Model model) {
 		infoSetting("qingjiaApply", model);
 		
-		return "qingjiaApply_add";
+		return "qingjiaApply/add";
 	}
 	
 	/**
@@ -80,7 +80,7 @@ public class QingjiaController extends BaseController {
 		Qingjia qj = this.qingjiaService.get(id);
 		model.addAttribute("qj", qj);
 		
-		return "qingjiaApply_show";
+		return "qingjiaApply/show";
 	}
 	
 	
@@ -94,7 +94,7 @@ public class QingjiaController extends BaseController {
 		Qingjia qj = this.qingjiaService.get(id);
 		model.addAttribute("qj", qj);
 		
-		return "qingjiaApply_edit";
+		return "qingjiaApply/edit";
 	}
 	
 	/**

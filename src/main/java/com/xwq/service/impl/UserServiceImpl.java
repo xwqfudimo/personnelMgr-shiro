@@ -1,5 +1,7 @@
 package com.xwq.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +55,11 @@ public class UserServiceImpl implements UserService {
 		int result = this.userDao.execute(hql, newPwd, username);
 		if(result == 0) return false;
 		return true;
+	}
+
+	@Override
+	public List<User> list() {
+		return this.userDao.getList("from User u join fetch u.employee");
 	}
 
 }

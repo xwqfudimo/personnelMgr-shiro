@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.comparator.DepartmentComparator;
+import com.xwq.enums.Gender;
 import com.xwq.model.Department;
 import com.xwq.model.Employee;
 import com.xwq.util.JsonUtil;
+import com.xwq.util.ParameterUtil;
 import com.xwq.vo.EmpVo;
 
 @Controller
@@ -40,19 +42,9 @@ public class EmployeeController extends BaseController {
 		
 		infoSetting("viewEmpInfo", model);
 		
-		return "viewEmpInfo";
+		return "emp/viewEmpInfo";
 	}
 	
-	
-	/**
-	 * 修改登录密码
-	 */
-	@RequestMapping(value="/modifyPwd", method=RequestMethod.GET)
-	public String modifyPwd(Model model) {
-		infoSetting("modifyPwd", model);
-		
-		return "modifyPwd";
-	}
 	
 	/**
 	 * 修改登录密码提交
@@ -106,12 +98,8 @@ public class EmployeeController extends BaseController {
 		
 		for(int i=0; i<deptList.size(); i++) {
 			Department d = deptList.get(i);
-			if(i==0) {
-				buffer.append("{id:" + d.getId() + ", pId:0, name:'" + d.getName() + "',open:true}");
-			} else {
-				buffer.append(",{id:" + d.getId() + ", pId:0, name:'" + d.getName() + "',open:true}");
-			}
-			
+			if(i != 0) buffer.append(",");
+			buffer.append("{id:" + d.getId() + ", pId:0, name:'" + d.getName() + "',open:true}");
 			
 			for(Employee e : emps) {
 				if(e.getDepartment().getId() == d.getId()) {
@@ -123,7 +111,7 @@ public class EmployeeController extends BaseController {
 		
 		model.addAttribute("data", buffer.toString());
 		
-		return "empSearch";
+		return "emp/empSearch";
 	}
 	
 	
@@ -144,5 +132,119 @@ public class EmployeeController extends BaseController {
 		Employee emp = this.employeeService.get(id);
 		
 		return JsonUtil.toJson(emp);
+	}
+	
+	
+	/**
+	 * 员工列表
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/empMgr")
+	public String list(Model model) {
+		infoSetting("empMgr", model);
+		
+		List<Employee> emps = this.employeeService.list();
+		model.addAttribute("emps", emps);
+		
+		return "emp/list";
+	}
+	
+	/**
+	 * 新增员工
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/emp_add", method=RequestMethod.GET)
+	public String add(Model model) {
+		infoSetting("empMgr", model);
+		
+		model.addAttribute("depts", this.departmentService.getDeptList());
+		
+		return "emp/add";
+	}
+	
+	
+	/**
+	 * 新增员工提交
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/emp_add", method=RequestMethod.POST)
+	public String add(HttpServletRequest request) {
+		String name = request.getParameter("name");
+		
+		if(ParameterUtil.parameterOK(name)) {
+			Employee emp = new Employee();
+			this.setEmp(emp, request);
+			
+			this.employeeService.add(emp);
+		}
+		
+		return "redirect:/empMgr";
+	}
+	
+	/**
+	 * 修改员工
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/emp_edit/{id}", method=RequestMethod.GET)
+	public String update(@PathVariable int id, Model model) {
+		infoSetting("empMgr", model);
+		
+		Employee emp = this.employeeService.get(id);
+		model.addAttribute("emp", emp);
+		
+		model.addAttribute("depts", this.departmentService.getDeptList());
+		
+		return "emp/edit";
+	}
+	
+	/**
+	 * 修改员工提交
+	 * @return
+	 */
+	@RequestMapping(value="/emp_edit_submit", method=RequestMethod.POST)
+	public String update(HttpServletRequest request) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Employee emp = this.employeeService.get(id);
+		this.setEmp(emp, request);
+		this.employeeService.update(emp);
+		
+		return "redirect:/empMgr";
+	}
+	
+	
+	private void setEmp(Employee emp, HttpServletRequest request) {
+		emp.setName(request.getParameter("name"));
+		emp.setAddress(request.getParameter("address"));
+		emp.setBeizhu(request.getParameter("beizhu"));
+		emp.setBirthdate(request.getParameter("birthdate"));
+		emp.setCard(request.getParameter("card"));
+		emp.setDepartment(this.departmentService.get(Integer.parseInt(request.getParameter("deptId"))));
+		emp.setEmail(request.getParameter("email"));
+		emp.setMarriage(request.getParameter("marriage"));
+		emp.setNationality(request.getParameter("nationality"));
+		emp.setPhone(request.getParameter("phone"));
+		emp.setRzsj(request.getParameter("rzsj"));
+		emp.setSex(Gender.valueOf(request.getParameter("sex")));
+		emp.setXl(request.getParameter("xl"));
+		emp.setZzmm(request.getParameter("zzmm"));
+	}
+	
+	
+	/**
+	 * 删除员工
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="/emp_del/{id}", method=RequestMethod.GET)
+	public @ResponseBody boolean delete(@PathVariable int id) {
+		this.employeeService.delete(id);
+		
+		return true;
 	}
 }

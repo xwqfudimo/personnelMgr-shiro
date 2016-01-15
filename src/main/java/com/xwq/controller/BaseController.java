@@ -8,6 +8,7 @@ import com.xwq.service.DepartmentService;
 import com.xwq.service.EmployeeService;
 import com.xwq.service.JiabanService;
 import com.xwq.service.KaoqingService;
+import com.xwq.service.MenuService;
 import com.xwq.service.QingjiaService;
 import com.xwq.service.ResourceService;
 import com.xwq.service.UserService;
@@ -28,6 +29,8 @@ public class BaseController {
 	protected KaoqingService kaoqingService;
 	@Autowired
 	protected ResourceService resourceService;
+	@Autowired
+	protected MenuService menuService;
 	
 	/**
 	 * 设置通用信息
@@ -35,7 +38,7 @@ public class BaseController {
 	 * @param model
 	 */
 	protected void infoSetting(String href, Model model) {
-		String columnName = this.resourceService.getColumnNameByHref(href);
+		String columnName = this.menuService.getMenuNameByHref(href);
 		
 		model.addAttribute("columnName", columnName);
 	}

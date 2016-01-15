@@ -21,24 +21,47 @@
             <div class="result-content">
                 <ul class="sys-info-list">
                     <li>
-                        <label class="res-lab">操作系统</label><span class="res-info">WINNT</span>
+                        <label class="res-lab">操作系统</label><span class="res-info">${osName }  ${osVersion }——${osArch }</span>
                     </li>
                     <li>
-                        <label class="res-lab">运行环境</label><span class="res-info">Apache/2.2.21 (Win64) PHP/5.3.10</span>
+                        <label class="res-lab">运行环境</label><span class="res-info">${runtimeName } ${javaVersion }</span>
                     </li>
                     <li>
-                        <label class="res-lab">上传附件限制</label><span class="res-info">2M</span>
-                    </li>
-                    <li>
-                        <label class="res-lab">北京时间</label><span class="res-info">2014年3月18日 21:08:24</span>
-                    </li>
-                    <li>
-                        <label class="res-lab">服务器域名/IP</label><span class="res-info">localhost [ 127.0.0.1 ]</span>
+                        <label class="res-lab">北京时间</label><span class="res-info" id="nowTime"></span>
                     </li>
                 </ul>
             </div>
         </div>
  
     </div>
+
+<script type="text/javascript">
+function getNowDateTime() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    var second = date.getSeconds();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    if (second >= 0 && second <= 9) {
+    	second = "0" + second;
+    }
+    
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + second;
+    return currentdate;
+}
+
+document.getElementById("nowTime").innerHTML = getNowDateTime();
+</script>
+    
+    
 </body>
 </html>

@@ -28,7 +28,7 @@ public class KaoqingController extends BaseController {
 		if(filter == null) filter = "this-month";
 		model.addAttribute("filter", filter);
 		
-		return "kaoqingList";
+		return "kaoqing/list";
 	}
 	
 }

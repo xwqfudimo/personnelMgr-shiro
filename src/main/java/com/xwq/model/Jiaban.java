@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 
 import com.xwq.enums.AuditStatus;
 
+/**
+ * 加班
+ */
 @Entity
 public class Jiaban {
 	@Id

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xwq.dao.DepartmentDao;
 import com.xwq.dao.EmployeeDao;
 import com.xwq.dao.YjReportDao;
 import com.xwq.model.Employee;
@@ -20,10 +21,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeDao employeeDao;
 	@Autowired
 	private YjReportDao yjReportDao;
+	@Autowired
+	private DepartmentDao departmentDao;
 
 	@Override
 	public void add(Employee t) {
 		this.employeeDao.add(t);
+		
+		//部门人数+1
+		int deptId = t.getDepartment().getId();
+		String hql = "update Department set empNum = empNum+1 where id = ?";
+		this.departmentDao.execute(hql, deptId);
 	}
 
 	@Override
@@ -112,6 +120,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void deleteYjReport(int id) {
 		this.yjReportDao.delete(id);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EmpVo> getAllEmpVo() {
+		String hql = "select id, name from Employee";
+		List<Object[]> list = this.employeeDao.queryList(hql);
+		
+		List<EmpVo> empVoList = new ArrayList<EmpVo>();
+		for(Object[] objs : list) {
+			EmpVo vo = new EmpVo();
+			vo.setId(Integer.parseInt(objs[0].toString()));
+			vo.setName(objs[1].toString());
+			
+			empVoList.add(vo);
+		}
+		
+		return empVoList;
+	}
+
+	@Override
+	public List<Employee> list() {
+		return this.employeeDao.getList("from Employee e join fetch e.department");
 	}
 	
 }

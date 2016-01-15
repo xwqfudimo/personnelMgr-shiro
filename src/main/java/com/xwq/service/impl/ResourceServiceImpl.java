@@ -76,12 +76,5 @@ public class ResourceServiceImpl implements ResourceService {
 		this.roleResourceDao.execute(hql, roleId, resId);
 	}
 
-	//查询栏目名
-	@Override
-	public String getColumnNameByHref(String href) {
-		href = "/" + href;
-		String hql = "select name from Resource res where res.href = ? and res.type = 'menu'";
-		return this.resourceDao.query(hql, href).toString();
-	}
 
 }

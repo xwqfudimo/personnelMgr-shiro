@@ -131,3 +131,6 @@ textarea:focus,input[type="text"]:focus,input[type="password"]:focus,input[type=
 .title_a:hover {color:orange;}
 
 .menu-jt { float: right;}
+
+.pxtop { display:inline-block;vertical-align: top; }
+.tip {font-size: 12px; color: gray; }

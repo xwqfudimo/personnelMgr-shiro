@@ -31,7 +31,7 @@
     
     <filter>
     	<filter-name>sitemesh</filter-name>
-    	<filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
+    	<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
     </filter>
     
     <filter-mapping>
@@ -62,4 +62,13 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
+	
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404.jsp</location>
+	</error-page>
 </web-app>

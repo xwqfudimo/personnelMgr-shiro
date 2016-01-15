@@ -10,7 +10,7 @@
            <ul class="sidebar-list">
               	<c:forEach items="${menus }" var="m">
                 <li>
-                    <a href="<%=request.getContextPath()%>${m.module.href}" class="menu">${m.module.name } <span class="menu-jt">▲</span></a>
+                    <a class="menu">${m.name } <span class="menu-jt">▲</span></a>
                     
                     <c:if test="${m.children != null }">
 	                    <ul class="sub-menu">

@@ -3,15 +3,12 @@
 
 <div class="topbar-wrap white">
     <div class="topbar-inner clearfix">
-        <div class="topbar-logo-wrap clearfix">
-            <h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">后台管理</a></h1>
-            <ul class="navbar-list clearfix">
-            	<li><a class="on" href="#">首页</a></li>
-            </ul>
+        <div class="topbar-logo-wrap clearfix" style="font-size:22px;">
+            	人事管理系统
         </div>
         <div class="top-info-wrap">
             <ul class="top-info-list clearfix">
-                <li><a href="<%=request.getContextPath()%>/logout">退出</a></li>
+                <li><a href="${ctxPath }/logout" style="font-size:16px;">退出</a></li>
             </ul>
         </div>
     </div>

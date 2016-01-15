@@ -13,6 +13,9 @@ import org.hibernate.annotations.Type;
 import com.xwq.enums.AuditStatus;
 import com.xwq.enums.QingjiaType;
 
+/**
+ * 请假
+ */
 @Entity
 public class Qingjia {
 	@Id

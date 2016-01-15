@@ -32,7 +32,7 @@ public class JiabanController extends BaseController {
 		if(filter == null) filter = "all-apply";
 		model.addAttribute("filter", filter);
 		
-		return "jiabanApply";
+		return "jiabanApply/list";
 	}
 	
 	/**
@@ -42,7 +42,7 @@ public class JiabanController extends BaseController {
 	public String addJiabanApply(Model model) {
 		infoSetting("jiabanApply", model);
 		
-		return "jiabanApply_add";
+		return "jiabanApply/add";
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class JiabanController extends BaseController {
 		Jiaban jb = this.jiabanService.get(id);
 		model.addAttribute("jb", jb);
 		
-		return "jiabanApply_show";
+		return "jiabanApply/show";
 	}
 	
 	
@@ -96,7 +96,7 @@ public class JiabanController extends BaseController {
 		Jiaban jb = this.jiabanService.get(id);
 		model.addAttribute("jb", jb);
 		
-		return "jiabanApply_edit";
+		return "jiabanApply/edit";
 	}
 	
 	/**
