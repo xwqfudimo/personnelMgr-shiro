@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xwq.dao.RoleDao;
+import com.xwq.dao.RoleMenuDao;
 import com.xwq.dao.UserRoleDao;
 import com.xwq.model.Role;
+import com.xwq.model.RoleMenu;
 import com.xwq.model.UserRole;
 import com.xwq.service.RoleService;
 
@@ -17,6 +19,8 @@ public class RoleServiceImpl implements RoleService {
 	private RoleDao roleDao;
 	@Autowired
 	private UserRoleDao userRoleDao;
+	@Autowired
+	private RoleMenuDao roleMenuDao;
 
 	@Override
 	public void add(Role t) {
@@ -41,18 +45,20 @@ public class RoleServiceImpl implements RoleService {
 	//根据用户id查询用户所拥有的角色
 	@Override
 	public List<Role> listByUserId(int userId) {
-		String hql = "select r from Role r, User u, UserRole ur where u.id = ur.userId AND r.id = ur.roleId where u.id = ?";
+		String hql = "select r from Role r, User u, UserRole ur where u.id = ur.userId AND r.id = ur.roleId AND u.id = ?";
 		return this.roleDao.getList(hql, userId);
 	}
 
 	//新增用户-角色关联
 	@Override
-	public void addUserRole(int userId, int roleId) {
-		UserRole ur = new UserRole();
-		ur.setUserId(userId);
-		ur.setRoleId(roleId);
-		
-		this.userRoleDao.add(ur);
+	public void addUserRoles(int userId, int... roleIds) {
+		for(int rid : roleIds) {
+			UserRole ur = new UserRole();
+			ur.setUserId(userId);
+			ur.setRoleId(rid);
+			
+			this.userRoleDao.add(ur);
+		}
 	}
 
 	//删除用户-角色关联
@@ -60,6 +66,22 @@ public class RoleServiceImpl implements RoleService {
 	public void deleteUserRole(int userId, int roleId) {
 		String hql = "delete from UserRole ur where ur.userId = ? and ur.roleId = ?";
 		this.userRoleDao.execute(hql, userId, roleId);
+	}
+
+	@Override
+	public List<Role> list() {
+		return this.roleDao.getList("from Role");
+	}
+
+	@Override
+	public void deleteAllUserRole(int userId) {
+		String hql = "delete from UserRole where userId = ?";
+		this.roleDao.execute(hql, userId);
+	}
+
+	@Override
+	public void batchAddRoleMenu(List<RoleMenu> rms) {
+		this.roleMenuDao.batchAdd(rms);
 	}
 
 }

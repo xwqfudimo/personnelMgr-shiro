@@ -41,7 +41,7 @@
             </div>
             <div class="tip"><p>提示：菜单项括号(num)中的数字为该菜单项的排序号</p></div>
             
-         	<div id="data" style="display:none;">${data }</div><br>
+         	<div id="menuTree" style="display:none;">${menuTree }</div><br>
          	<div>
          		<a href="#" style="font-size:14px;" onclick="javascript:add_top_menu()">
          			<span class="pxtop" style="margin-top:4px;"><img src="${ctxPath }/resources/images/add.jpg" width="14px"></span><span class="pxtop">一级菜单</span>
@@ -79,8 +79,8 @@ var setting = {
 		}
 };
 
-var data = $("#data").html();
-var zNodes = eval('(' + data + ')');
+var menuTree = $("#menuTree").html();
+var zNodes = eval('(' + menuTree + ')');
 	
 function beforeDrag(treeId, treeNodes) {
 	return false;

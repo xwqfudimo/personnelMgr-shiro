@@ -7,15 +7,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="role_resource")
-public class RoleResource {
+@Table(name="role_privilege")
+public class RolePrivilege {
 	@Id
 	@GeneratedValue
 	private int id;
 	@Column(name="role_id")
 	private int roleId;
-	@Column(name="res_id")
-	private int resId;
+	@Column(name="privilege_id")
+	private int privilegeId;
 	
 	public int getId() {
 		return id;
@@ -29,10 +29,10 @@ public class RoleResource {
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
-	public int getResId() {
-		return resId;
+	public int getPrivilegeId() {
+		return privilegeId;
 	}
-	public void setResId(int resId) {
-		this.resId = resId;
+	public void setPrivilegeId(int privilegeId) {
+		this.privilegeId = privilegeId;
 	}
 }

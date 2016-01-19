@@ -7,6 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${columnName }</title>
+<link type="text/css" rel="stylesheet" href="${ctxPath }/resources/multi-select/css/multi-select.css" >
+<script type="text/javascript" src="${ctxPath }/resources/multi-select/js/jquery.multi-select.js"></script>
+
 </head>
 <body>
     <div class="main-wrap">
@@ -29,7 +32,16 @@
 						<c:forEach items="${empVoList }" var="emp">
 							<option value="${emp.id }">${emp.name }</option>
 						</c:forEach>
-					</select>
+					</select>&nbsp;&nbsp;
+					<a href="${ctxPath }/emp_add" target="_blank">+添加员工</a>
+					<br><br>
+					角色：
+					 <select multiple="multiple" id="roleIds" name="roleIds">
+					    <c:forEach items="${roleList }" var="role">
+					    	<option value="${role.id }">${role.desc }</option>
+					    </c:forEach>
+					 </select>     
+					
                 	<br><br>
                 	 <input class="btn btn-primary btn6 mr10" value="提交" type="submit">
                      <input class="btn btn6" onclick="history.go(-1)" value="返回" type="button">
@@ -37,5 +49,14 @@
         </div>
  
     </div>
+    
+<script type="text/javascript"> 
+$(document).ready(function(){ 
+	$('#roleIds').multiSelect({
+		  selectableHeader: "<div class='custom-header'>角色列表</div>",
+		  selectionHeader: "<div class='custom-header'>已选角色</div>"
+		});
+}); 
+</script>
 </body>
 </html>

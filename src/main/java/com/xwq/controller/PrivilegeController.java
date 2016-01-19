@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xwq.model.Resource;
+import com.xwq.model.Privilege;
 import com.xwq.util.ParameterUtil;
 
 @Controller
-public class AuthController extends BaseController {
+public class PrivilegeController extends BaseController {
 
 	/**
 	 * 权限列表
@@ -26,7 +26,7 @@ public class AuthController extends BaseController {
 	public String list(Model model) {
 		infoSetting("authMgr", model);
 		
-		List<Resource> list = this.resourceService.list();
+		List<Privilege> list = this.privilegeService.list();
 		model.addAttribute("auths", list);
 		
 		return "auth/list";
@@ -50,12 +50,12 @@ public class AuthController extends BaseController {
 		String uri = request.getParameter("uri");
 		
 		if(ParameterUtil.parameterOK(name, uri)) {
-			Resource res = new Resource();
+			Privilege res = new Privilege();
 			res.setName(name);
 			res.setUri(uri);
 			res.setGroup(request.getParameter("group_name"));
 			
-			this.resourceService.add(res);
+			this.privilegeService.add(res);
 		}
 		
 		return "redirect:/authMgr";
@@ -71,7 +71,7 @@ public class AuthController extends BaseController {
 	public String update(@PathVariable int id, Model model) {
 		infoSetting("authMgr", model);
 		
-		Resource res = this.resourceService.get(id);
+		Privilege res = this.privilegeService.get(id);
 		model.addAttribute("res", res);
 		
 		return "auth/edit";
@@ -89,12 +89,12 @@ public class AuthController extends BaseController {
 		String uri = request.getParameter("uri");
 		
 		if(ParameterUtil.parameterOK(name, uri)) {
-			Resource res = this.resourceService.get(id);
+			Privilege res = this.privilegeService.get(id);
 			res.setName(name);
 			res.setUri(uri);
 			res.setGroup(request.getParameter("group_name"));
 			
-			this.resourceService.update(res);	
+			this.privilegeService.update(res);	
 		}
 		
 		
@@ -109,7 +109,7 @@ public class AuthController extends BaseController {
 	 */
 	@RequestMapping("/auth_del/{id}")
 	public @ResponseBody boolean delete(@PathVariable int id) {
-		this.resourceService.delete(id);
+		this.privilegeService.delete(id);
 		
 		return true;
 	}

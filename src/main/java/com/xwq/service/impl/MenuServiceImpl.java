@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xwq.dao.MenuDao;
+import com.xwq.dao.RoleMenuDao;
 import com.xwq.model.Menu;
 import com.xwq.service.MenuService;
 
@@ -14,6 +15,8 @@ import com.xwq.service.MenuService;
 public class MenuServiceImpl implements MenuService {
 	@Autowired
 	private MenuDao menuDao;
+	@Autowired
+	private RoleMenuDao roleMenuDao;
 
 	@Override
 	public List<Menu> listByUsername(String username) {
@@ -96,5 +99,48 @@ public class MenuServiceImpl implements MenuService {
 	public void deleteByPid(int pid) {
 		String hql = "delete from Menu m where m.parent.id = ?";
 		this.menuDao.execute(hql, pid);
+	}
+
+	/**
+	 * 指定角色id的菜单树(树状结构结果)
+	 */
+	@Override
+	public List<Menu> listTreeByRoleId(int roleId) {
+		String hql = "select m from Menu m, Role r, RoleMenu rm where m.id=rm.menuId AND r.id=rm.roleId AND r.id = ? order by m.sort";
+		List<Menu> list = this.menuDao.getList(hql, roleId);
+		List<Menu> menuList = new ArrayList<Menu>();
+		
+		for(Menu mu : list) {
+			if(mu.getLevel() == 1) {
+				menuList.add(mu);
+			}
+		}
+		for(Menu pm : menuList) {
+			for(Menu mu : list) {
+				if(mu.getLevel() > 1 && mu.getParent().getId() == pm.getId()) {
+					pm.getChildren().add(mu);
+				}
+			}
+		}
+		
+		return menuList;
+	}
+
+	/**
+	 * 指定角色id的菜单列表
+	 */
+	@Override
+	public List<Menu> listByRoleId(int roleId) {
+		String hql = "select m from Menu m, Role r, RoleMenu rm where m.id=rm.menuId AND r.id=rm.roleId AND r.id = ? order by m.sort";
+		return this.menuDao.getList(hql, roleId);
+	}
+
+	/**
+	 * 删除指定id角色的所有角色菜单关联
+	 */
+	@Override
+	public void deleteAllRoleMenu(int roleId) {
+		String hql = "delete from RoleMenu where roleId = ?";
+		this.roleMenuDao.execute(hql, roleId);
 	}
 }

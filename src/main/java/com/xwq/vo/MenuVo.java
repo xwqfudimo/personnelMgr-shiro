@@ -3,22 +3,22 @@ package com.xwq.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xwq.model.Resource;
+import com.xwq.model.Privilege;
 
 public class MenuVo {
-	private Resource module;
-	private List<Resource> children = new ArrayList<Resource>();
+	private Privilege module;
+	private List<Privilege> children = new ArrayList<Privilege>();
 	
-	public Resource getModule() {
+	public Privilege getModule() {
 		return module;
 	}
-	public void setModule(Resource module) {
+	public void setModule(Privilege module) {
 		this.module = module;
 	}
-	public List<Resource> getChildren() {
+	public List<Privilege> getChildren() {
 		return children;
 	}
-	public void setChildren(List<Resource> children) {
+	public void setChildren(List<Privilege> children) {
 		this.children = children;
 	}
 }

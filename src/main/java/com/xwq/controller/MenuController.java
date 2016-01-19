@@ -1,7 +1,5 @@
 package com.xwq.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -26,24 +24,7 @@ public class MenuController extends BaseController {
 	public String list(HttpServletRequest request, Model model) {
 		infoSetting("menuMgr", model);
 		
-		List<Menu> menuList = this.menuService.listTree();
-		
-		//转换成json格式字符串
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("[");
-		
-		for(int i=0; i<menuList.size(); i++) {
-			Menu m = menuList.get(i);
-			if(i != 0) buffer.append(",");
-			buffer.append("{id:" + m.getId() + ", pId:0, name:'" + m.getName() + "(" + m.getSort() + ")',open:true}");
-			
-			for(Menu c : m.getChildren()) {
-				buffer.append(",{id:" + c.getId() + ", pId:" + m.getId() + ", name:'" + c.getName() + "(" + c.getSort() + ")'}");
-			}
-		}
-		buffer.append("]");
-		
-		model.addAttribute("data", buffer.toString());
+		model.addAttribute("menuTree", this.getMenuTreeJsonWithSort());
 		
 		return "menu/list";
 	}

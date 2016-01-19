@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.model.Employee;
+import com.xwq.model.Role;
 import com.xwq.model.User;
 import com.xwq.util.ParameterUtil;
 import com.xwq.vo.EmpVo;
+import com.xwq.vo.UserVo;
 
 @Controller
 public class UserController extends BaseController {
@@ -29,7 +31,7 @@ public class UserController extends BaseController {
 	public String list(Model model) {
 		infoSetting("userMgr", model);
 		
-		List<User> users = this.userService.list();
+		List<UserVo> users = this.userService.list();
 		model.addAttribute("users", users);
 		
 		return "user/list";
@@ -39,9 +41,12 @@ public class UserController extends BaseController {
 	public String add(Model model) {
 		infoSetting("userMgr", model);
 		
-		//所用员工列表
+		//全部员工列表
 		List<EmpVo> empVoList = this.employeeService.getAllEmpVo();
 		model.addAttribute("empVoList", empVoList);
+		
+		//全部角色列表
+		model.addAttribute("roleList", this.roleService.list());
 		
 		return "user/add";
 	}
@@ -57,15 +62,23 @@ public class UserController extends BaseController {
 		String pwd = request.getParameter("password");
 		int empId = Integer.parseInt(request.getParameter("empId"));
 		
+		String[] roleIds = request.getParameterValues("roleIds");
+		int[] rids = new int[roleIds.length];
+		for(int i=0; i<roleIds.length; i++) {
+			rids[i] = Integer.parseInt(roleIds[i]);
+		}
+		
 		if(ParameterUtil.parameterOK(username, pwd)) {
 			User u = new User();
 			u.setUsername(username);
 			u.setPassword(DigestUtils.md5Hex(pwd));
-			
 			Employee emp = this.employeeService.get(empId);
 			u.setEmployee(emp);
 			
 			this.userService.add(u);
+			
+			//添加用户角色
+			this.roleService.addUserRoles(u.getId(), rids);
 		}
 		
 		return "redirect:/userMgr";
@@ -79,6 +92,9 @@ public class UserController extends BaseController {
 	@RequestMapping(value="/user_del/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean delete(@PathVariable int id) {
 		this.userService.delete(id);
+		
+		//删除用户角色
+		this.roleService.deleteAllUserRole(id);
 		
 		return true;
 	}
@@ -100,6 +116,13 @@ public class UserController extends BaseController {
 		List<EmpVo> empVoList = this.employeeService.getAllEmpVo();
 		model.addAttribute("empVoList", empVoList);
 		
+		//用户所拥有角色
+		List<Role> roles = this.roleService.listByUserId(id);
+		model.addAttribute("roles", roles);
+		
+		//全部角色列表
+		model.addAttribute("roleList", this.roleService.list());
+		
 		return "user/edit";
 	}
 	
@@ -115,6 +138,12 @@ public class UserController extends BaseController {
 		String password = request.getParameter("password");
 		int empId = Integer.parseInt(request.getParameter("empId"));
 		
+		String[] roleIds = request.getParameterValues("roleIds");
+		int[] rids = new int[roleIds.length];
+		for(int i=0; i<roleIds.length; i++) {
+			rids[i] = Integer.parseInt(roleIds[i]);
+		}
+		
 		if(ParameterUtil.parameterOK(username, password)) {
 			User user = this.userService.get(id);
 			user.setUsername(username);
@@ -124,6 +153,11 @@ public class UserController extends BaseController {
 			user.setEmployee(emp);
 			
 			this.userService.update(user);
+			
+			
+			//修改用户角色
+			this.roleService.deleteAllUserRole(id);
+			this.roleService.addUserRoles(id, rids);
 		}
 		
 		return "redirect:/userMgr";

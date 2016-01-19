@@ -2,12 +2,14 @@
 <decorators defaultdir="/WEB-INF/jsp">
 	<excludes>
 		<pattern>/resources/*</pattern>
-		<pattern>/login</pattern>
+		<pattern>/login*</pattern>
 		<pattern>/logout</pattern>
 		<pattern>/empSearch</pattern>
 		<pattern>/emp/*</pattern>
 		<pattern>/modifyPwdSubmit</pattern>
 		<pattern>/menu*</pattern>
+		<pattern>/role_add</pattern>
+		<pattern>/role_edit/*</pattern>
 	</excludes>
 	<decorator name="default" page="/WEB-INF/jsp/decorator.jsp">
 		<pattern>/*</pattern>

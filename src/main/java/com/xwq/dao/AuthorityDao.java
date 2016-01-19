@@ -1,7 +1,7 @@
 package com.xwq.dao;
 
-import com.xwq.model.Resource;
+import com.xwq.model.Privilege;
 
-public interface AuthorityDao extends BaseDao<Resource> {
+public interface AuthorityDao extends BaseDao<Privilege> {
 
 }

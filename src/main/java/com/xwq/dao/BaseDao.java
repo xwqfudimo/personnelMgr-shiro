@@ -12,4 +12,7 @@ public interface BaseDao<T> {
 	public int execute(String hql, Object...params);
 	@SuppressWarnings("rawtypes")
 	public List queryList(String hql, Object...params);
+	
+	@SuppressWarnings("rawtypes")
+	public List sqlQueryList(String sql, Object...params);
 }

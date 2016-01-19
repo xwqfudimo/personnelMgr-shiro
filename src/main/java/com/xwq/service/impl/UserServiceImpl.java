@@ -1,6 +1,9 @@
 package com.xwq.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.xwq.dao.UserDao;
 import com.xwq.model.User;
 import com.xwq.service.UserService;
+import com.xwq.vo.UserVo;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -57,9 +61,43 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> list() {
-		return this.userDao.getList("from User u join fetch u.employee");
+	public List<UserVo> list() {
+		String sql = "SELECT u.id as uid, u.username as username, e.name as ename, urr.rname as rname  FROM USER u LEFT JOIN (SELECT ur.user_id AS userid, r.role_desc as rname FROM user_role ur, role r WHERE ur.role_id = r.id) urr ON(u.id = urr.userid) LEFT JOIN employee e ON(u.emp_id = e.id)";
+		List<Object[]> list = this.userDao.sqlQueryList(sql);
+		
+		Map<Integer,UserVo> userMap = new HashMap<Integer,UserVo>();
+		
+		for(Object[] objs : list) {
+			int uid = Integer.parseInt(objs[0].toString());
+			String username = objs[1].toString();
+			String ename = objs[2] == null? "" : objs[2].toString();
+			String rname = objs[3] == null? "" : objs[3].toString();
+		
+			if(userMap.containsKey(uid)) {
+				UserVo uv = userMap.get(uid);
+				String uvRname = uv.getRname();
+				uvRname = uvRname + "，" + rname;
+				uv.setRname(uvRname);
+				userMap.put(uid, uv);
+			}
+			else {
+				UserVo vo = new UserVo();
+				vo.setUid(uid);
+				vo.setUsername(username);
+				vo.setEname(ename);
+				vo.setRname(rname);
+				userMap.put(uid, vo);
+			}
+		}
+		
+		
+		List<UserVo> userList = new ArrayList<UserVo>();
+		userList.addAll(userMap.values());
+		
+		return userList;
 	}
 
 }

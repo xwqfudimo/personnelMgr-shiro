@@ -7,6 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${columnName }</title>
+<link type="text/css" rel="stylesheet" href="${ctxPath }/resources/multi-select/css/multi-select.css" >
+<script type="text/javascript" src="${ctxPath }/resources/multi-select/js/jquery.multi-select.js"></script>
 </head>
 <body>
     <div class="main-wrap">
@@ -31,6 +33,20 @@
 						</c:forEach>
 					</select>
                 	<br><br>
+                	角色：
+                	 <select multiple="multiple" id="roleIds" name="roleIds">
+					    <c:forEach items="${roleList }" var="role">
+					    	<option value="${role.id }"   
+					    				<c:forEach items="${roles }" var="my">
+											<c:if test="${role.id == my.id }">
+												selected
+											</c:if>
+										</c:forEach>
+								>${role.desc }</option>
+					    </c:forEach>
+					 </select>    
+					
+					<br><br>
                 	 <input type="hidden" name="id" value="${user.id }">
                 	 <input class="btn btn-primary btn6 mr10" value="提交" type="submit">
                      <input class="btn btn6" onclick="history.go(-1)" value="返回" type="button">
@@ -42,8 +58,13 @@
   <script type="text/javascript">
   $(document).ready(function() {
 		$("#emptyPwd").click(function() {
-			$('#password').attr("value", "");
-		});	  
+			$('#password').val('');
+		});	
+		
+		$('#roleIds').multiSelect({
+			  selectableHeader: "<div class='custom-header'>角色列表</div>",
+			  selectionHeader: "<div class='custom-header'>已选角色</div>"
+			});
   });
   </script>  
     

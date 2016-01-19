@@ -14,6 +14,11 @@ public interface MenuService {
 	
 	public List<Menu> listTree();
 	public List<Menu> listByUsername(String username);
+	public List<Menu> listTreeByRoleId(int roleId);
+	public List<Menu> listByRoleId(int roleId);
 	
 	public String getMenuNameByHref(String href);
+	
+	
+	public void deleteAllRoleMenu(int roleId);
 }

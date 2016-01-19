@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,12 +17,15 @@
                 <ul class="admin_items">
                     <li>
                         <label for="username">用户名：</label>
-                        <input type="text" name="username" id="username" size="35" class="admin_input_style" />
+                        <input type="text" name="username" id="username" size="35" class="admin_input_style" value="${username }"/>
                     </li>
                     <li>
                         <label for="password">密码：</label>
-                        <input type="password" name="password" id="password" size="35" class="admin_input_style" />
+                        <input type="password" name="password" id="password" size="35" class="admin_input_style" value="${password }"/>
                     </li>
+                    <li><input type="checkbox" name="remember_pwd" value="1" 
+                    	<c:if test="${remember == 1 }">checked</c:if>
+                     >记住密码</li>
                     <li>
                         <input type="submit" tabindex="3" value="提交" class="btn btn-primary" />
                     </li>

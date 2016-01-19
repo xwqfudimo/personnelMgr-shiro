@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${columnName }</title>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/layer/layer.js"></script>
+    <script type="text/javascript" src="${ctxPath }/resources/js/layer/layer.js"></script>
 </head>
 <body>
 	
@@ -30,21 +30,19 @@
                     <table class="result-tab grid-data" width="100%">
                         <tr>
                             <th>用户名</th>
-                            <th>密码</th>
-                            <th>员工ID</th>
                             <th>员工名</th>
+                            <th>角色</th>
                             <th width="200px">操作</th>
                         </tr>
 
                    		<c:forEach items="${users }" var="user">
                    			<tr>
                    				<td>${user.username }</td>
-                   				<td>${user.password }</td>
-                   				<td>${user.employee.id }</td>
-                   				<td>${user.employee.name }</td>
+                   				<td>${user.ename }</td>
+                   				<td>${user.rname }</td>
                    				<td>
-                  					<a class="link-update" href="<%=request.getContextPath() %>/user_edit/${user.id}">修改</a>
-                                   	<a class="link-del" href="javascript:void(0)" onclick="del(${user.id})">删除</a>
+                  					<a class="link-update" href="${ctxPath }/user_edit/${user.uid}">修改</a>
+                                   	<a class="link-del" href="javascript:void(0)" onclick="del(${user.uid})">删除</a>
                                 </td>
                    			</tr>
                    		</c:forEach>

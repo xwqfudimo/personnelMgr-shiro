@@ -4,6 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,17 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		}
 		
 		return query.uniqueResult();
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List sqlQueryList(String sql, Object... params) {
+		SQLQuery query = getSession().createSQLQuery(sql);
+		for(int i=0; i<params.length; i++) {
+			query.setParameter(i, params[i]);
+		}
+		
+		return query.list();
 	}
 
 	
