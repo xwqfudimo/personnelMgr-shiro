@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.xwq.dao.KaoqingDao;
 import com.xwq.model.Kaoqing;
+import com.xwq.model.Pagination;
 import com.xwq.service.KaoqingService;
 import com.xwq.util.DateUtil;
 
@@ -40,15 +41,27 @@ public class KaoqingServiceImpl implements KaoqingService {
 		List<Kaoqing> result = null;
 		if(filter == null || "this-month".equals(filter)) {
 			String hql = "from Kaoqing kq where kq.employee.id = ? and kq.date like ? order by kq.date desc";
-			result = this.kaoqingDao.getList(hql, empId, DateUtil.getThisMonth() + "%");
+			
+			int totalCount = Integer.parseInt(this.kaoqingDao.query("select count(*) " + hql, empId, DateUtil.getThisMonth() + "%").toString());
+			Pagination.setTotalCount(totalCount);
+			
+			result = this.kaoqingDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId, DateUtil.getThisMonth() + "%");
 		}
 		else if("last-month".equals(filter)) {
 			String hql = "from Kaoqing kq where kq.employee.id = ? and kq.date like ? order by kq.date desc";
-			result = this.kaoqingDao.getList(hql, empId, DateUtil.getLastMonth() + "%");
+			
+			int totalCount = Integer.parseInt(this.kaoqingDao.query("select count(*) " + hql, empId, DateUtil.getLastMonth() + "%").toString());
+			Pagination.setTotalCount(totalCount);
+			
+			result = this.kaoqingDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId, DateUtil.getLastMonth() + "%");
 		}
 		else {
 			String hql = "from Kaoqing kq where kq.employee.id = ? order by kq.date desc";
-			result = this.kaoqingDao.getList(hql, empId);
+			
+			int totalCount = Integer.parseInt(this.kaoqingDao.query("select count(*) " + hql, empId).toString());
+			Pagination.setTotalCount(totalCount);
+			
+			result = this.kaoqingDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId);
 		}
 			
 		return result;

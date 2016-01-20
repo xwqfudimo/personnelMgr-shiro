@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xwq.dao.QingjiaDao;
+import com.xwq.model.Pagination;
 import com.xwq.model.Qingjia;
 import com.xwq.service.QingjiaService;
 
@@ -50,7 +51,10 @@ public class QingjiaServiceImpl implements QingjiaService {
 			hql = "from Qingjia j where j.employee.id = ? and j.auditStatus = 0 order by j.submitTime desc";
 		}
 		
-		return this.qingjiaDao.getList(hql, empId);
+		int totalCount = Integer.parseInt(this.qingjiaDao.query("select count(*) " + hql, empId).toString());
+		Pagination.setTotalCount(totalCount);
+		
+		return this.qingjiaDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId);
 	}
 
 }

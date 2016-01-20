@@ -46,45 +46,46 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	public T get(int id) {
 		return (T)getSession().get(getClz(), id);
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<T> getList(String hql, Object... params) {
+	
+	protected Query getQuery(String hql, Object... params) {
 		Query query = getSession().createQuery(hql);
 		for(int i=0; i<params.length; i++) {
 			query.setParameter(i, params[i]);
 		}
-		
+		return query;
+	}
+	
+	protected SQLQuery getSQLQuery(String sql, Object... params) {
+		SQLQuery query = getSession().createSQLQuery(sql);
+		for(int i=0; i<params.length; i++) {
+			query.setParameter(i, params[i]);
+		}
+		return query;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> getList(String hql, Object... params) {
+		Query query = getQuery(hql, params);
 		return query.list();
 	}
 
 	@Override
 	public int execute(String hql, Object... params) {
-		Query query = getSession().createQuery(hql);
-		for(int i=0; i<params.length; i++) {
-			query.setParameter(i, params[i]);
-		}
-		
+		Query query = getQuery(hql, params);
 		return query.executeUpdate();
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public List queryList(String hql, Object... params) {
-		Query query = getSession().createQuery(hql);
-		for(int i=0; i<params.length; i++) {
-			query.setParameter(i, params[i]);
-		}
-		
+		Query query = getQuery(hql, params);
 		return query.list();
 	}
 
 	@Override
 	public Object query(String hql, Object... params) {
-		Query query = getSession().createQuery(hql);
-		for(int i=0; i<params.length; i++) {
-			query.setParameter(i, params[i]);
-		}
+		Query query = getQuery(hql, params);
 		
 		return query.uniqueResult();
 	}
@@ -92,11 +93,38 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public List sqlQueryList(String sql, Object... params) {
-		SQLQuery query = getSession().createSQLQuery(sql);
-		for(int i=0; i<params.length; i++) {
-			query.setParameter(i, params[i]);
-		}
-		
+		SQLQuery query = getSQLQuery(sql, params);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> getListByPage(String hql, int offset, int pageSize, Object... params) {
+		Query query = getQuery(hql, params);
+		query.setFirstResult(offset).setMaxResults(pageSize);
+		return query.list();
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List queryListByPage(String hql, int offset, int pageSize, Object... params) {
+		Query query = getQuery(hql, params);
+		query.setFirstResult(offset).setMaxResults(pageSize);
+		return query.list();
+	}
+
+	@Override
+	public Object sqlQuery(String sql, Object... params) {
+		SQLQuery query = getSQLQuery(sql, params);
+		return query.uniqueResult();
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List sqlQueryListByPage(String sql, int offset, int pageSize, Object... params) {
+		SQLQuery query = getSQLQuery(sql, params);
+		query.setFirstResult(offset);
+		query.setMaxResults(pageSize);
 		return query.list();
 	}
 

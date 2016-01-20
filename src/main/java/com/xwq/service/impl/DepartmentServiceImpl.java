@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.xwq.dao.DepartmentDao;
 import com.xwq.model.Department;
+import com.xwq.model.Pagination;
 import com.xwq.service.DepartmentService;
 import com.xwq.vo.DeptVo;
 
@@ -56,6 +57,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public List<Department> list() {
-		return this.departmentDao.getList("from Department");
+		int totalCount = Integer.parseInt(this.departmentDao.query("select count(*) from Department").toString());
+		Pagination.setTotalCount(totalCount);
+		
+		return this.departmentDao.getListByPage("from Department", Pagination.getOffset(), Pagination.getPageSize());
 	}
 }

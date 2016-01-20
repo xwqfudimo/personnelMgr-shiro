@@ -10,6 +10,7 @@ import com.xwq.dao.DepartmentDao;
 import com.xwq.dao.EmployeeDao;
 import com.xwq.dao.YjReportDao;
 import com.xwq.model.Employee;
+import com.xwq.model.Pagination;
 import com.xwq.model.YjReport;
 import com.xwq.service.EmployeeService;
 import com.xwq.vo.EmpVo;
@@ -78,16 +79,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<YjReportVo> getYjReportListByEmpId(int empId, String filter) {
 		String hql = "";
 		if(filter == null || "all".equals(filter)) {
-			hql = "select id, title, submitDate, audited from YjReport yj where yj.employee.id = ?";
+			hql = " from YjReport yj where yj.employee.id = ?";
 		}
 		else if("yes".equals(filter)) {
-			hql = "select id, title, submitDate, audited from YjReport yj where yj.employee.id = ? and yj.audited = 1";
+			hql = " from YjReport yj where yj.employee.id = ? and yj.audited = 1";
 		}
 		else {
-			hql = "select id, title, submitDate, audited from YjReport yj where yj.employee.id = ? and yj.audited = 0";
+			hql = " from YjReport yj where yj.employee.id = ? and yj.audited = 0";
 		}
 		
-		List<Object[]> list = (List<Object[]>) this.yjReportDao.queryList(hql, empId);
+		int totalCount = Integer.parseInt(this.yjReportDao.query("select count(id) " + hql, empId).toString());
+		Pagination.setTotalCount(totalCount);
+		
+		String select = "select id, title, submitDate, audited ";
+		List<Object[]> list = (List<Object[]>) this.yjReportDao.queryListByPage(select + hql, Pagination.getOffset(), Pagination.getPageSize(), empId);
 		List<YjReportVo> voList = new ArrayList<YjReportVo>();
 		for(Object[] os : list) {
 			YjReportVo vo = new YjReportVo();
@@ -142,7 +147,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<Employee> list() {
-		return this.employeeDao.getList("from Employee e join fetch e.department");
+		int totalCount = Integer.parseInt(this.employeeDao.query("select count(*) from Employee").toString());
+		Pagination.setTotalCount(totalCount);
+		
+		return this.employeeDao.getListByPage("from Employee e join fetch e.department", Pagination.getOffset(), Pagination.getPageSize());
 	}
 	
 }

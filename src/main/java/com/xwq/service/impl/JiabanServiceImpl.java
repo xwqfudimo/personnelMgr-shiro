@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.xwq.dao.JiabanDao;
 import com.xwq.model.Jiaban;
+import com.xwq.model.Pagination;
 import com.xwq.service.JiabanService;
 
 @Service("jiabanService")
@@ -50,7 +51,10 @@ public class JiabanServiceImpl implements JiabanService {
 			hql = "from Jiaban j where j.employee.id = ? and j.auditStatus = 0 order by j.submitTime desc";
 		}
 		
-		return this.jiabanDao.getList(hql, empId);
+		int totalCount = Integer.parseInt(this.jiabanDao.query("select count(*) " + hql, empId).toString());
+		Pagination.setTotalCount(totalCount);
+		
+		return this.jiabanDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId);
 	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.xwq.dao.PrivilegeDao;
 import com.xwq.dao.RolePrivilegeDao;
+import com.xwq.model.Pagination;
 import com.xwq.model.Privilege;
 import com.xwq.model.RolePrivilege;
 import com.xwq.service.PrivilegeService;
@@ -43,7 +44,10 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
 	@Override
 	public List<Privilege> list() {
-		return this.PrivilegeDao.getList("from Privilege");
+		int totalCount = Integer.parseInt(this.PrivilegeDao.query("select count(id) from Privilege").toString());
+		Pagination.setTotalCount(totalCount);
+		
+		return this.PrivilegeDao.getListByPage("from Privilege", Pagination.getOffset(), Pagination.getPageSize());
 	}
 
 	//根据用户id查询用户所拥有的权限

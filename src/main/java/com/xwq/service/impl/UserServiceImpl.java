@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xwq.dao.UserDao;
+import com.xwq.model.Pagination;
 import com.xwq.model.User;
 import com.xwq.service.UserService;
 import com.xwq.vo.UserVo;
@@ -65,8 +66,11 @@ public class UserServiceImpl implements UserService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserVo> list() {
+		int totalCount = Integer.parseInt(this.userDao.query("select count(id) from User").toString());
+		Pagination.setTotalCount(totalCount);
+		
 		String sql = "SELECT u.id as uid, u.username as username, e.name as ename, urr.rname as rname  FROM USER u LEFT JOIN (SELECT ur.user_id AS userid, r.role_desc as rname FROM user_role ur, role r WHERE ur.role_id = r.id) urr ON(u.id = urr.userid) LEFT JOIN employee e ON(u.emp_id = e.id)";
-		List<Object[]> list = this.userDao.sqlQueryList(sql);
+		List<Object[]> list = this.userDao.sqlQueryListByPage(sql, Pagination.getOffset(), Pagination.getPageSize());
 		
 		Map<Integer,UserVo> userMap = new HashMap<Integer,UserVo>();
 		

@@ -7,6 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${columnName }</title>
     <script type="text/javascript" src="${ctxPath }/resources/js/layer/layer.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="${ctxPath }/resources/pagination/css/pagination.css">
+    <script type="text/javascript" src="${ctxPath }/resources/pagination/js/jquery.pagination.js"></script>
 </head>
 <body>
 	
@@ -47,7 +50,14 @@
                    		</c:forEach>
 
                     </table>
-                    <div class="list-page"> 2 条 1/1 页</div>
+                    <div class="pages">
+				        <div id="Pagination"></div>
+				        <div class="searchPage">
+				          <span class="page-sum">共<strong class="allPage">${pageCount }</strong>页</span>
+				          <span class="page-go">跳转<input type="text" id="pageNo">页</span>
+				          <a href="javascript:;" class="btn"  onclick="go()">GO</a>
+				        </div>
+				    </div>
                 </div>
             </form>
         </div>
@@ -55,6 +65,8 @@
     </div>
     <!--/main-->
 <script type="text/javascript">
+var pageCount = <c:out value="${pageCount}"/>;
+var page = <c:out value="${pageIndex-1}"/>;
 
 function del(id) {
 	 layer.confirm('确定删除数据吗？', {title: '提示', btn:['确定', '取消']}, function(){
@@ -64,8 +76,9 @@ function del(id) {
          window.location.reload();
      });
 }
-</script>    
+</script>   
+
+<script type="text/javascript" src="${ctxPath }/resources/pagination/pagination.js"></script> 
     
 </body>
-
 </html>

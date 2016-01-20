@@ -31,6 +31,22 @@
     		<mvc:exclude-mapping path="/resources/**"/>
     		<bean class="com.xwq.interceptor.LoginInterceptor"/>
     	</mvc:interceptor>
+    	
+    	<mvc:interceptor>
+    		<mvc:mapping path="/authMgr"/>
+    		<mvc:mapping path="/userMgr"/>
+    		<mvc:mapping path="/jiabanApply"/>
+    		<mvc:mapping path="/qingjiaApply"/>
+    		<mvc:mapping path="/viewKaoqingList"/>
+    		<mvc:mapping path="/yjReport"/>
+    		<mvc:mapping path="/empMgr"/>
+    		<mvc:mapping path="/deptMgr"/>
+    		<mvc:mapping path="/roleMgr"/>
+    		
+    		<bean class="com.xwq.interceptor.PaginationIntercepter">
+    			<property name="pageSize" value="15"/>
+    		</bean>
+    	</mvc:interceptor>
     </mvc:interceptors>
     
 </beans>
