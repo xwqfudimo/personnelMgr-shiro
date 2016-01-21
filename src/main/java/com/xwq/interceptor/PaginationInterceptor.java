@@ -8,7 +8,10 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.xwq.util.Pagination;
 
-public class PaginationIntercepter extends HandlerInterceptorAdapter {
+/**
+ * 分页拦截器
+ */
+public class PaginationInterceptor extends HandlerInterceptorAdapter {
 	private int pageSize;
 	
 	public void setPageSize(int pageSize) {

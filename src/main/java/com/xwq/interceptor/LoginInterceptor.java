@@ -5,6 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+/**
+ * 登录检测拦截器
+ */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	@Override

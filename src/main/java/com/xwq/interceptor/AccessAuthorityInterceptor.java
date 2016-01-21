@@ -11,7 +11,10 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.xwq.annotation.Auth;
 import com.xwq.exception.PermissionDeniedException;
 
-public class AccessAuthorityIntercepter extends HandlerInterceptorAdapter {
+/**
+ * 权限检查拦截器
+ */
+public class AccessAuthorityInterceptor extends HandlerInterceptorAdapter {
 	
 	@SuppressWarnings("unchecked")
 	@Override

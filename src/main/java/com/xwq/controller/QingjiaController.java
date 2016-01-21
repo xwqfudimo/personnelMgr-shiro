@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
+import com.xwq.annotation.LogText;
 import com.xwq.enums.QingjiaType;
 import com.xwq.model.Qingjia;
 import com.xwq.util.DateUtil;
@@ -52,6 +53,7 @@ public class QingjiaController extends BaseController {
 	/**
 	 * 新增请假申请提交
 	 */
+	@LogText("新增请假申请")
 	@Auth("qingjia/add")
 	@RequestMapping(value="/qingjiaApply_add", method=RequestMethod.POST)
 	public String addQingjiaApplySubmit(HttpServletRequest request, Model model) {
@@ -106,6 +108,7 @@ public class QingjiaController extends BaseController {
 	/**
 	 * 请假申请修改提交
 	 */
+	@LogText("修改请假申请")
 	@Auth("qingjia/update")
 	@RequestMapping("/qingjiaApply_edit_submit")
 	public String editQingjiaApplySubmit(HttpServletRequest request) {
@@ -128,6 +131,7 @@ public class QingjiaController extends BaseController {
 	/**
 	 * 请假申请删除
 	 */
+	@LogText("删除请假申请")
 	@Auth("qingjia/delete")
 	@RequestMapping(value="/qingjiaApply_del/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean delQingjiaApply(@PathVariable int id, Model model) {

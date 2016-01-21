@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
+import com.xwq.annotation.LogText;
 import com.xwq.model.Menu;
 
 @Controller
@@ -53,6 +54,7 @@ public class MenuController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@LogText("更新菜单")
 	@Auth("menu/update")
 	@RequestMapping("/menu_edit_submit")
 	public @ResponseBody boolean update(HttpServletRequest request) {
@@ -76,6 +78,7 @@ public class MenuController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@LogText("删除菜单")
 	@Auth("menu/delete")
 	@RequestMapping("/menu_del/{id}")
 	public @ResponseBody boolean delete(@PathVariable int id) {
@@ -103,6 +106,7 @@ public class MenuController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@LogText("新增菜单")
 	@Auth("menu/add")
 	@RequestMapping(value="/menu_add_submit", method=RequestMethod.POST)
 	public @ResponseBody boolean addSubmit(HttpServletRequest request) {
@@ -131,6 +135,7 @@ public class MenuController extends BaseController {
 	/**
 	 * 新增一级菜单提交
 	 */
+	@LogText("新增一级菜单")
 	@Auth("menu/add")
 	@RequestMapping("/menu_add_top_submit")
 	public @ResponseBody boolean addTopMenuSubmit(HttpServletRequest request) {

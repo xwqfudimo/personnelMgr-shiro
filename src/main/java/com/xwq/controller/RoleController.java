@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
+import com.xwq.annotation.LogText;
 import com.xwq.model.Privilege;
 import com.xwq.model.Role;
 import com.xwq.model.RoleMenu;
@@ -61,6 +62,7 @@ public class RoleController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@LogText("新增角色")
 	@Auth("role/add")
 	@RequestMapping(value="/role_add", method=RequestMethod.POST)
 	public String addSubmit(HttpServletRequest request, Model model) {
@@ -167,6 +169,7 @@ public class RoleController extends BaseController {
 	/**
 	 * 更新角色
 	 */
+	@LogText("更新角色")
 	@Auth("role/update")
 	@RequestMapping(value="/role_edit_submit", method=RequestMethod.POST)
 	public String update(HttpServletRequest request) {
@@ -227,6 +230,7 @@ public class RoleController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@LogText("删除角色")
 	@Auth("role/delete")
 	@RequestMapping("/role_del/{id}")
 	public @ResponseBody boolean delete(@PathVariable int id) {

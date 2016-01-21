@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
+import com.xwq.annotation.LogText;
 import com.xwq.model.Privilege;
 import com.xwq.util.ParameterUtil;
 
@@ -47,6 +48,7 @@ public class PrivilegeController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@LogText("新增权限")
 	@Auth("auth/add")
 	@RequestMapping(value="/auth_add", method=RequestMethod.POST)
 	public String add(HttpServletRequest request) {
@@ -87,6 +89,7 @@ public class PrivilegeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@LogText("修改权限")
 	@Auth("auth/update")
 	@RequestMapping("/auth_edit_submit")
 	public String update(HttpServletRequest request) {
@@ -113,6 +116,7 @@ public class PrivilegeController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@LogText("删除权限")
 	@Auth("auth/delete")
 	@RequestMapping("/auth_del/{id}")
 	public @ResponseBody boolean delete(@PathVariable int id) {

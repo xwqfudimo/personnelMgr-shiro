@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
+import com.xwq.annotation.LogText;
 import com.xwq.model.Department;
 import com.xwq.util.ParameterUtil;
 
@@ -47,6 +48,7 @@ public class DepartmentController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@LogText("新增部门")
 	@Auth("dept/add")
 	@RequestMapping(value="/dept_add", method=RequestMethod.POST)
 	public String add(HttpServletRequest request) {
@@ -88,6 +90,7 @@ public class DepartmentController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@LogText("修改部门")
 	@Auth("dept/update")
 	@RequestMapping(value="/dept_edit_submit", method=RequestMethod.POST)
 	public String update(HttpServletRequest request) {
@@ -112,6 +115,7 @@ public class DepartmentController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@LogText("删除部门")
 	@Auth("dept/delete")
 	@RequestMapping(value="/dept_del/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean delete(@PathVariable int id) {

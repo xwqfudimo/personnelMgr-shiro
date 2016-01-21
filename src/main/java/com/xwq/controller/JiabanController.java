@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
+import com.xwq.annotation.LogText;
 import com.xwq.model.Jiaban;
 import com.xwq.util.DateUtil;
 
@@ -54,6 +55,7 @@ public class JiabanController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@LogText("新增加班申请")
 	@Auth("jiaban/add")
 	@RequestMapping(value="/jiabanApply_add", method=RequestMethod.POST)
 	public String addJiabanApplySubmit(HttpServletRequest request, Model model) {
@@ -108,6 +110,7 @@ public class JiabanController extends BaseController {
 	/**
 	 * 加班申请修改提交
 	 */
+	@LogText("修改加班申请")
 	@Auth("jiaban/update")
 	@RequestMapping("/jiabanApply_edit_submit")
 	public String editJiabanApplySubmit(HttpServletRequest request) {
@@ -129,6 +132,7 @@ public class JiabanController extends BaseController {
 	/**
 	 * 加班申请删除
 	 */
+	@LogText("删除加班申请")
 	@Auth("jiaban/delete")
 	@RequestMapping(value="/jiabanApply_del/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean delJiabanApply(@PathVariable int id, Model model) {

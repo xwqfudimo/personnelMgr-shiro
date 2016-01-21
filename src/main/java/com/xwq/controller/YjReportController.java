@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
+import com.xwq.annotation.LogText;
 import com.xwq.model.YjReport;
 import com.xwq.util.DateUtil;
 import com.xwq.vo.YjReportVo;
@@ -53,6 +54,7 @@ public class YjReportController extends BaseController {
 	/**
 	 * 新增业绩报告提交
 	 */
+	@LogText("新增业绩报告")
 	@Auth("yj/add")
 	@RequestMapping(value="/yjReport_add", method=RequestMethod.POST)
 	public String yjReportAddSubmit(HttpServletRequest request, Model model) {
@@ -109,6 +111,7 @@ public class YjReportController extends BaseController {
 	/**
 	 * 修改提交业绩报告
 	 */
+	@LogText("修改业绩报告")
 	@Auth("yj/update")
 	@RequestMapping(value="/yjReport_edit_submit", method=RequestMethod.POST)
 	public String yjReportEditSubmit(HttpServletRequest request) {
@@ -127,6 +130,7 @@ public class YjReportController extends BaseController {
 	/**
 	 * 删除业绩报告
 	 */
+	@LogText("删除业绩报告")
 	@Auth("yj/delete")
 	@RequestMapping(value="/yjReport_del/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean yjReportDel(@PathVariable int id) {

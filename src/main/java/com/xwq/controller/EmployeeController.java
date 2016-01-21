@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
+import com.xwq.annotation.LogText;
 import com.xwq.comparator.DepartmentComparator;
 import com.xwq.enums.Gender;
 import com.xwq.model.Department;
@@ -47,38 +47,6 @@ public class EmployeeController extends BaseController {
 		
 		return "emp/viewEmpInfo";
 	}
-	
-	
-	/**
-	 * 修改登录密码提交
-	 */
-	@Auth("emp/update")
-	@RequestMapping(value="/modifyPwdSubmit", method=RequestMethod.POST)
-	public @ResponseBody int modifyPwd(HttpServletRequest request, Model model) {
-		String oldPwd = request.getParameter("oldPwd");
-		String newPwd = request.getParameter("newPwd");
-		String newPwd2 = request.getParameter("newPwd2");
-		
-		if(oldPwd != null && !"".equals(oldPwd.trim()) && newPwd != null && !"".equals(newPwd.trim()) && newPwd2 != null && !"".equals(newPwd2.trim())) {
-			if(newPwd.equals(newPwd2)) {
-				String username = request.getSession().getAttribute("loginUser").toString();
-				String password = this.userService.getPwdByUsername(username);
-				
-				
-				String md5Pwd = DigestUtils.md5Hex(oldPwd);
-				if(password.equals(md5Pwd)) {
-					//修改成功
-					this.userService.updatePassword(username, DigestUtils.md5Hex(newPwd));
-					
-					return 1;
-				}
-			}
-		}
-		
-		return 0;
-		
-	}
-	
 	
 	/**
 	 * 查询员工资料
@@ -123,6 +91,7 @@ public class EmployeeController extends BaseController {
 	/**
 	 * 查询员工资料搜索结果
 	 */
+	@LogText("搜索员工")
 	@Auth("emp/list")
 	@RequestMapping(value="/empSearch", method=RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public @ResponseBody Object empSearchResult(HttpServletRequest request) {
@@ -179,6 +148,7 @@ public class EmployeeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@LogText("新增员工")
 	@Auth("emp/add")
 	@RequestMapping(value="/emp_add", method=RequestMethod.POST)
 	public String add(HttpServletRequest request) {
@@ -217,6 +187,7 @@ public class EmployeeController extends BaseController {
 	 * 修改员工提交
 	 * @return
 	 */
+	@LogText("修改员工")
 	@Auth("emp/update")
 	@RequestMapping(value="/emp_edit_submit", method=RequestMethod.POST)
 	public String update(HttpServletRequest request) {
@@ -253,6 +224,7 @@ public class EmployeeController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@LogText("删除员工")
 	@Auth("emp/delete")
 	@RequestMapping(value="/emp_del/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean delete(@PathVariable int id) {

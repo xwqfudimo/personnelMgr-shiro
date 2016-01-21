@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.xwq.annotation.LogText;
 import com.xwq.model.Menu;
 import com.xwq.service.MenuService;
 import com.xwq.service.PrivilegeService;
@@ -58,6 +59,7 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
+	@LogText("登录系统")
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
 		String username = request.getParameter("username");

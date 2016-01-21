@@ -14,6 +14,7 @@ import com.xwq.service.DepartmentService;
 import com.xwq.service.EmployeeService;
 import com.xwq.service.JiabanService;
 import com.xwq.service.KaoqingService;
+import com.xwq.service.LogService;
 import com.xwq.service.MenuService;
 import com.xwq.service.PrivilegeService;
 import com.xwq.service.QingjiaService;
@@ -40,6 +41,8 @@ public class BaseController {
 	protected MenuService menuService;
 	@Autowired
 	protected RoleService roleService;
+	@Autowired
+	protected LogService logService;
 	
 	/**
 	 * 设置通用信息

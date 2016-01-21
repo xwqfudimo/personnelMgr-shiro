@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
+import com.xwq.annotation.LogText;
 import com.xwq.model.Employee;
 import com.xwq.model.Role;
 import com.xwq.model.User;
@@ -59,6 +60,7 @@ public class UserController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@LogText("新增用户")
 	@Auth("user/add")
 	@RequestMapping(value="user_add", method=RequestMethod.POST)
 	public String add(HttpServletRequest request) {
@@ -93,6 +95,7 @@ public class UserController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@LogText("删除用户")
 	@Auth("user/delete")
 	@RequestMapping(value="/user_del/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean delete(@PathVariable int id) {
@@ -137,6 +140,7 @@ public class UserController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@LogText("修改用户")
 	@Auth("user/update")
 	@RequestMapping(value="/user_edit_submit", method=RequestMethod.POST)
 	public String update(HttpServletRequest request) {
@@ -180,5 +184,36 @@ public class UserController extends BaseController {
 		infoSetting(request, "modifyPwd", model);
 		
 		return "user/modifyPwd";
+	}
+	
+	
+	/**
+	 * 修改登录密码提交
+	 */
+	@LogText("修改密码")
+	@Auth("user/update")
+	@RequestMapping(value="/modifyPwdSubmit", method=RequestMethod.POST)
+	public @ResponseBody int modifyPwdSubmit(HttpServletRequest request, Model model) {
+		String oldPwd = request.getParameter("oldPwd");
+		String newPwd = request.getParameter("newPwd");
+		String newPwd2 = request.getParameter("newPwd2");
+		
+		if(oldPwd != null && !"".equals(oldPwd.trim()) && newPwd != null && !"".equals(newPwd.trim()) && newPwd2 != null && !"".equals(newPwd2.trim())) {
+			if(newPwd.equals(newPwd2)) {
+				String username = request.getSession().getAttribute("loginUser").toString();
+				String password = this.userService.getPwdByUsername(username);
+				
+				
+				String md5Pwd = DigestUtils.md5Hex(oldPwd);
+				if(password.equals(md5Pwd)) {
+					//修改成功
+					this.userService.updatePassword(username, DigestUtils.md5Hex(newPwd));
+					
+					return 1;
+				}
+			}
+		}
+		
+		return 0;
 	}
 }

@@ -105,9 +105,12 @@ $(document).ready(function(){
 function del(id) {
 	 layer.confirm('确定删除数据吗？', {title: '提示', btn:['确定', '取消']}, function(){
          var url = '${ctxPath }/jiabanApply_del/'+ id;
-         $.get(url);
-         layer.msg('删除成功！', {time:2000});
-         window.location.reload();
+         $.get(url, function(result) {
+        	 if(result) {
+        		 layer.msg('删除成功！', {time:2000});
+                 window.location.reload();
+        	 }
+         });
      });
 }
 </script>    
