@@ -18,7 +18,7 @@ public class UserServiceTest {
 	
 	@Test
 	public void testList() {
-		List<UserVo> userList = this.userService.list();
+		List<UserVo> userList = this.userService.list("");
 		
 		for(UserVo u : userList) {
 			System.out.println(u.getUid() + "," + u.getUsername() + "," + u.getEname() + "," + u.getRname());

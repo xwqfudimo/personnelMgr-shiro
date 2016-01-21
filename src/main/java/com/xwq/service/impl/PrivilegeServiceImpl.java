@@ -43,11 +43,11 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 	}
 
 	@Override
-	public List<Privilege> list() {
-		int totalCount = Integer.parseInt(this.PrivilegeDao.query("select count(id) from Privilege").toString());
+	public List<Privilege> list(String search) {
+		int totalCount = Integer.parseInt(this.PrivilegeDao.query("select count(id) from Privilege where name like ?", "%"+search+"%").toString());
 		Pagination.setTotalCount(totalCount);
 		
-		return this.PrivilegeDao.getListByPage("from Privilege", Pagination.getOffset(), Pagination.getPageSize());
+		return this.PrivilegeDao.getListByPage("from Privilege where name like ?", Pagination.getOffset(), Pagination.getPageSize(), "%"+search+"%");
 	}
 
 	//根据用户id查询用户所拥有的权限

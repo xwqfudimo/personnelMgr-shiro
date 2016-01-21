@@ -10,7 +10,7 @@ public interface UserService {
 	public void delete(int id);
 	public void update(User t);
 	public User get(int id);
-	public List<UserVo> list();
+	public List<UserVo> list(String search);
 	
 	public boolean userIsExist(String username); 
 	public String getPwdByUsername(String username);

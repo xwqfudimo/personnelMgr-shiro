@@ -12,5 +12,5 @@ public interface DepartmentService {
 	public Department get(int id);
 	
 	public List<DeptVo> getDeptList(); 
-	public List<Department> list();
+	public List<Department> list(String search);
 }

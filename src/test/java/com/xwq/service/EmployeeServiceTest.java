@@ -14,6 +14,6 @@ public class EmployeeServiceTest {
 	
 	@Test
 	public void testList() {
-		this.employeeService.list();
+		this.employeeService.list("");
 	}
 }

@@ -24,6 +24,17 @@
                 <h1>用户列表</h1>
             </div>
             <form method="get">
+            	<div class="search-wrap">
+		            <div class="search-content">
+		                    <table class="search-tab">
+		                        <tr>
+		                            <th width="70">关键字:</th>
+		                            <td><input class="common-text" placeholder="用户名关键字" name="keyword" value="" type="text"></td>
+		                            <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>
+		                        </tr>
+		                    </table>
+		            </div>
+		        </div>
                 <div class="result-title">
                     <div class="result-list">
                         <a href="${ctxPath }/user_add"><i class="icon-font"></i>添加用户</a>

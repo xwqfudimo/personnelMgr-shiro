@@ -146,11 +146,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Employee> list() {
-		int totalCount = Integer.parseInt(this.employeeDao.query("select count(*) from Employee").toString());
+	public List<Employee> list(String search) {
+		int totalCount = Integer.parseInt(this.employeeDao.query("select count(*) from Employee where name like ?", "%"+search+"%").toString());
 		Pagination.setTotalCount(totalCount);
 		
-		return this.employeeDao.getListByPage("from Employee e join fetch e.department", Pagination.getOffset(), Pagination.getPageSize());
+		return this.employeeDao.getListByPage("from Employee e join fetch e.department where e.name like ?", Pagination.getOffset(), Pagination.getPageSize(), "%"+search+"%");
 	}
 	
 }

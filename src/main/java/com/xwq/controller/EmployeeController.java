@@ -121,7 +121,8 @@ public class EmployeeController extends BaseController {
 	public String list(HttpServletRequest request, Model model) {
 		infoSetting(request, "empMgr", model);
 		
-		List<Employee> emps = this.employeeService.list();
+		String keyword = request.getParameter("keyword") == null? "" : request.getParameter("keyword");
+		List<Employee> emps = this.employeeService.list(keyword);
 		model.addAttribute("emps", emps);
 		
 		return "emp/list";

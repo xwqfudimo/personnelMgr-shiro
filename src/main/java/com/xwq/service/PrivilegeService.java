@@ -11,7 +11,7 @@ public interface PrivilegeService {
 	public void delete(int id);
 	public void update(Privilege res);
 	public Privilege get(int id);
-	public List<Privilege> list();
+	public List<Privilege> list(String search);
 	public Map<String, List<Privilege>> listByGroup();
 	public Map<String, List<Privilege>> listByGroupAndRoleId(int roleId);
 	

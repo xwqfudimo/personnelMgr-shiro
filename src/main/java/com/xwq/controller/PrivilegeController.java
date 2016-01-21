@@ -29,7 +29,8 @@ public class PrivilegeController extends BaseController {
 	public String list(HttpServletRequest request, Model model) {
 		infoSetting(request, "authMgr", model);
 		
-		List<Privilege> list = this.privilegeService.list();
+		String keyword = request.getParameter("keyword") == null? "" : request.getParameter("keyword");
+		List<Privilege> list = this.privilegeService.list(keyword);
 		model.addAttribute("auths", list);
 		
 		return "auth/list";

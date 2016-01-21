@@ -34,7 +34,8 @@ public class UserController extends BaseController {
 	public String list(HttpServletRequest request, Model model) {
 		infoSetting(request, "userMgr", model);
 		
-		List<UserVo> users = this.userService.list();
+		String keyword = request.getParameter("keyword") == null? "" : request.getParameter("keyword");
+		List<UserVo> users = this.userService.list(keyword);
 		model.addAttribute("users", users);
 		
 		return "user/list";

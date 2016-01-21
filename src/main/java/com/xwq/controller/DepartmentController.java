@@ -29,7 +29,8 @@ public class DepartmentController extends BaseController {
 	public String list(HttpServletRequest request, Model model) {
 		infoSetting(request, "deptMgr", model);
 		
-		List<Department> depts = this.departmentService.list();
+		String keyword = request.getParameter("keyword") == null? "" : request.getParameter("keyword");
+		List<Department> depts = this.departmentService.list(keyword);
 		model.addAttribute("depts", depts);
 		
 		return "dept/list";

@@ -25,8 +25,8 @@ public class LogController extends BaseController {
 	public String list(HttpServletRequest request, Model model) {
 		infoSetting(request, "syslog", model);
 		
-		String search = "";
-		List<Log> logList = this.logService.listByPage(search);
+		String keyword = request.getParameter("keyword") == null? "" : request.getParameter("keyword");
+		List<Log> logList = this.logService.listByPage(keyword);
 		model.addAttribute("logList", logList);
 		
 		return "log/syslog";

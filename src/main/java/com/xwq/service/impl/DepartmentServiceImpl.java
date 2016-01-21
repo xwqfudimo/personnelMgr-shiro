@@ -56,10 +56,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public List<Department> list() {
-		int totalCount = Integer.parseInt(this.departmentDao.query("select count(*) from Department").toString());
+	public List<Department> list(String search) {
+		int totalCount = Integer.parseInt(this.departmentDao.query("select count(*) from Department where name like ?", "%"+search+"%").toString());
 		Pagination.setTotalCount(totalCount);
 		
-		return this.departmentDao.getListByPage("from Department", Pagination.getOffset(), Pagination.getPageSize());
+		return this.departmentDao.getListByPage("from Department where name like ?", Pagination.getOffset(), Pagination.getPageSize(), "%"+search+"%");
 	}
 }
