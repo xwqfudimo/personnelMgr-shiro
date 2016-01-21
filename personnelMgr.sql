@@ -28,11 +28,11 @@ CREATE TABLE `department` (
   `fzr_phone` varchar(11) DEFAULT NULL,
   `sort` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `department` */
 
-insert  into `department`(`id`,`name`,`emp_num`,`fzr`,`fzr_phone`,`sort`) values (1,'研发部',2,NULL,NULL,1),(2,'行政部',1,NULL,NULL,2),(3,'财务部',1,NULL,NULL,3);
+insert  into `department`(`id`,`name`,`emp_num`,`fzr`,`fzr_phone`,`sort`) values (1,'研发部',2,NULL,NULL,1),(2,'行政部',1,NULL,NULL,2),(3,'财务部',1,NULL,NULL,3),(4,'人事部',1,'','',4);
 
 /*Table structure for table `employee` */
 
@@ -59,11 +59,11 @@ CREATE TABLE `employee` (
   PRIMARY KEY (`id`),
   KEY `FK_Reference_emp_dept` (`dept_id`),
   CONSTRAINT `FK_Reference_emp_dept` FOREIGN KEY (`dept_id`) REFERENCES `department` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `employee` */
 
-insert  into `employee`(`id`,`name`,`dept_id`,`sex`,`birthdate`,`nationality`,`zzmm`,`marriage`,`address`,`rzsj`,`xl`,`phone`,`email`,`card`,`resume`,`self_intro`,`beizhu`) values (1,'夏维强',1,'男',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'钟山',1,'男','1994-03-17','汉族','群众','未婚','凌霄天庭','2015-02-11','无','1251239678','zs@qq.com','530521199402316678','无','吾乃帝皇',NULL),(3,'沈蔓歌',2,'女','2010-12-24','汉','群众','未婚','邻家','2015-06-24','本科','1251239678','mg@qq.com','530521199402316676','无','歌后',NULL),(4,'古千幽',3,'女',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'沈万三',3,'男',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `employee`(`id`,`name`,`dept_id`,`sex`,`birthdate`,`nationality`,`zzmm`,`marriage`,`address`,`rzsj`,`xl`,`phone`,`email`,`card`,`resume`,`self_intro`,`beizhu`) values (1,'夏维强',1,'男',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'钟山',1,'男','1994-03-17','汉族','群众','未婚','凌霄天庭','2015-02-11','无','1251239678','zs@qq.com','530521199402316678','无','吾乃帝皇',NULL),(3,'沈蔓歌',2,'女','2010-12-24','汉','群众','未婚','邻家','2015-06-24','本科','1251239678','mg@qq.com','530521199402316676','无','歌后',NULL),(4,'古千幽',3,'女',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'沈万三',3,'男',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,'念悠悠',4,'女','2009-01-21','汉族','群众','未婚','','2015-01-21','高中','','','',NULL,NULL,'');
 
 /*Table structure for table `event` */
 
@@ -150,11 +150,11 @@ CREATE TABLE `menu` (
   `sort` int(11) DEFAULT NULL,
   `href` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 /*Data for the table `menu` */
 
-insert  into `menu`(`id`,`name`,`level`,`parent_id`,`sort`,`href`) values (1,'员工信息',1,0,1,'#'),(2,'事务申请',1,0,2,'#'),(3,'考勤',1,0,3,'#'),(4,'薪资',1,0,4,'#'),(5,'业绩报告',1,0,5,'#'),(6,'我的资料',2,1,11,'/viewEmpInfo '),(7,'员工查询',2,1,12,'/empSearch '),(8,'修改登录密码',2,1,13,'/modifyPwd'),(9,'加班申请',2,2,21,'/jiabanApply '),(10,'请假申请',2,2,22,'/qingjiaApply'),(11,'我的考勤记录',2,3,31,'/viewKaoqingList'),(12,'我的业绩报告',2,5,51,'/yjReport'),(13,'系统管理',1,0,6,'#'),(14,'用户管理 ',2,13,61,'/userMgr '),(15,'角色管理',2,13,63,'/roleMgr'),(16,'权限管理',2,13,64,'/authMgr'),(17,'企业管理',1,0,7,'#'),(18,'员工管理',2,17,71,'/empMgr'),(19,'部门管理',2,17,72,'/deptMgr'),(20,'菜单管理',2,13,62,'/menuMgr'),(21,'系统日志',2,13,65,'/syslog');
+insert  into `menu`(`id`,`name`,`level`,`parent_id`,`sort`,`href`) values (1,'员工信息',1,NULL,1,'#'),(2,'事务申请',1,NULL,2,'#'),(3,'考勤',1,NULL,3,'#'),(4,'薪资',1,NULL,4,'#'),(5,'业绩报告',1,NULL,5,'#'),(6,'我的资料',2,1,11,'/viewEmpInfo '),(7,'员工查询',2,1,12,'/empSearch '),(8,'修改登录密码',2,1,13,'/modifyPwd'),(9,'加班申请',2,2,21,'/jiabanApply '),(10,'请假申请',2,2,22,'/qingjiaApply'),(11,'我的考勤记录',2,3,31,'/viewKaoqingList'),(12,'我的业绩报告',2,5,51,'/yjReport'),(13,'系统管理',1,NULL,6,'#'),(14,'用户管理 ',2,13,61,'/userMgr '),(15,'角色管理',2,13,63,'/roleMgr'),(16,'权限管理',2,13,64,'/authMgr'),(17,'企业管理',1,NULL,7,'#'),(18,'员工管理',2,17,72,'/empMgr'),(19,'部门管理',2,17,71,'/deptMgr'),(20,'菜单管理',2,13,62,'/menuMgr'),(21,'系统日志',2,13,65,'/syslog');
 
 /*Table structure for table `module` */
 
@@ -170,6 +170,22 @@ CREATE TABLE `module` (
 /*Data for the table `module` */
 
 insert  into `module`(`id`,`name`,`sort`) values (1,'员工资料',1),(2,'事务申请',2),(3,'考勤',3),(4,'薪资',4),(5,'业绩报告',5);
+
+/*Table structure for table `privilege` */
+
+DROP TABLE IF EXISTS `privilege`;
+
+CREATE TABLE `privilege` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(16) DEFAULT NULL,
+  `uri` varchar(32) DEFAULT NULL,
+  `group_name` varchar(8) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+
+/*Data for the table `privilege` */
+
+insert  into `privilege`(`id`,`name`,`uri`,`group_name`) values (1,'员工列表','emp/list','员工管理'),(2,'查询员工','emp/view','员工管理'),(3,'新增员工','emp/add','员工管理'),(4,'修改员工','emp/update','员工管理'),(5,'删除员工','emp/delete','员工管理'),(6,'部门列表','dept/list','部门管理'),(7,'查询部门','dept/view','部门管理'),(8,'新增部门','dept/add','部门管理'),(9,'修改部门','dept/update','部门管理'),(10,'删除部门','dept/delete','部门管理'),(11,'用户列表','user/list','用户管理'),(12,'新增用户','user/add','用户管理'),(13,'查询用户','user/view','用户管理'),(14,'修改用户','user/update','用户管理'),(15,'删除用户','user/delete','用户管理'),(16,'加班列表','jiaban/list','加班管理'),(17,'新增加班','jiaban/add','加班管理'),(18,'查询加班','jiaban/view','加班管理'),(19,'修改加班','jiaban/update','加班管理'),(20,'删除加班','jiaban/delete','加班管理'),(21,'请假列表','qingjia/list','请假管理'),(22,'查询请假','qingjia/view','请假管理'),(23,'新增请假','qingjia/add','请假管理'),(24,'修改请假','qingjia/update','请假管理'),(25,'删除请假','qingjia/delete','请假管理'),(26,'业绩列表','yj/list','业绩管理'),(27,'查询业绩','yj/view','业绩管理'),(28,'新增业绩','yj/add','业绩管理'),(29,'修改业绩','yj/update','业绩管理'),(30,'删除业绩','yj/delete','业绩管理'),(31,'角色列表','role/list','角色管理'),(32,'查询角色','role/view','角色管理'),(33,'新增角色','role/add','角色管理'),(34,'修改角色','role/update','角色管理'),(35,'删除角色','role/update','角色管理'),(36,'权限列表','auth/list','权限管理'),(37,'查询权限','auth/view','权限管理'),(38,'新增权限','auth/add','权限管理'),(39,'修改权限','auth/update','权限管理'),(40,'删除权限','auth/delete','权限管理'),(41,'菜单列表','menu/list','菜单管理'),(42,'新增菜单','menu/add','菜单管理'),(43,'查询菜单','menu/view','菜单管理'),(44,'修改菜单','menu/update','菜单管理'),(45,'删除菜单','menu/delete','菜单管理');
 
 /*Table structure for table `qingjia` */
 
@@ -198,22 +214,6 @@ CREATE TABLE `qingjia` (
 
 insert  into `qingjia`(`id`,`emp_id`,`emp_name`,`dept_name`,`start_time`,`end_time`,`day_num`,`hour_num`,`qj_type`,`qj_reason`,`submit_time`,`audit_status`,`audit_person`) values (3,2,'钟山','研发部','2015-12-29 09:00:00','2015-12-30 09:00:00',1,0,'事假','老婆生孩子','2016-01-04 13:30:06','1','无');
 
-/*Table structure for table `resource` */
-
-DROP TABLE IF EXISTS `resource`;
-
-CREATE TABLE `resource` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(16) DEFAULT NULL,
-  `uri` varchar(32) DEFAULT NULL,
-  `group_name` varchar(8) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
-
-/*Data for the table `resource` */
-
-insert  into `resource`(`id`,`name`,`uri`,`group_name`) values (1,'员工列表','emp/list','员工管理'),(2,'查询员工','emp/view','员工管理'),(3,'新增员工','emp/add','员工管理'),(4,'修改员工','emp/update','员工管理'),(5,'删除员工','emp/delete','员工管理'),(6,'部门列表','dept/list','部门管理'),(7,'查询部门','dept/view','部门管理'),(8,'新增部门','dept/add','部门管理'),(9,'修改部门','dept/update','部门管理'),(10,'删除部门','dept/delete','部门管理'),(11,'用户列表','user/list','用户管理'),(12,'新增用户','user/add','用户管理'),(13,'查询用户','user/view','用户管理'),(14,'修改用户','user/update','用户管理'),(15,'删除用户','user/delete','用户管理'),(16,'加班列表','jiaban/list','加班管理'),(17,'新增加班','jiaban/add','加班管理'),(18,'查询加班','jiaban/view','加班管理'),(19,'修改加班','jiaban/update','加班管理'),(20,'删除加班','jiaban/delete','加班管理'),(21,'请假列表','qingjia/list','请假管理'),(22,'查询请假','qingjia/view','请假管理'),(23,'新增请假','qingjia/add','请假管理'),(24,'修改请假','qingjia/update','请假管理'),(25,'删除请假','qingjia/delete','请假管理'),(26,'业绩列表','yj/list','业绩管理'),(27,'查询业绩','yj/view','业绩管理'),(28,'新增业绩','yj/add','业绩管理'),(29,'修改业绩','yj/update','业绩管理'),(30,'删除业绩','yj/delete','业绩管理'),(31,'角色列表','role/list','角色管理'),(32,'查询角色','role/view','角色管理'),(33,'新增角色','role/add','角色管理'),(34,'修改角色','role/update','角色管理'),(35,'删除角色','role/update','角色管理'),(36,'权限列表','auth/list','权限管理'),(37,'查询权限','auth/view','权限管理'),(38,'新增权限','auth/add','权限管理'),(39,'修改权限','auth/update','权限管理'),(40,'删除权限','auth/delete','权限管理');
-
 /*Table structure for table `role` */
 
 DROP TABLE IF EXISTS `role`;
@@ -223,11 +223,11 @@ CREATE TABLE `role` (
   `name` varchar(16) DEFAULT NULL,
   `role_desc` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `role` */
 
-insert  into `role`(`id`,`name`,`role_desc`) values (1,'administrator','超级管理员'),(2,'employee','普通员工');
+insert  into `role`(`id`,`name`,`role_desc`) values (1,'administrator','超级管理员'),(2,'employee','普通员工'),(3,'hr','人事');
 
 /*Table structure for table `role_menu` */
 
@@ -238,27 +238,27 @@ CREATE TABLE `role_menu` (
   `role_id` int(11) DEFAULT NULL,
   `menu_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8;
 
 /*Data for the table `role_menu` */
 
-insert  into `role_menu`(`id`,`role_id`,`menu_id`) values (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,1,7),(8,1,8),(9,1,9),(10,1,10),(11,1,11),(12,1,12),(13,1,13),(14,1,14),(15,1,15),(16,1,16),(17,1,17),(18,1,18),(19,1,19),(20,1,20),(21,1,21);
+insert  into `role_menu`(`id`,`role_id`,`menu_id`) values (22,2,11),(23,2,1),(24,2,12),(25,2,2),(26,2,3),(27,2,4),(28,2,5),(29,2,6),(30,2,7),(31,2,8),(32,2,9),(33,2,10),(34,1,11),(35,1,12),(36,1,13),(37,1,14),(38,1,15),(39,1,16),(40,1,17),(41,1,18),(42,1,19),(43,1,1),(44,1,2),(45,1,3),(46,1,4),(47,1,5),(48,1,6),(49,1,7),(50,1,8),(51,1,9),(52,1,20),(53,1,10),(54,1,21),(89,3,11),(90,3,12),(91,3,13),(92,3,14),(93,3,17),(94,3,18),(95,3,19),(96,3,1),(97,3,2),(98,3,3),(99,3,4),(100,3,5),(101,3,6),(102,3,7),(103,3,8),(104,3,9),(105,3,10);
 
-/*Table structure for table `role_resource` */
+/*Table structure for table `role_privilege` */
 
-DROP TABLE IF EXISTS `role_resource`;
+DROP TABLE IF EXISTS `role_privilege`;
 
-CREATE TABLE `role_resource` (
+CREATE TABLE `role_privilege` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) DEFAULT NULL,
-  `res_id` int(11) DEFAULT NULL,
+  `privilege_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_Reference_ra_auth` (`res_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+  KEY `FK_Reference_ra_auth` (`privilege_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=176 DEFAULT CHARSET=utf8;
 
-/*Data for the table `role_resource` */
+/*Data for the table `role_privilege` */
 
-insert  into `role_resource`(`id`,`role_id`,`res_id`) values (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,1,7),(8,1,8),(9,1,9),(10,1,10),(11,1,11),(12,1,12),(13,1,13),(14,1,14);
+insert  into `role_privilege`(`id`,`role_id`,`privilege_id`) values (15,2,16),(16,2,17),(17,2,18),(18,2,19),(19,2,20),(20,2,2),(21,2,12),(22,2,13),(23,2,14),(24,2,15),(25,2,26),(26,2,27),(27,2,28),(28,2,29),(29,2,30),(30,2,21),(31,2,22),(32,2,23),(33,2,24),(34,2,25),(35,2,31),(36,2,32),(37,2,33),(38,2,34),(39,2,35),(40,1,16),(41,1,17),(42,1,18),(43,1,19),(44,1,20),(45,1,6),(46,1,7),(47,1,8),(48,1,9),(49,1,10),(50,1,1),(51,1,2),(52,1,3),(53,1,4),(54,1,5),(55,1,11),(56,1,12),(57,1,13),(58,1,14),(59,1,15),(60,1,36),(61,1,37),(62,1,38),(63,1,39),(64,1,40),(65,1,41),(66,1,42),(67,1,43),(68,1,44),(69,1,45),(70,1,26),(71,1,27),(72,1,28),(73,1,29),(74,1,30),(75,1,21),(76,1,22),(77,1,23),(78,1,24),(79,1,25),(80,1,31),(81,1,32),(82,1,33),(83,1,34),(84,1,35),(146,3,16),(147,3,17),(148,3,18),(149,3,19),(150,3,20),(151,3,6),(152,3,7),(153,3,8),(154,3,9),(155,3,10),(156,3,1),(157,3,2),(158,3,3),(159,3,4),(160,3,5),(161,3,11),(162,3,12),(163,3,13),(164,3,14),(165,3,15),(166,3,26),(167,3,27),(168,3,28),(169,3,29),(170,3,30),(171,3,21),(172,3,22),(173,3,23),(174,3,24),(175,3,25);
 
 /*Table structure for table `salary` */
 
@@ -299,11 +299,11 @@ CREATE TABLE `user` (
   UNIQUE KEY `AK_Key_2` (`username`),
   KEY `FK_Reference_user_emp` (`emp_id`),
   CONSTRAINT `FK_Reference_user_emp` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `user` */
 
-insert  into `user`(`id`,`emp_id`,`username`,`password`) values (1,1,'xwq','698d51a19d8a121ce581499d7b701668'),(2,2,'zs','c4ca4238a0b923820dcc509a6f75849b');
+insert  into `user`(`id`,`emp_id`,`username`,`password`) values (1,1,'xwq','698d51a19d8a121ce581499d7b701668'),(2,2,'zs','c4ca4238a0b923820dcc509a6f75849b'),(4,3,'smg','c4ca4238a0b923820dcc509a6f75849b'),(5,5,'test','698d51a19d8a121ce581499d7b701668'),(6,6,'nyy','c4ca4238a0b923820dcc509a6f75849b');
 
 /*Table structure for table `user_role` */
 
@@ -314,11 +314,11 @@ CREATE TABLE `user_role` (
   `user_id` int(11) DEFAULT NULL,
   `role_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `user_role` */
 
-insert  into `user_role`(`id`,`user_id`,`role_id`) values (1,2,1);
+insert  into `user_role`(`id`,`user_id`,`role_id`) values (5,5,1),(6,5,2),(9,4,2),(10,3,2),(11,2,1),(12,6,3);
 
 /*Table structure for table `waichu` */
 
