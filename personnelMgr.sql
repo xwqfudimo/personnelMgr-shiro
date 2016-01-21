@@ -28,7 +28,7 @@ CREATE TABLE `department` (
   `fzr_phone` varchar(11) DEFAULT NULL,
   `sort` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `department` */
 
@@ -131,12 +131,17 @@ DROP TABLE IF EXISTS `log`;
 
 CREATE TABLE `log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uname` varchar(16) NOT NULL,
   `log_msg` varchar(64) NOT NULL,
   `record_time` datetime NOT NULL,
+  `url` varchar(128) DEFAULT NULL,
+  `param` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `log` */
+
+insert  into `log`(`id`,`uname`,`log_msg`,`record_time`,`url`,`param`) values (2,'zs','修改部门','2016-01-21 13:02:12','/dept_edit_submit','{\"name\":[\"市场部3\"],\"sort\":[\"5\"],\"id\":[\"5\"],\"fzr_phone\":[\"\"],\"fzr\":[\"\"]}'),(3,'zs','删除部门','2016-01-21 13:03:05','/dept_del/5','{}'),(4,'zs','新增部门','2016-01-21 13:07:23','/dept_add','{\"name\":[\"市场部\"],\"sort\":[\"5\"],\"fzr_phone\":[\"\"],\"fzr\":[\"\"]}'),(5,'zs','删除部门','2016-01-21 13:07:27','/dept_del/6','{}'),(6,'zs','登录','2016-01-21 13:35:51','/login','{\"password\":[\"1\"],\"username\":[\"zs\"]}'),(7,'zs','登录','2016-01-21 13:37:41','/login','{\"password\":[\"1\"],\"username\":[\"zs\"]}'),(8,'zs','登录','2016-01-21 13:41:13','/login','{\"password\":[\"1\"],\"username\":[\"zs\"]}'),(9,'zs','登录','2016-01-21 13:44:28','/login','{\"password\":[\"1\"],\"username\":[\"zs\"]}'),(10,'zs','登录','2016-01-21 13:46:23','/login','{\"password\":[\"1\"],\"username\":[\"zs\"]}'),(11,'zs','登录','2016-01-21 13:49:00','/login','{\"password\":[\"1\"],\"username\":[\"zs\"]}'),(12,'zs','登录','2016-01-21 13:50:40','/login','{\"password\":[\"1\"],\"username\":[\"zs\"]}'),(13,'zs','登录系统','2016-01-21 13:56:55','/login','{\"password\":[\"1\"],\"username\":[\"zs\"]}'),(14,'zs','登录系统','2016-01-21 14:14:07','/login','{\"password\":[\"1\"],\"username\":[\"zs\"]}'),(15,'zs','登录系统','2016-01-21 14:17:27','/login','{\"password\":[\"1\"],\"username\":[\"zs\"]}');
 
 /*Table structure for table `menu` */
 
