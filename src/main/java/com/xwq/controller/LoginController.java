@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.xwq.model.Menu;
 import com.xwq.service.MenuService;
@@ -25,7 +24,6 @@ import com.xwq.service.UserService;
 import com.xwq.util.ParameterUtil;
 
 @Controller
-@SessionAttributes("loginUser")
 public class LoginController {
 	@Autowired
 	private UserService userService;
@@ -70,7 +68,7 @@ public class LoginController {
 			if(this.userService.userIsExist(username)) {
 				String pwd = this.userService.getPwdByUsername(username);
 				if(pwd.equals(DigestUtils.md5Hex(password))) { //登录成功
-					request.getSession().setAttribute("loginUser", username);
+					request.getSession().setAttribute("loginUser", username); //注意：直接用api操作session时， 就不能再用@SessionAttributes注解了
 					
 					//将菜单名存入application中
 					List<Menu> menuList = this.menuService.getAllMenuByUsername(username);
