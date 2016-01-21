@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.xwq.dao.PrivilegeDao;
 import com.xwq.dao.RolePrivilegeDao;
-import com.xwq.model.Pagination;
 import com.xwq.model.Privilege;
 import com.xwq.model.RolePrivilege;
 import com.xwq.service.PrivilegeService;
+import com.xwq.util.Pagination;
 
 @Service("PrivilegeService")
 public class PrivilegeServiceImpl implements PrivilegeService {
@@ -142,6 +142,18 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 	public void deleteAllRolePrivilege(int roleId) {
 		String hql = "delete from RolePrivilege where roleId = ?";
 		this.rolePrivilegeDao.execute(hql, roleId);
+	}
+
+	/**
+	 * 查询指定username的用户所拥有的权限的uri列表
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getAllPrivilegeUrlByUsername(String username) {
+		String hql = "select p.uri from User u, Role r, UserRole ur, Privilege p, RolePrivilege rp " + 
+						"where u.id=ur.userId and r.id=ur.roleId and r.id=rp.roleId and p.id=rp.privilegeId and u.username = ?";
+		
+		return this.PrivilegeDao.queryList(hql, username);
 	}
 
 

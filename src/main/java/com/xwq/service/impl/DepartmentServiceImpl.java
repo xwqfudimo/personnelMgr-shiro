@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.xwq.dao.DepartmentDao;
 import com.xwq.model.Department;
-import com.xwq.model.Pagination;
 import com.xwq.service.DepartmentService;
+import com.xwq.util.Pagination;
 import com.xwq.vo.DeptVo;
 
 @Service("departmentService")

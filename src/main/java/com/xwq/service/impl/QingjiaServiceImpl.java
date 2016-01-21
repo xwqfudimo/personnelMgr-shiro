@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xwq.dao.QingjiaDao;
-import com.xwq.model.Pagination;
 import com.xwq.model.Qingjia;
 import com.xwq.service.QingjiaService;
+import com.xwq.util.Pagination;
 
 @Service("qingjiaService")
 public class QingjiaServiceImpl implements QingjiaService {

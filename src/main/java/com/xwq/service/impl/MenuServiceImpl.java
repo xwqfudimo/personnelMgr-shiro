@@ -25,10 +25,11 @@ public class MenuServiceImpl implements MenuService {
 		
 		List<Menu> menus = new ArrayList<Menu>();
 		
+		//用户拥有多个角色时，会出现菜单项重复，这里去重
 		for(Menu menu : menuList) {
-			if(menu.getLevel() == 1) {
+			if(menu.getLevel() == 1 && !menus.contains(menu)) {
 				for(Menu m : menuList) {
-					if(m.getLevel() == 2 && m.getParent().getId() == menu.getId()) {
+					if(m.getLevel() == 2 && m.getParent().getId() == menu.getId() && !menu.getChildren().contains(m)) {
 						menu.getChildren().add(m);
 					}
 				}
@@ -142,5 +143,15 @@ public class MenuServiceImpl implements MenuService {
 	public void deleteAllRoleMenu(int roleId) {
 		String hql = "delete from RoleMenu where roleId = ?";
 		this.roleMenuDao.execute(hql, roleId);
+	}
+
+	/**
+	 * 获取指定username用户的所拥有的全部菜单
+	 */
+	@Override
+	public List<Menu> getAllMenuByUsername(String username) {
+		String hql = "select m from Menu m, RoleMenu rm, Role r, User u, UserRole ur " + 
+						"where u.id = ur.userId AND r.id = ur.roleId AND m.id = rm.menuId AND r.id = rm.roleId AND u.username = ?";
+		return this.menuDao.getList(hql, username);
 	}
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xwq.annotation.Auth;
 import com.xwq.model.Privilege;
 import com.xwq.util.ParameterUtil;
 
@@ -22,9 +23,10 @@ public class PrivilegeController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("auth/list")
 	@RequestMapping("/authMgr")
-	public String list(Model model) {
-		infoSetting("authMgr", model);
+	public String list(HttpServletRequest request, Model model) {
+		infoSetting(request, "authMgr", model);
 		
 		List<Privilege> list = this.privilegeService.list();
 		model.addAttribute("auths", list);
@@ -32,9 +34,10 @@ public class PrivilegeController extends BaseController {
 		return "auth/list";
 	}
 	
+	@Auth("auth/add")
 	@RequestMapping(value="/auth_add", method=RequestMethod.GET)
-	public String add(Model model) {
-		infoSetting("authMgr", model);
+	public String add(HttpServletRequest request, Model model) {
+		infoSetting(request, "authMgr", model);
 		
 		return "auth/add";
 	}
@@ -44,6 +47,7 @@ public class PrivilegeController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("auth/add")
 	@RequestMapping(value="/auth_add", method=RequestMethod.POST)
 	public String add(HttpServletRequest request) {
 		String name = request.getParameter("name");
@@ -67,9 +71,10 @@ public class PrivilegeController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("auth/update")
 	@RequestMapping("/auth_edit/{id}")
-	public String update(@PathVariable int id, Model model) {
-		infoSetting("authMgr", model);
+	public String update(@PathVariable int id, HttpServletRequest request, Model model) {
+		infoSetting(request, "authMgr", model);
 		
 		Privilege res = this.privilegeService.get(id);
 		model.addAttribute("res", res);
@@ -82,6 +87,7 @@ public class PrivilegeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@Auth("auth/update")
 	@RequestMapping("/auth_edit_submit")
 	public String update(HttpServletRequest request) {
 		int id = Integer.parseInt(request.getParameter("id"));
@@ -107,6 +113,7 @@ public class PrivilegeController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@Auth("auth/delete")
 	@RequestMapping("/auth_del/{id}")
 	public @ResponseBody boolean delete(@PathVariable int id) {
 		this.privilegeService.delete(id);

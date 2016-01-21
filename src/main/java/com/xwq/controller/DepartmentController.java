@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xwq.annotation.Auth;
 import com.xwq.model.Department;
 import com.xwq.util.ParameterUtil;
 
@@ -22,9 +23,10 @@ public class DepartmentController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("dept/list")
 	@RequestMapping("/deptMgr")
-	public String list(Model model) {
-		infoSetting("deptMgr", model);
+	public String list(HttpServletRequest request, Model model) {
+		infoSetting(request, "deptMgr", model);
 		
 		List<Department> depts = this.departmentService.list();
 		model.addAttribute("depts", depts);
@@ -32,9 +34,10 @@ public class DepartmentController extends BaseController {
 		return "dept/list";
 	}
 	
+	@Auth("dept/add")
 	@RequestMapping(value="/dept_add", method=RequestMethod.GET)
-	public String add(Model model) {
-		infoSetting("deptMgr", model);
+	public String add(HttpServletRequest request, Model model) {
+		infoSetting(request, "deptMgr", model);
 		
 		return "dept/add";
 	}
@@ -44,6 +47,7 @@ public class DepartmentController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@Auth("dept/add")
 	@RequestMapping(value="/dept_add", method=RequestMethod.POST)
 	public String add(HttpServletRequest request) {
 		String name = request.getParameter("name");
@@ -68,9 +72,10 @@ public class DepartmentController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("dept/update")
 	@RequestMapping(value="/dept_edit/{id}", method=RequestMethod.GET)
-	public String update(@PathVariable int id, Model model) {
-		infoSetting("deptMgr", model);
+	public String update(@PathVariable int id, HttpServletRequest request, Model model) {
+		infoSetting(request, "deptMgr", model);
 		
 		Department dept = this.departmentService.get(id);
 		model.addAttribute("dept", dept);
@@ -83,6 +88,7 @@ public class DepartmentController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@Auth("dept/update")
 	@RequestMapping(value="/dept_edit_submit", method=RequestMethod.POST)
 	public String update(HttpServletRequest request) {
 		int id = Integer.parseInt(request.getParameter("id"));
@@ -106,6 +112,7 @@ public class DepartmentController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@Auth("dept/delete")
 	@RequestMapping(value="/dept_del/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean delete(@PathVariable int id) {
 		this.departmentService.delete(id);

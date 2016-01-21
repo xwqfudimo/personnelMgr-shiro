@@ -10,9 +10,9 @@ import com.xwq.dao.DepartmentDao;
 import com.xwq.dao.EmployeeDao;
 import com.xwq.dao.YjReportDao;
 import com.xwq.model.Employee;
-import com.xwq.model.Pagination;
 import com.xwq.model.YjReport;
 import com.xwq.service.EmployeeService;
+import com.xwq.util.Pagination;
 import com.xwq.vo.EmpVo;
 import com.xwq.vo.YjReportVo;
 

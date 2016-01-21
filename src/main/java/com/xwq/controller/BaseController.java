@@ -1,6 +1,9 @@
 package com.xwq.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,9 +46,10 @@ public class BaseController {
 	 * @param href
 	 * @param model
 	 */
-	protected void infoSetting(String href, Model model) {
-		String columnName = this.menuService.getMenuNameByHref(href);
-		
+	@SuppressWarnings("unchecked")
+	protected void infoSetting(HttpServletRequest request, String href, Model model) {
+		Map<String,String> menuNameMap = (Map<String, String>) request.getSession().getServletContext().getAttribute("menuNameMap");
+		String columnName = menuNameMap.get(href);
 		model.addAttribute("columnName", columnName);
 	}
 	

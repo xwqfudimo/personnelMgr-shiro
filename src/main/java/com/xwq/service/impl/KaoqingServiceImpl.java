@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.xwq.dao.KaoqingDao;
 import com.xwq.model.Kaoqing;
-import com.xwq.model.Pagination;
 import com.xwq.service.KaoqingService;
 import com.xwq.util.DateUtil;
+import com.xwq.util.Pagination;
 
 @Service("kaoqingService")
 public class KaoqingServiceImpl implements KaoqingService {

@@ -18,7 +18,7 @@ public class KaoqingController extends BaseController {
 	 */
 	@RequestMapping(value="/viewKaoqingList", method=RequestMethod.GET)
 	public String viewKaoqingList(HttpServletRequest request, Model model) {
-		infoSetting("viewKaoqingList", model);
+		infoSetting(request, "viewKaoqingList", model);
 		
 		String filter = request.getParameter("filter");
 		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());

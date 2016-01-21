@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xwq.dao.UserDao;
-import com.xwq.model.Pagination;
 import com.xwq.model.User;
 import com.xwq.service.UserService;
+import com.xwq.util.Pagination;
 import com.xwq.vo.UserVo;
 
 @Service("userService")

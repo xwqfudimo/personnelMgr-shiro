@@ -1,5 +1,9 @@
 package com.xwq.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.xwq.model.Menu;
+import com.xwq.service.MenuService;
+import com.xwq.service.PrivilegeService;
 import com.xwq.service.UserService;
 import com.xwq.util.ParameterUtil;
 
@@ -22,6 +29,10 @@ import com.xwq.util.ParameterUtil;
 public class LoginController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private PrivilegeService privilegeService;
+	@Autowired
+	private MenuService menuService;
 	
 	/**
 	 * 用户登录
@@ -61,6 +72,18 @@ public class LoginController {
 				if(pwd.equals(DigestUtils.md5Hex(password))) { //登录成功
 					request.getSession().setAttribute("loginUser", username);
 					
+					//将菜单名存入application中
+					List<Menu> menuList = this.menuService.getAllMenuByUsername(username);
+					Map<String,String> menuNameMap = new HashMap<String,String>();
+					for(Menu m : menuList) {
+						if(m.getHref() != null && !m.getHref().trim().equals("#")) {
+							menuNameMap.put(m.getHref().substring(1).trim(), m.getName());
+						}
+					}
+					request.getSession().getServletContext().setAttribute("menuNameMap", menuNameMap);
+					
+					
+					//记住用户名
 					Cookie usernameCookie = new Cookie("loginUser", username);
 					response.addCookie(usernameCookie);
 					
@@ -76,6 +99,11 @@ public class LoginController {
 						Cookie rememberCookie = new Cookie("remember", "0");
 						response.addCookie(rememberCookie);
 					}
+					
+					
+					//将用户所拥有权限的uri存到WebDataContext工具类中
+					List<String> privilegeUriList = this.privilegeService.getAllPrivilegeUrlByUsername(username);
+					request.getSession().getServletContext().setAttribute("privilegeUriList", privilegeUriList);
 					
 					return "redirect:/index";
 				}

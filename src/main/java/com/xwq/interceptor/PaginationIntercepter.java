@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.xwq.model.Pagination;
+import com.xwq.util.Pagination;
 
 public class PaginationIntercepter extends HandlerInterceptorAdapter {
 	private int pageSize;

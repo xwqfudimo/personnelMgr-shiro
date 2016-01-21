@@ -1,4 +1,4 @@
-package com.xwq.model;
+package com.xwq.util;
 
 public class Pagination {
 	//每页显示数量
@@ -44,8 +44,6 @@ public class Pagination {
 	}
 	public static void setTotalCount(int totalCount) {
 		Pagination.totalCount.set(totalCount);
-		
-		System.out.println(pageSize.get());
 		
 		if(totalCount % pageSize.get() == 0) {
 			Pagination.pageCount = totalCount / pageSize.get();

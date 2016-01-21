@@ -22,4 +22,6 @@ public interface PrivilegeService {
 	public void deleteRolePrivilege(int roleId, int priId);
 	public void batchAddRolePrivilege(List<RolePrivilege> rps);
 	public void deleteAllRolePrivilege(int roleId);
+	
+	public List<String> getAllPrivilegeUrlByUsername(String username);
 }

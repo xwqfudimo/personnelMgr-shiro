@@ -19,6 +19,8 @@ public interface MenuService {
 	
 	public String getMenuNameByHref(String href);
 	
-	
 	public void deleteAllRoleMenu(int roleId);
+	
+	
+	public List<Menu> getAllMenuByUsername(String username);
 }

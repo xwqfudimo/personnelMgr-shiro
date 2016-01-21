@@ -11,6 +11,7 @@ public interface RoleService {
 	public void update(Role t);
 	public Role get(int id);
 	public List<Role> list();
+	public List<Role> listByPage();
 	
 	public List<Role> listByUserId(int userId);
 	public void addUserRoles(int userId, int... roleIds);

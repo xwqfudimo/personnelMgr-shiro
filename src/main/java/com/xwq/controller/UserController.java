@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xwq.annotation.Auth;
 import com.xwq.model.Employee;
 import com.xwq.model.Role;
 import com.xwq.model.User;
@@ -27,9 +28,10 @@ public class UserController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("user/list")
 	@RequestMapping("/userMgr")
-	public String list(Model model) {
-		infoSetting("userMgr", model);
+	public String list(HttpServletRequest request, Model model) {
+		infoSetting(request, "userMgr", model);
 		
 		List<UserVo> users = this.userService.list();
 		model.addAttribute("users", users);
@@ -37,9 +39,10 @@ public class UserController extends BaseController {
 		return "user/list";
 	}
 	
+	@Auth("user/add")
 	@RequestMapping(value="user_add", method=RequestMethod.GET)
-	public String add(Model model) {
-		infoSetting("userMgr", model);
+	public String add(HttpServletRequest request, Model model) {
+		infoSetting(request, "userMgr", model);
 		
 		//全部员工列表
 		List<EmpVo> empVoList = this.employeeService.getAllEmpVo();
@@ -56,6 +59,7 @@ public class UserController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@Auth("user/add")
 	@RequestMapping(value="user_add", method=RequestMethod.POST)
 	public String add(HttpServletRequest request) {
 		String username = request.getParameter("username");
@@ -89,6 +93,7 @@ public class UserController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@Auth("user/delete")
 	@RequestMapping(value="/user_del/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean delete(@PathVariable int id) {
 		this.userService.delete(id);
@@ -105,9 +110,10 @@ public class UserController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("user/update")
 	@RequestMapping(value="/user_edit/{id}", method=RequestMethod.GET)
-	public String update(@PathVariable int id, Model model) {
-		infoSetting("userMgr", model);
+	public String update(@PathVariable int id, HttpServletRequest request, Model model) {
+		infoSetting(request, "userMgr", model);
 		
 		User user = this.userService.get(id);
 		model.addAttribute("user", user);
@@ -131,6 +137,7 @@ public class UserController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@Auth("user/update")
 	@RequestMapping(value="/user_edit_submit", method=RequestMethod.POST)
 	public String update(HttpServletRequest request) {
 		int id = Integer.parseInt(request.getParameter("id"));
@@ -167,9 +174,10 @@ public class UserController extends BaseController {
 	/**
 	 * 修改登录密码
 	 */
+	@Auth("user/update")
 	@RequestMapping(value="/modifyPwd", method=RequestMethod.GET)
-	public String modifyPwd(Model model) {
-		infoSetting("modifyPwd", model);
+	public String modifyPwd(HttpServletRequest request, Model model) {
+		infoSetting(request, "modifyPwd", model);
 		
 		return "user/modifyPwd";
 	}

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xwq.annotation.Auth;
 import com.xwq.model.Privilege;
 import com.xwq.model.Role;
 import com.xwq.model.RoleMenu;
@@ -29,19 +30,21 @@ public class RoleController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("role/list")
 	@RequestMapping("/roleMgr")
-	public String list(Model model) {
-		infoSetting("roleMgr", model);
+	public String list(HttpServletRequest request, Model model) {
+		infoSetting(request, "roleMgr", model);
 		
-		List<Role> roles = this.roleService.list();
+		List<Role> roles = this.roleService.listByPage();
 		model.addAttribute("roles", roles);
 		
 		return "role/list";
 	}
 	
+	@Auth("role/add")
 	@RequestMapping(value="/role_add", method=RequestMethod.GET)
-	public String add(Model model) {
-		infoSetting("roleMgr", model);
+	public String add(HttpServletRequest request, Model model) {
+		infoSetting(request, "roleMgr", model);
 		
 		//全部菜单(树)
 		model.addAttribute("menuTree", this.getMenuTreeJson());
@@ -58,8 +61,9 @@ public class RoleController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("role/add")
 	@RequestMapping(value="/role_add", method=RequestMethod.POST)
-	public String add(HttpServletRequest request, Model model) {
+	public String addSubmit(HttpServletRequest request, Model model) {
 		String name = request.getParameter("name");
 		String desc = request.getParameter("desc");
 		String[] privilegeIds = request.getParameterValues("privilegeId");
@@ -114,9 +118,10 @@ public class RoleController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("role/view")
 	@RequestMapping(value="/role/{id}", method=RequestMethod.GET)
-	public String show(@PathVariable int id, Model model) {
-		infoSetting("roleMgr", model);
+	public String show(@PathVariable int id, HttpServletRequest request, Model model) {
+		infoSetting(request, "roleMgr", model);
 		
 		Role role = this.roleService.get(id);
 		model.addAttribute("role", role);
@@ -136,9 +141,10 @@ public class RoleController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("role/update")
 	@RequestMapping(value="/role_edit/{id}", method=RequestMethod.GET)
-	public String edit(@PathVariable int id, Model model) {
-		infoSetting("roleMgr", model);
+	public String edit(@PathVariable int id, HttpServletRequest request, Model model) {
+		infoSetting(request, "roleMgr", model);
 		
 		//全部(分组)权限
 		Map<String, List<Privilege>> map = this.privilegeService.listByGroup();
@@ -161,6 +167,7 @@ public class RoleController extends BaseController {
 	/**
 	 * 更新角色
 	 */
+	@Auth("role/update")
 	@RequestMapping(value="/role_edit_submit", method=RequestMethod.POST)
 	public String update(HttpServletRequest request) {
 		int id = Integer.parseInt(request.getParameter("id"));
@@ -220,6 +227,7 @@ public class RoleController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@Auth("role/delete")
 	@RequestMapping("/role_del/{id}")
 	public @ResponseBody boolean delete(@PathVariable int id) {
 		this.roleService.delete(id);

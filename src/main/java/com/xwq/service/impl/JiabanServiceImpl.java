@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.xwq.dao.JiabanDao;
 import com.xwq.model.Jiaban;
-import com.xwq.model.Pagination;
 import com.xwq.service.JiabanService;
+import com.xwq.util.Pagination;
 
 @Service("jiabanService")
 public class JiabanServiceImpl implements JiabanService {

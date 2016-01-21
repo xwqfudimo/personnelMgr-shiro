@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xwq.annotation.Auth;
 import com.xwq.model.YjReport;
 import com.xwq.util.DateUtil;
 import com.xwq.vo.YjReportVo;
@@ -21,9 +22,10 @@ public class YjReportController extends BaseController {
 	/**
 	 * 业绩报告
 	 */
+	@Auth("yj/list")
 	@RequestMapping(value="/yjReport", method=RequestMethod.GET)
 	public String yjReport(HttpServletRequest request, Model model) {
-		infoSetting("yjReport", model);
+		infoSetting(request, "yjReport", model);
 		
 		String filter = request.getParameter("audited");
 		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
@@ -40,9 +42,10 @@ public class YjReportController extends BaseController {
 	/**
 	 * 新增业绩报告
 	 */
+	@Auth("yj/add")
 	@RequestMapping(value="/yjReport_add", method=RequestMethod.GET)
 	public String yjReportAdd(HttpServletRequest request, Model model) {
-		infoSetting("yjReport", model);
+		infoSetting(request, "yjReport", model);
 		
 		return "yjReport/add";
 	}
@@ -50,6 +53,7 @@ public class YjReportController extends BaseController {
 	/**
 	 * 新增业绩报告提交
 	 */
+	@Auth("yj/add")
 	@RequestMapping(value="/yjReport_add", method=RequestMethod.POST)
 	public String yjReportAddSubmit(HttpServletRequest request, Model model) {
 		String title = request.getParameter("title");
@@ -77,9 +81,10 @@ public class YjReportController extends BaseController {
 	/**
 	 * 查看业绩报告
 	 */
+	@Auth("yj/view")
 	@RequestMapping(value="/yjReport/{id}", method=RequestMethod.GET)
-	public String yjReportShow(@PathVariable int id, Model model) {
-		infoSetting("yjReport", model);
+	public String yjReportShow(@PathVariable int id, HttpServletRequest request, Model model) {
+		infoSetting(request, "yjReport", model);
 		
 		YjReport report = this.employeeService.getYjReport(id);
 		model.addAttribute("report", report);
@@ -90,9 +95,10 @@ public class YjReportController extends BaseController {
 	/**
 	 * 修改业绩报告
 	 */
+	@Auth("yj/update")
 	@RequestMapping(value="/yjReport_edit/{id}", method=RequestMethod.GET)
-	public String yjReportEdit(@PathVariable int id, Model model) {
-		infoSetting("yjReport", model);
+	public String yjReportEdit(@PathVariable int id, HttpServletRequest request, Model model) {
+		infoSetting(request, "yjReport", model);
 		
 		YjReport report = this.employeeService.getYjReport(id);
 		model.addAttribute("report", report);
@@ -103,6 +109,7 @@ public class YjReportController extends BaseController {
 	/**
 	 * 修改提交业绩报告
 	 */
+	@Auth("yj/update")
 	@RequestMapping(value="/yjReport_edit_submit", method=RequestMethod.POST)
 	public String yjReportEditSubmit(HttpServletRequest request) {
 		int id = Integer.parseInt(request.getParameter("id"));
@@ -120,6 +127,7 @@ public class YjReportController extends BaseController {
 	/**
 	 * 删除业绩报告
 	 */
+	@Auth("yj/delete")
 	@RequestMapping(value="/yjReport_del/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean yjReportDel(@PathVariable int id) {
 		this.employeeService.deleteYjReport(id);

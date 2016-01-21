@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import com.xwq.dao.RoleDao;
 import com.xwq.dao.RoleMenuDao;
 import com.xwq.dao.UserRoleDao;
-import com.xwq.model.Pagination;
 import com.xwq.model.Role;
 import com.xwq.model.RoleMenu;
 import com.xwq.model.UserRole;
 import com.xwq.service.RoleService;
+import com.xwq.util.Pagination;
 
 @Service("roleService")
 public class RoleServiceImpl implements RoleService {
@@ -71,6 +71,14 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public List<Role> list() {
+		return this.roleDao.getList("from Role");
+	}
+	
+	/**
+	 * 分页查询角色列表
+	 */
+	@Override
+	public List<Role> listByPage() {
 		int totalCount = Integer.parseInt(this.roleDao.query("select count(*) from Role").toString());
 		Pagination.setTotalCount(totalCount);
 		
@@ -87,5 +95,4 @@ public class RoleServiceImpl implements RoleService {
 	public void batchAddRoleMenu(List<RoleMenu> rms) {
 		this.roleMenuDao.batchAdd(rms);
 	}
-
 }

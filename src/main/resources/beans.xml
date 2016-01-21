@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
         
     <context:annotation-config/>
-    <context:component-scan base-package="com.xwq"/>    
+    <context:component-scan base-package="com.xwq"/>  
 
 	<context:property-placeholder location="classpath:jdbc.properties" />
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"

@@ -44,7 +44,7 @@
                 	<ul id="menu" class="ztree"></ul>
                 	<br><br>
                 	权限：
-                	<div style="height:220px;">
+                	<div style="height:auto;">
                 	<ul class="auths">
                 		
                 		<c:forEach items="${rolePrivilegeMap }" var="map">

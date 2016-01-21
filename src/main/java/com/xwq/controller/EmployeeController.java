@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Controller;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xwq.annotation.Auth;
 import com.xwq.comparator.DepartmentComparator;
 import com.xwq.enums.Gender;
 import com.xwq.model.Department;
@@ -33,14 +33,17 @@ public class EmployeeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@Auth("emp/view")
 	@RequestMapping("/viewEmpInfo")
-	public String viewEmpInfo(HttpSession session, Model model) {
-		int empId = Integer.parseInt(session.getAttribute("empId").toString());
+	public String viewEmpInfo(HttpServletRequest request, Model model) {
+		infoSetting(request, "viewEmpInfo", model);
+		
+		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
 		
 		Employee emp = this.employeeService.get(empId);
 		model.addAttribute("emp", emp);
 		
-		infoSetting("viewEmpInfo", model);
+		infoSetting(request, "viewEmpInfo", model);
 		
 		return "emp/viewEmpInfo";
 	}
@@ -49,6 +52,7 @@ public class EmployeeController extends BaseController {
 	/**
 	 * 修改登录密码提交
 	 */
+	@Auth("emp/update")
 	@RequestMapping(value="/modifyPwdSubmit", method=RequestMethod.POST)
 	public @ResponseBody int modifyPwd(HttpServletRequest request, Model model) {
 		String oldPwd = request.getParameter("oldPwd");
@@ -79,9 +83,10 @@ public class EmployeeController extends BaseController {
 	/**
 	 * 查询员工资料
 	 */
+	@Auth("emp/list")
 	@RequestMapping(value="/empSearch", method=RequestMethod.GET)
 	public String empSearch(HttpServletRequest request, Model model) {
-		infoSetting("empSearch", model);
+		infoSetting(request, "empSearch", model);
 		
 		//部门-员工树状列表
 		List<Employee> emps = this.employeeService.getEmpsWithDept();
@@ -118,6 +123,7 @@ public class EmployeeController extends BaseController {
 	/**
 	 * 查询员工资料搜索结果
 	 */
+	@Auth("emp/list")
 	@RequestMapping(value="/empSearch", method=RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public @ResponseBody Object empSearchResult(HttpServletRequest request) {
 		String empName = request.getParameter("empName");
@@ -127,6 +133,7 @@ public class EmployeeController extends BaseController {
 	}
 	
 
+	@Auth("emp/view")
 	@RequestMapping(value="/emp/{id}", produces="text/html;charset=UTF-8")
 	public @ResponseBody Object get(@PathVariable int id) {
 		Employee emp = this.employeeService.get(id);
@@ -140,9 +147,10 @@ public class EmployeeController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("emp/list")
 	@RequestMapping("/empMgr")
-	public String list(Model model) {
-		infoSetting("empMgr", model);
+	public String list(HttpServletRequest request, Model model) {
+		infoSetting(request, "empMgr", model);
 		
 		List<Employee> emps = this.employeeService.list();
 		model.addAttribute("emps", emps);
@@ -155,9 +163,10 @@ public class EmployeeController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("emp/add")
 	@RequestMapping(value="/emp_add", method=RequestMethod.GET)
-	public String add(Model model) {
-		infoSetting("empMgr", model);
+	public String add(HttpServletRequest request, Model model) {
+		infoSetting(request, "empMgr", model);
 		
 		model.addAttribute("depts", this.departmentService.getDeptList());
 		
@@ -170,6 +179,7 @@ public class EmployeeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@Auth("emp/add")
 	@RequestMapping(value="/emp_add", method=RequestMethod.POST)
 	public String add(HttpServletRequest request) {
 		String name = request.getParameter("name");
@@ -190,9 +200,10 @@ public class EmployeeController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@Auth("emp/update")
 	@RequestMapping(value="/emp_edit/{id}", method=RequestMethod.GET)
-	public String update(@PathVariable int id, Model model) {
-		infoSetting("empMgr", model);
+	public String update(@PathVariable int id, HttpServletRequest request, Model model) {
+		infoSetting(request, "empMgr", model);
 		
 		Employee emp = this.employeeService.get(id);
 		model.addAttribute("emp", emp);
@@ -206,6 +217,7 @@ public class EmployeeController extends BaseController {
 	 * 修改员工提交
 	 * @return
 	 */
+	@Auth("emp/update")
 	@RequestMapping(value="/emp_edit_submit", method=RequestMethod.POST)
 	public String update(HttpServletRequest request) {
 		int id = Integer.parseInt(request.getParameter("id"));
@@ -241,6 +253,7 @@ public class EmployeeController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@Auth("emp/delete")
 	@RequestMapping(value="/emp_del/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean delete(@PathVariable int id) {
 		this.employeeService.delete(id);
