@@ -5,19 +5,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.xwq.dao.KaoqingDao;
-import com.xwq.model.Kaoqing;
-import com.xwq.service.KaoqingService;
+import com.xwq.dao.KaoqinDao;
+import com.xwq.model.Kaoqin;
+import com.xwq.service.KaoqinService;
 import com.xwq.util.DateUtil;
 import com.xwq.util.Pagination;
 
-@Service("kaoqingService")
-public class KaoqingServiceImpl implements KaoqingService {
+@Service("kaoqinService")
+public class KaoqinServiceImpl implements KaoqinService {
 	@Autowired
-	private KaoqingDao kaoqingDao;
+	private KaoqinDao kaoqingDao;
 
 	@Override
-	public void add(Kaoqing t) {
+	public void add(Kaoqin t) {
 		this.kaoqingDao.add(t);
 	}
 
@@ -27,18 +27,18 @@ public class KaoqingServiceImpl implements KaoqingService {
 	}
 
 	@Override
-	public void update(Kaoqing t) {
+	public void update(Kaoqin t) {
 		this.kaoqingDao.update(t);
 	}
 
 	@Override
-	public Kaoqing get(int id) {
+	public Kaoqin get(int id) {
 		return this.kaoqingDao.get(id);
 	}
 
 	@Override
-	public List<Kaoqing> getListByEmpId(int empId, String filter) {
-		List<Kaoqing> result = null;
+	public List<Kaoqin> getListByEmpId(int empId, String filter) {
+		List<Kaoqin> result = null;
 		if(filter == null || "this-month".equals(filter)) {
 			String hql = "from Kaoqing kq where kq.employee.id = ? and kq.date like ? order by kq.date desc";
 			

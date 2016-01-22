@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
  * 考勤
  */
 @Entity
-public class Kaoqing {
+public class Kaoqin {
 	@Id
 	@GeneratedValue
 	private int id;

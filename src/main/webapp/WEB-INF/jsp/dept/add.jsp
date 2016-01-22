@@ -22,9 +22,13 @@
             <form method="post">
                 	部门名称：<input type="text" class="common-text2" name="name" size="8">
                 	<br><br>
-                	负责人：<input type="text" class="common-text2" name="fzr" size="5">
-                	<br><br>
-                	负责人电话：<input type="text" class="common-text2" name="fzr_phone" size="11">
+                	负责人：
+                	<select name="fzr_id">
+                		<option value="-1">请选择</option>
+                		<c:forEach items="${emps }" var="emp">
+                			<option value="${emp.id }">${emp.name }</option>
+                		</c:forEach>
+                	</select>
                 	<br><br>
                 	排序：<input type="text" class="common-text2" name="sort" size="3">
                 	<br><br>

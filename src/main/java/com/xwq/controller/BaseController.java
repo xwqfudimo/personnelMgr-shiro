@@ -13,7 +13,7 @@ import com.xwq.model.Menu;
 import com.xwq.service.DepartmentService;
 import com.xwq.service.EmployeeService;
 import com.xwq.service.JiabanService;
-import com.xwq.service.KaoqingService;
+import com.xwq.service.KaoqinService;
 import com.xwq.service.LogService;
 import com.xwq.service.MenuService;
 import com.xwq.service.PrivilegeService;
@@ -34,7 +34,7 @@ public class BaseController {
 	@Autowired
 	protected QingjiaService qingjiaService;
 	@Autowired
-	protected KaoqingService kaoqingService;
+	protected KaoqinService kaoqingService;
 	@Autowired
 	protected PrivilegeService privilegeService;
 	@Autowired

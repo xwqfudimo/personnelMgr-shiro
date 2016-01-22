@@ -22,9 +22,14 @@
             <form method="post" action="${ctxPath }/dept_edit_submit">
                 	部门名称：<input type="text" class="common-text2" name="name" size="8" value="${dept.name }">
                 	<br><br>
-                	负责人：<input type="text" class="common-text2" name="fzr" size="5" value="${dept.fzr }">
-                	<br><br>
-                	负责人电话：<input type="text" class="common-text2" name="fzr_phone" size="11" value="${dept.fzrPhone }">
+                	负责人：
+                	<select name="fzr_id">
+                		<c:forEach items="${emps}" var="emp">
+                			<option value="${emp.id }" 
+                				<c:if test="${emp.id == dept.fzr.id }">selected</c:if>
+                				>${emp.name }</option>
+                		</c:forEach>
+                	</select>
                 	<br><br>
                 	排序：<input type="text" class="common-text2" name="sort" size="3" value="${dept.sort }">
                 	<br><br>

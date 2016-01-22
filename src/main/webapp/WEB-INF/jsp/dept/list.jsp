@@ -55,8 +55,8 @@
                    			<tr>
                    				<td>${dept.name }</td>
                    				<td>${dept.empNum }</td>
-                   				<td>${dept.fzr}</td>
-                   				<td>${dept.fzrPhone }</td>
+                   				<td>${dept.fzr.name}</td>
+                   				<td>${dept.fzr.phone }</td>
                    				<td>${dept.sort }</td>
                    				<td>
                   					<a class="link-update" href="${ctxPath }/dept_edit/${dept.id}">修改</a>

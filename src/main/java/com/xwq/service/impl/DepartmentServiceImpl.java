@@ -60,6 +60,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 		int totalCount = Integer.parseInt(this.departmentDao.query("select count(*) from Department where name like ?", "%"+search+"%").toString());
 		Pagination.setTotalCount(totalCount);
 		
-		return this.departmentDao.getListByPage("from Department where name like ?", Pagination.getOffset(), Pagination.getPageSize(), "%"+search+"%");
+		List<Department> deptList = this.departmentDao.getListByPage("select d from Department d left join d.fzr where d.name like ?", Pagination.getOffset(), Pagination.getPageSize(), "%"+search+"%");
+		
+		return deptList;
 	}
 }

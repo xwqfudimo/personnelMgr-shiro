@@ -9,26 +9,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.xwq.model.Kaoqing;
+import com.xwq.model.Kaoqin;
 
 @Controller
-public class KaoqingController extends BaseController {
+public class KaoqinController extends BaseController {
 	/**
 	 * 考勤记录
 	 */
-	@RequestMapping(value="/viewKaoqingList", method=RequestMethod.GET)
+	@RequestMapping(value="/viewKaoqinList", method=RequestMethod.GET)
 	public String viewKaoqingList(HttpServletRequest request, Model model) {
-		infoSetting(request, "viewKaoqingList", model);
+		infoSetting(request, "viewKaoqinList", model);
 		
 		String filter = request.getParameter("filter");
 		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
-		List<Kaoqing> kaoqingList = this.kaoqingService.getListByEmpId(empId, filter);
-		model.addAttribute("kaoqingList", kaoqingList);
+		List<Kaoqin> kaoqinList = this.kaoqingService.getListByEmpId(empId, filter);
+		model.addAttribute("kaoqinList", kaoqinList);
 		
 		if(filter == null) filter = "this-month";
 		model.addAttribute("filter", filter);
 		
-		return "kaoqing/list";
+		return "kaoqin/list";
 	}
 	
 }

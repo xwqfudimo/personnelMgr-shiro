@@ -15,6 +15,7 @@ import com.xwq.annotation.Auth;
 import com.xwq.annotation.LogText;
 import com.xwq.model.Department;
 import com.xwq.util.ParameterUtil;
+import com.xwq.vo.EmpVo;
 
 @Controller
 public class DepartmentController extends BaseController {
@@ -41,6 +42,9 @@ public class DepartmentController extends BaseController {
 	public String add(HttpServletRequest request, Model model) {
 		infoSetting(request, "deptMgr", model);
 		
+		List<EmpVo> voList = this.employeeService.getAllEmpVo();
+		model.addAttribute("emps", voList);
+		
 		return "dept/add";
 	}
 	
@@ -58,8 +62,7 @@ public class DepartmentController extends BaseController {
 		if(ParameterUtil.parameterOK(name)) {
 			Department dept = new Department();
 			dept.setName(name);
-			dept.setFzr(request.getParameter("fzr"));
-			dept.setFzrPhone(request.getParameter("fzr_phone"));
+			dept.setFzr(this.employeeService.get(Integer.parseInt(request.getParameter("fzr_id"))));
 			dept.setSort(Integer.parseInt(request.getParameter("sort")));
 			dept.setEmpNum(0);
 			
@@ -83,6 +86,9 @@ public class DepartmentController extends BaseController {
 		Department dept = this.departmentService.get(id);
 		model.addAttribute("dept", dept);
 		
+		List<EmpVo> voList = this.employeeService.getAllEmpVo();
+		model.addAttribute("emps", voList);
+		
 		return "dept/edit";
 	}
 	
@@ -101,8 +107,7 @@ public class DepartmentController extends BaseController {
 		if(ParameterUtil.parameterOK(name)) {
 			Department dept = this.departmentService.get(id);
 			dept.setName(name);
-			dept.setFzr(request.getParameter("fzr"));
-			dept.setFzrPhone(request.getParameter("fzr_phone"));
+			dept.setFzr(this.employeeService.get(Integer.parseInt(request.getParameter("fzr_id"))));
 			dept.setSort(Integer.parseInt(request.getParameter("sort")));
 			
 			this.departmentService.update(dept);

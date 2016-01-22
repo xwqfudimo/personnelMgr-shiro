@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * 部门
@@ -17,9 +19,9 @@ public class Department {
 	@Column(name="emp_num")
 	private int empNum;
 	//部门负责人
-	private String fzr;
-	@Column(name="fzr_phone")
-	private String fzrPhone;
+	@ManyToOne
+	@JoinColumn(name="fzr_emp_id")
+	private Employee fzr;
 	private int sort;
 	
 	public int getId() {
@@ -40,17 +42,11 @@ public class Department {
 	public void setEmpNum(int empNum) {
 		this.empNum = empNum;
 	}
-	public String getFzr() {
+	public Employee getFzr() {
 		return fzr;
 	}
-	public void setFzr(String fzr) {
+	public void setFzr(Employee fzr) {
 		this.fzr = fzr;
-	}
-	public String getFzrPhone() {
-		return fzrPhone;
-	}
-	public void setFzrPhone(String fzrPhone) {
-		this.fzrPhone = fzrPhone;
 	}
 	public int getSort() {
 		return sort;

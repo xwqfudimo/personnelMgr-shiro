@@ -40,7 +40,7 @@
                            
                         </tr>
 
-                   		<c:forEach items="${kaoqingList }" var="kq">
+                   		<c:forEach items="${kaoqinList }" var="kq">
                    			<tr>
                    				<td>${kq.date }</td>
                    				<td>${kq.moringSignTime }</td>
