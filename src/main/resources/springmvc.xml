@@ -59,6 +59,7 @@
     		<mvc:mapping path="/deptMgr"/>
     		<mvc:mapping path="/roleMgr"/>
     		<mvc:mapping path="/syslog"/>
+    		<mvc:mapping path="/viewSalaryList"/>
     		
     		<bean class="com.xwq.interceptor.PaginationInterceptor">
     			<property name="pageSize" value="15"/>

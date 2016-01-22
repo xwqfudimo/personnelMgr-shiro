@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.xwq.dao.DepartmentDao;
 import com.xwq.dao.EmployeeDao;
+import com.xwq.dao.SalaryDao;
 import com.xwq.dao.YjReportDao;
 import com.xwq.model.Employee;
+import com.xwq.model.Salary;
 import com.xwq.model.YjReport;
 import com.xwq.service.EmployeeService;
 import com.xwq.util.Pagination;
@@ -24,6 +26,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private YjReportDao yjReportDao;
 	@Autowired
 	private DepartmentDao departmentDao;
+	@Autowired
+	private SalaryDao salaryDao;
 
 	@Override
 	public void add(Employee t) {
@@ -151,6 +155,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Pagination.setTotalCount(totalCount);
 		
 		return this.employeeDao.getListByPage("from Employee e join fetch e.department where e.name like ?", Pagination.getOffset(), Pagination.getPageSize(), "%"+search+"%");
+	}
+
+	/**
+	 * 指定id员工的月工资列表
+	 */
+	@Override
+	public List<Salary> listSalaryByEmpId(int empId) {
+		String hql = " from Salary s where s.employee.id = ?";
+		
+		int totalCount = Integer.parseInt(this.salaryDao.query("select count(*) " + hql, empId).toString());
+		Pagination.setTotalCount(totalCount);
+		
+		return this.salaryDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId);
+	}
+
+	@Override
+	public Salary getSalary(int id) {
+		return this.salaryDao.get(id);
 	}
 	
 }

@@ -42,7 +42,6 @@ public class Employee {
 	private String email;
 	//身份证号码
 	private String card;
-	private String resume;
 	@Column(name="self_intro")
 	private String selfIntro;
 	private String beizhu;
@@ -131,12 +130,6 @@ public class Employee {
 	public void setCard(String card) {
 		this.card = card;
 	}
-	public String getResume() {
-		return resume;
-	}
-	public void setResume(String resume) {
-		this.resume = resume;
-	}
 	public String getSelfIntro() {
 		return selfIntro;
 	}
@@ -157,7 +150,7 @@ public class Employee {
 				+ ", nationality=" + nationality + ", zzmm=" + zzmm
 				+ ", marriage=" + marriage + ", address=" + address + ", rzsj="
 				+ rzsj + ", xl=" + xl + ", phone=" + phone + ", email=" + email
-				+ ", card=" + card + ", resume=" + resume + ", selfIntro="
+				+ ", card=" + card + ", selfIntro="
 				+ selfIntro + ", beizhu=" + beizhu + "]";
 	}
 }

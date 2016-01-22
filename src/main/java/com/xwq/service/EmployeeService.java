@@ -3,6 +3,7 @@ package com.xwq.service;
 import java.util.List;
 
 import com.xwq.model.Employee;
+import com.xwq.model.Salary;
 import com.xwq.model.YjReport;
 import com.xwq.vo.EmpVo;
 import com.xwq.vo.YjReportVo;
@@ -23,4 +24,7 @@ public interface EmployeeService {
 	public YjReport getYjReport(int id);
 	public void updateYjReport(YjReport report);
 	public void deleteYjReport(int id);
+	
+	public List<Salary> listSalaryByEmpId(int empId);
+	public Salary getSalary(int id);
 }

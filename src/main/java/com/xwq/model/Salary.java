@@ -2,6 +2,7 @@ package com.xwq.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -15,7 +16,7 @@ public class Salary {
 	@Id
 	@GeneratedValue
 	private int id;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="emp_id")
 	private Employee employee;
 	@Column(name="emp_name")
@@ -25,6 +26,7 @@ public class Salary {
 	@Column(name="basic_salary")
 	private double basicSalary;
 	private double butie;
+	//奖金
 	private double bonus;
 	@Column(name="jiaban_plus")
 	private double jiabanPlus;
