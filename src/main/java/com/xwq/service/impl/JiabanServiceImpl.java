@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xwq.dao.JiabanDao;
+import com.xwq.enums.AuditStatus;
 import com.xwq.model.Jiaban;
 import com.xwq.service.JiabanService;
 import com.xwq.util.Pagination;
@@ -55,6 +56,35 @@ public class JiabanServiceImpl implements JiabanService {
 		Pagination.setTotalCount(totalCount);
 		
 		return this.jiabanDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId);
+	}
+
+	
+	@Override
+	public List<Jiaban> getListByEmpIds(List<Integer> empIds, String filter) {
+		String hql = "";
+		if(filter == null || filter.equals("all")) {
+			hql = "from Jiaban j where j.employee.id in(:ids) order by j.submitTime desc";
+		}
+		else if(filter.equals("null")) {
+			hql = "from Jiaban j where j.employee.id in(:ids) and j.auditStatus is null order by j.submitTime desc";
+		}
+		else if(filter.equals("yes")) {
+			hql = "from Jiaban j where j.employee.id in(:ids) and j.auditStatus = 1 order by j.submitTime desc";
+		}
+		else {
+			hql = "from Jiaban j where j.employee.id in(:ids) and j.auditStatus = 0 order by j.submitTime desc";
+		}
+		
+		int totalCount = this.jiabanDao.getTotalCountByEmpIds("select count(*) " + hql, "ids", empIds);
+		Pagination.setTotalCount(totalCount);
+		
+		return this.jiabanDao.getByEmpIds(hql, Pagination.getOffset(), Pagination.getPageSize(), "ids", empIds);
+	}
+
+	@Override
+	public void updateJiabanAuditStatus(int id, AuditStatus status, String auditPerson) {
+		String hql = "update Jiaban set auditStatus = ?, auditPerson = ? where id = ?";
+		this.jiabanDao.execute(hql, status, auditPerson, id);
 	}
 
 }

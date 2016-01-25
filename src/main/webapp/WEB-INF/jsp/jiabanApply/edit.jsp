@@ -22,9 +22,9 @@
                 <h1>修改加班申请</h1>
             </div>
             <form method="post" action="${ctxPath }/jiabanApply_edit_submit">
-                	起始时间：<input type="text" class="common-text2 laydate-icon" name="start_time" value="${fn:substring(jb.startTime, 0, 16) }" id="start_time" size="18" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                	起始时间：<input type="text" class="common-text2 laydate-icon" name="start_time" value="${fn:substring(jb.startTime, 0, 16) }" id="start_time" size="20" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                 	&nbsp;&nbsp;
-                	结束时间：<input type="text" class="common-text2 laydate-icon" name="end_time" value="${fn:substring(jb.endTime, 0, 16) }" id="end_time" size="18" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                	结束时间：<input type="text" class="common-text2 laydate-icon" name="end_time" value="${fn:substring(jb.endTime, 0, 16) }" id="end_time" size="20" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                 	<br><br>
                 	共 <input type="text" name="day_num" class="common-text2" size="2" value="${jb.dayNum }"> 天 <input type="text" name="hour_num" class="common-text2" size="2" value="${jb.hourNum }"> 小时
                 	<br><br>

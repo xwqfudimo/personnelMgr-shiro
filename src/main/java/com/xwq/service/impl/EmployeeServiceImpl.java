@@ -174,5 +174,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Salary getSalary(int id) {
 		return this.salaryDao.get(id);
 	}
+
+	/**
+	 * 获取指定id部门的员工id列表
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Integer> getEmpIdsByDeptId(int deptId) {
+		String hql = "select e.id from Employee e where e.department.id = ?";
+		return this.employeeDao.queryList(hql, deptId);
+	}
 	
 }

@@ -30,9 +30,9 @@
             			<option value="<%=QingjiaType.PUBLIC%>" <c:if test="${qj.qjType == QingjiaType.PUBLIC }">selected</c:if> >公假</option>
             		</select>
             		<br><br>
-                	起始时间：<input type="text" class="common-text2 laydate-icon" name="start_time" id="start_time" value="${fn:substring(qj.startTime, 0, 16) }" size="18" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                	起始时间：<input type="text" class="common-text2 laydate-icon" name="start_time" id="start_time" value="${fn:substring(qj.startTime, 0, 16) }" size="20" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                 	&nbsp;&nbsp;
-                	结束时间：<input type="text" class="common-text2 laydate-icon" name="end_time" id="end_time" value="${fn:substring(qj.endTime, 0, 16) }" size="18" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                	结束时间：<input type="text" class="common-text2 laydate-icon" name="end_time" id="end_time" value="${fn:substring(qj.endTime, 0, 16) }" size="20" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                 	<br><br>
                 	共 <input type="text" name="day_num" class="common-text2" size="2" value="${qj.dayNum }"> 天 <input type="text" name="hour_num" class="common-text2" size="2" value="${qj.hourNum }"> 小时
                 	<br><br>

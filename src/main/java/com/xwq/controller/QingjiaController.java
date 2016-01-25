@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
 import com.xwq.annotation.LogText;
+import com.xwq.enums.AuditStatus;
 import com.xwq.enums.QingjiaType;
+import com.xwq.exception.PermissionDeniedException;
 import com.xwq.model.Qingjia;
 import com.xwq.util.DateUtil;
+import com.xwq.vo.DeptFzrVo;
 
 @Controller
 public class QingjiaController extends BaseController {
@@ -138,5 +141,92 @@ public class QingjiaController extends BaseController {
 		this.qingjiaService.delete(id);
 		
 		return true;
+	}
+	
+	
+	/**
+	 * 请假审批列表， 这里不需要权限拦截，在代码中判断
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws PermissionDeniedException 
+	 */
+	@RequestMapping("/qingjiaApproval")
+	public String qingjiaApproval(HttpServletRequest request, Model model) throws PermissionDeniedException {
+		infoSetting(request, "qingjiaApproval", model);
+		
+		String filter = request.getParameter("filter");
+		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
+		//判断登录用户是否具有审批的资格(部门经理、总经理)
+		List<DeptFzrVo> deptList = this.departmentService.getDeptFzrIds();
+		
+		boolean flag = false;  
+		int deptId = 0;
+		for(DeptFzrVo vo : deptList) {
+			if(vo.getFzrEmpId() == empId) {
+				flag = true;
+				deptId = vo.getDeptId();
+				break;
+			}
+		}
+		
+		if(!flag) throw new PermissionDeniedException("你没有权限访问此功能！");
+		
+		//具有审批资格，获取deptId指定的部门中的员工id列表
+		List<Integer> empIdList = this.employeeService.getEmpIdsByDeptId(deptId);
+		
+		List<Qingjia> qjList = this.qingjiaService.getListByEmpIds(empIdList, filter);
+		model.addAttribute("qjList", qjList);
+		
+		filter = filter == null? "all" : filter;
+		model.addAttribute("filter", filter);
+		
+		return "qingjiaApproval/list";
+	}
+	
+	
+	/**
+	 * 批准请假
+	 * @param id
+	 * @param request
+	 * @return
+	 * @throws PermissionDeniedException 
+	 */
+	@LogText("批准请假")
+	@RequestMapping("/qingjiaApproval_approve/{id}")
+	public @ResponseBody boolean qingjiaApprovalApprove(@PathVariable int id, HttpServletRequest request) throws PermissionDeniedException {
+		approvalqingjia(request, id, AuditStatus.APPROVE);
+		
+		return true;
+	}
+	
+	
+	/**
+	 * 不批准请假
+	 * @param id
+	 * @param request
+	 * @return
+	 * @throws PermissionDeniedException 
+	 */
+	@LogText("不批准请假")
+	@RequestMapping("/qingjiaApproval_against/{id}")
+	public @ResponseBody boolean qingjiaApprovalAgainst(@PathVariable int id, HttpServletRequest request) throws PermissionDeniedException {
+		approvalqingjia(request, id, AuditStatus.AGAINST);
+		
+		return true;
+	}
+	
+	
+	private void approvalqingjia(HttpServletRequest request, int id, AuditStatus status) throws PermissionDeniedException {
+		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
+		String empName = request.getSession().getAttribute("empName").toString();
+		
+		List<Integer> frzIdList = this.departmentService.getAllFzrEmpIdList();
+		if(frzIdList.contains(empId)) {
+			this.qingjiaService.updateQingjiaAuditStatus(id, status, empName);
+		}
+		else {
+			throw new PermissionDeniedException("你没有权限访问此功能！");
+		}
 	}
 }

@@ -3,6 +3,7 @@ package com.xwq.service;
 import java.util.List;
 
 import com.xwq.model.Department;
+import com.xwq.vo.DeptFzrVo;
 import com.xwq.vo.DeptVo;
 
 public interface DepartmentService {
@@ -13,4 +14,6 @@ public interface DepartmentService {
 	
 	public List<DeptVo> getDeptList(); 
 	public List<Department> list(String search);
+	public List<DeptFzrVo> getDeptFzrIds();
+	public List<Integer> getAllFzrEmpIdList();
 }

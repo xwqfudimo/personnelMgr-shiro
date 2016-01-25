@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xwq.dao.QingjiaDao;
+import com.xwq.enums.AuditStatus;
 import com.xwq.model.Qingjia;
 import com.xwq.service.QingjiaService;
 import com.xwq.util.Pagination;
@@ -55,6 +56,34 @@ public class QingjiaServiceImpl implements QingjiaService {
 		Pagination.setTotalCount(totalCount);
 		
 		return this.qingjiaDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId);
+	}
+
+	@Override
+	public List<Qingjia> getListByEmpIds(List<Integer> empIdList, String filter) {
+		String hql = "";
+		if(filter == null || filter.equals("all")) {
+			hql = "from Qingjia q where q.employee.id in(:ids) order by q.submitTime desc";
+		}
+		else if(filter.equals("null")) {
+			hql = "from Qingjia q where q.employee.id in(:ids) and q.auditStatus is null order by q.submitTime desc";
+		}
+		else if(filter.equals("yes")) {
+			hql = "from Qingjia q where q.employee.id in(:ids) and q.auditStatus = 1 order by q.submitTime desc";
+		}
+		else {
+			hql = "from Qingjia q where q.employee.id in(:ids) and q.auditStatus = 0 order by q.submitTime desc";
+		}
+		
+		int totalCount = this.qingjiaDao.getTotalCountByEmpIds("select count(*) " + hql, "ids", empIdList);
+		Pagination.setTotalCount(totalCount);
+		
+		return this.qingjiaDao.getByEmpIds(hql, Pagination.getOffset(), Pagination.getPageSize(), "ids", empIdList);
+	}
+
+	@Override
+	public void updateQingjiaAuditStatus(int id, AuditStatus status, String auditPerson) {
+		String hql = "update Qingjia set auditStatus = ?, auditPerson = ? where id = ?";
+		this.qingjiaDao.execute(hql, status, auditPerson, id);
 	}
 
 }

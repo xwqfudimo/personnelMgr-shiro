@@ -18,6 +18,7 @@ public interface EmployeeService {
 	public List<Employee> getEmpsWithDept();
 	public List<EmpVo> getEmpsByName(String empName);
 	public List<EmpVo> getAllEmpVo();
+	public List<Integer> getEmpIdsByDeptId(int deptId);
 	
 	public List<YjReportVo> getYjReportListByEmpId(int empId, String filter);
 	public void addYjReport(YjReport yjReport);

@@ -10,6 +10,7 @@ import com.xwq.dao.DepartmentDao;
 import com.xwq.model.Department;
 import com.xwq.service.DepartmentService;
 import com.xwq.util.Pagination;
+import com.xwq.vo.DeptFzrVo;
 import com.xwq.vo.DeptVo;
 
 @Service("departmentService")
@@ -63,5 +64,32 @@ public class DepartmentServiceImpl implements DepartmentService {
 		List<Department> deptList = this.departmentDao.getListByPage("select d from Department d left join d.fzr where d.name like ?", Pagination.getOffset(), Pagination.getPageSize(), "%"+search+"%");
 		
 		return deptList;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DeptFzrVo> getDeptFzrIds() {
+		String sql = "select id, fzr_emp_id from department";
+		List<Object[]> list = this.departmentDao.sqlQueryList(sql);
+		
+		List<DeptFzrVo> voList = new ArrayList<DeptFzrVo>();
+		for(Object[] objs : list) {
+			DeptFzrVo vo = new DeptFzrVo();
+			vo.setDeptId(Integer.parseInt(objs[0].toString()));
+			vo.setFzrEmpId(Integer.parseInt(objs[1].toString()));
+			voList.add(vo);
+		}
+		
+		return voList;
+	}
+
+	/**
+	 * 获取所有的部门负责人empId
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Integer> getAllFzrEmpIdList() {
+		String sql = "select fzr_emp_id from department";
+		return this.departmentDao.sqlQueryList(sql);
 	}
 }

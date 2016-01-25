@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
 import com.xwq.annotation.LogText;
+import com.xwq.enums.AuditStatus;
+import com.xwq.exception.PermissionDeniedException;
 import com.xwq.model.Jiaban;
 import com.xwq.util.DateUtil;
+import com.xwq.vo.DeptFzrVo;
 
 @Controller
 public class JiabanController extends BaseController {
@@ -139,5 +142,92 @@ public class JiabanController extends BaseController {
 		this.jiabanService.delete(id);
 		
 		return true;
+	}
+	
+	
+	/**
+	 * 加班审批列表， 这里不需要权限拦截，在代码中判断
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws PermissionDeniedException 
+	 */
+	@RequestMapping("/jiabanApproval")
+	public String jiabanApproval(HttpServletRequest request, Model model) throws PermissionDeniedException {
+		infoSetting(request, "jiabanApproval", model);
+		
+		String filter = request.getParameter("filter");
+		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
+		//判断登录用户是否具有审批的资格(部门经理、总经理)
+		List<DeptFzrVo> deptList = this.departmentService.getDeptFzrIds();
+		
+		boolean flag = false;  
+		int deptId = 0;
+		for(DeptFzrVo vo : deptList) {
+			if(vo.getFzrEmpId() == empId) {
+				flag = true;
+				deptId = vo.getDeptId();
+				break;
+			}
+		}
+		
+		if(!flag) throw new PermissionDeniedException("你没有权限访问此功能！");
+		
+		//具有审批资格，获取deptId指定的部门中的员工id列表
+		List<Integer> empIdList = this.employeeService.getEmpIdsByDeptId(deptId);
+		
+		List<Jiaban> jbList = this.jiabanService.getListByEmpIds(empIdList, filter);
+		model.addAttribute("jbList", jbList);
+		
+		filter = filter == null? "all" : filter;
+		model.addAttribute("filter", filter);
+		
+		return "jiabanApproval/list";
+	}
+	
+	
+	/**
+	 * 批准加班
+	 * @param id
+	 * @param request
+	 * @return
+	 * @throws PermissionDeniedException 
+	 */
+	@LogText("批准加班")
+	@RequestMapping("/jiabanApproval_approve/{id}")
+	public @ResponseBody boolean jiabanApprovalApprove(@PathVariable int id, HttpServletRequest request) throws PermissionDeniedException {
+		approvalJiaban(request, id, AuditStatus.APPROVE);
+		
+		return true;
+	}
+	
+	
+	/**
+	 * 不批准加班
+	 * @param id
+	 * @param request
+	 * @return
+	 * @throws PermissionDeniedException 
+	 */
+	@LogText("不批准加班")
+	@RequestMapping("/jiabanApproval_against/{id}")
+	public @ResponseBody boolean jiabanApprovalAgainst(@PathVariable int id, HttpServletRequest request) throws PermissionDeniedException {
+		approvalJiaban(request, id, AuditStatus.AGAINST);
+		
+		return true;
+	}
+	
+	
+	private void approvalJiaban(HttpServletRequest request, int id, AuditStatus status) throws PermissionDeniedException {
+		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
+		String empName = request.getSession().getAttribute("empName").toString();
+		
+		List<Integer> frzIdList = this.departmentService.getAllFzrEmpIdList();
+		if(frzIdList.contains(empId)) {
+			this.jiabanService.updateJiabanAuditStatus(id, status, empName);
+		}
+		else {
+			throw new PermissionDeniedException("你没有权限访问此功能！");
+		}
 	}
 }
