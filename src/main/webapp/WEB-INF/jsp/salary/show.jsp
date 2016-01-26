@@ -28,6 +28,9 @@
                         <label class="res-lab">日期</label><span class="res-info">${salary.date }</span>
                     </li>
                     <li>
+                        <label class="res-lab">员工</label><span class="res-info">${salary.empName }</span>
+                    </li>
+                    <li>
                         <label class="res-lab">基本工资</label><span class="res-info">${salary.basicSalary }</span>
                     </li>
                     <li>

@@ -30,5 +30,8 @@ public interface EmployeeService {
 	
 	public List<Salary> listSalaryByEmpId(int empId);
 	public Salary getSalary(int id);
-	
+	public List<Salary> listAllSalaryByPage();
+	public void addSalary(Salary salary);
+	public void updateSalary(Salary salary);
+	public void deleteSalary(int id);
 }

@@ -17,7 +17,7 @@
         
       	<div class="result-wrap">
       		<div class="result-title">
-                <h1>新增考勤记录</h1>
+                <h1>修改考勤记录</h1>
             </div>
             <form method="post" action="${ctxPath }/kaoqin_edit_submit">
                 	员工：${kq.empName }

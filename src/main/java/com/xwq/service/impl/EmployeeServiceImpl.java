@@ -162,7 +162,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 */
 	@Override
 	public List<Salary> listSalaryByEmpId(int empId) {
-		String hql = " from Salary s where s.employee.id = ?";
+		String hql = " from Salary s where s.employee.id = ?  order by date desc";
 		
 		int totalCount = Integer.parseInt(this.salaryDao.query("select count(*) " + hql, empId).toString());
 		Pagination.setTotalCount(totalCount);
@@ -208,6 +208,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void auditedYjReport(int id) {
 		String hql = "update YjReport set audited = true where id = ?";
 		this.yjReportDao.execute(hql, id);
+	}
+
+	@Override
+	public List<Salary> listAllSalaryByPage() {
+		String hql = " from Salary order by date desc";
+		
+		int totalCount = Integer.parseInt(this.salaryDao.query("select count(*) " + hql).toString());
+		Pagination.setTotalCount(totalCount);
+		
+		return this.salaryDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize());
+	}
+
+	@Override
+	public void addSalary(Salary salary) {
+		this.salaryDao.add(salary);
+	}
+
+	@Override
+	public void updateSalary(Salary salary) {
+		this.salaryDao.update(salary);
+	}
+
+	@Override
+	public void deleteSalary(int id) {
+		this.salaryDao.delete(id);
 	}
 	
 }
