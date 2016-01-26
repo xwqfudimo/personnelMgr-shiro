@@ -10,4 +10,5 @@ public interface KaoqinService {
 	public void update(Kaoqin t);
 	public Kaoqin get(int id);
 	public List<Kaoqin> getListByEmpId(int empId, String filter);
+	public List<Kaoqin> listAllByPage(String filter);
 }

@@ -22,8 +22,8 @@ public class Kaoqin {
 	private String empName;
 	@Column(name="dept_name")
 	private String deptName;
-	@Column(name="moring_sign_time")
-	private String moringSignTime;
+	@Column(name="morning_sign_time")
+	private String morningSignTime;
 	@Column(name="afternoon_sign_time")
 	private String afternoonSignTime;
 	@Column(name="t_date")
@@ -41,11 +41,12 @@ public class Kaoqin {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-	public String getMoringSignTime() {
-		return moringSignTime;
+
+	public String getMorningSignTime() {
+		return morningSignTime;
 	}
-	public void setMoringSignTime(String moringSignTime) {
-		this.moringSignTime = moringSignTime;
+	public void setMorningSignTime(String morningSignTime) {
+		this.morningSignTime = morningSignTime;
 	}
 	public String getAfternoonSignTime() {
 		return afternoonSignTime;

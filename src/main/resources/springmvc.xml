@@ -63,6 +63,8 @@
     		<mvc:mapping path="/jiabanApproval"/>
     		<mvc:mapping path="/qingjiaApproval"/>
     		<mvc:mapping path="/yjReportAudit"/>
+    		<mvc:mapping path="/kaoqinMgr"/>
+    		<mvc:mapping path="/salaryMgr"/>
     		
     		<bean class="com.xwq.interceptor.PaginationInterceptor">
     			<property name="pageSize" value="15"/>

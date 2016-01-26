@@ -67,4 +67,38 @@ public class KaoqinServiceImpl implements KaoqinService {
 		return result;
 	}
 
+	/**
+	 * 分页获取全体员工的考勤记录
+	 */
+	@Override
+	public List<Kaoqin> listAllByPage(String filter) {
+		List<Kaoqin> result = null;
+		if(filter == null || "this-month".equals(filter)) {
+			String hql = "from Kaoqin kq where kq.date like ? order by kq.date desc";
+			
+			int totalCount = Integer.parseInt(this.kaoqinDao.query("select count(*) " + hql, DateUtil.getThisMonth() + "%").toString());
+			Pagination.setTotalCount(totalCount);
+			
+			result = this.kaoqinDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), DateUtil.getThisMonth() + "%");
+		}
+		else if("last-month".equals(filter)) {
+			String hql = "from Kaoqin kq where kq.date like ? order by kq.date desc";
+			
+			int totalCount = Integer.parseInt(this.kaoqinDao.query("select count(*) " + hql, DateUtil.getLastMonth() + "%").toString());
+			Pagination.setTotalCount(totalCount);
+			
+			result = this.kaoqinDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), DateUtil.getLastMonth() + "%");
+		}
+		else {
+			String hql = "from Kaoqin kq order by kq.date desc";
+			
+			int totalCount = Integer.parseInt(this.kaoqinDao.query("select count(*) " + hql).toString());
+			Pagination.setTotalCount(totalCount);
+			
+			result = this.kaoqinDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize());
+		}
+			
+		return result;
+	}
+
 }
