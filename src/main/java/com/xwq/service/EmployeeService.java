@@ -21,11 +21,14 @@ public interface EmployeeService {
 	public List<Integer> getEmpIdsByDeptId(int deptId);
 	
 	public List<YjReportVo> getYjReportListByEmpId(int empId, String filter);
+	public List<YjReport> getYjReportListByEmpIds(List<Integer> empIdList, String filter);
 	public void addYjReport(YjReport yjReport);
 	public YjReport getYjReport(int id);
 	public void updateYjReport(YjReport report);
 	public void deleteYjReport(int id);
+	public void auditedYjReport(int id);
 	
 	public List<Salary> listSalaryByEmpId(int empId);
 	public Salary getSalary(int id);
+	
 }

@@ -2,6 +2,7 @@ package com.xwq.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -17,7 +18,7 @@ public class YjReport {
 	@Id
 	@GeneratedValue
 	private int id;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="emp_id")
 	private Employee employee;
 	@Column(name="emp_name")
@@ -25,8 +26,8 @@ public class YjReport {
 	@Column(name="dept_name")
 	private String deptName;
 	private String title;
-	@Column(name="finish_state")
-	private String finishState;
+	@Column(name="finish_situation")
+	private String finishSituation;
 	
 	@Column(name="job_summary")
 	private String jobSummary;
@@ -86,11 +87,12 @@ public class YjReport {
 	public void setAudited(boolean audited) {
 		this.audited = audited;
 	}
-	public String getFinishState() {
-		return finishState;
+
+	public String getFinishSituation() {
+		return finishSituation;
 	}
-	public void setFinishState(String finishState) {
-		this.finishState = finishState;
+	public void setFinishSituation(String finishSituation) {
+		this.finishSituation = finishSituation;
 	}
 	public String getAuditPerson() {
 		return auditPerson;

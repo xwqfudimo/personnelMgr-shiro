@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
 import com.xwq.annotation.LogText;
+import com.xwq.exception.PermissionDeniedException;
 import com.xwq.model.YjReport;
 import com.xwq.util.DateUtil;
 import com.xwq.vo.YjReportVo;
@@ -69,7 +70,7 @@ public class YjReportController extends BaseController {
 			yjReport.setDeptName(session.getAttribute("deptName").toString());
 			yjReport.setEmployee(this.employeeService.get(Integer.parseInt(session.getAttribute("empId").toString())));
 			yjReport.setEmpName(session.getAttribute("empName").toString());
-			yjReport.setFinishState(request.getParameter("finish_state"));
+			yjReport.setFinishSituation(request.getParameter("finish_situation"));
 			yjReport.setJobSummary(request.getParameter("job_summary"));
 			yjReport.setTitle(title);
 			
@@ -119,7 +120,7 @@ public class YjReportController extends BaseController {
 		
 		YjReport report = this.employeeService.getYjReport(id);
 		report.setTitle(request.getParameter("title"));
-		report.setFinishState(request.getParameter("finish_state"));
+		report.setFinishSituation(request.getParameter("finish_situation"));
 		report.setJobSummary(request.getParameter("job_summary"));
 		
 		this.employeeService.updateYjReport(report);
@@ -135,6 +136,74 @@ public class YjReportController extends BaseController {
 	@RequestMapping(value="/yjReport_del/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean yjReportDel(@PathVariable int id) {
 		this.employeeService.deleteYjReport(id);
+		
+		return true;
+	}
+	
+	/**
+	 * 业绩报告审核列表
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws PermissionDeniedException 
+	 */
+	@RequestMapping("/yjReportAudit")
+	public String yjReportAuditList(HttpServletRequest request, Model model) throws PermissionDeniedException {
+		infoSetting(request, "yjReportAudit", model);
+		
+		String filter = request.getParameter("filter");
+		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
+		int deptId = super.getFzrDeptId(empId);
+		
+		//具有审批资格，获取deptId指定的部门中的员工id列表
+		List<Integer> empIdList = this.employeeService.getEmpIdsByDeptId(deptId);
+
+		List<YjReport> yjList = this.employeeService.getYjReportListByEmpIds(empIdList, filter);
+		model.addAttribute("yjList", yjList);
+		
+		filter = filter == null? "all" : filter;
+		model.addAttribute("filter", filter);
+		
+		return "yjReportAudit/list";
+	}
+	
+	
+	/**
+	 * 审核业绩报告
+	 * @throws PermissionDeniedException 
+	 */
+	@RequestMapping(value="/yjReport_audit/{id}", method=RequestMethod.GET)
+	public String yjReportAudit(@PathVariable int id, HttpServletRequest request, Model model) throws PermissionDeniedException {
+		infoSetting(request, "yjReportAudit", model);
+		
+		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
+		
+		List<Integer> frzIdList = this.departmentService.getAllFzrEmpIdList();
+		if(!frzIdList.contains(empId)) {
+			throw new PermissionDeniedException("你没有权限访问此功能！");
+		}
+		
+		YjReport report = this.employeeService.getYjReport(id);
+		model.addAttribute("report", report);
+		
+		return "yjReportAudit/audit";
+	}
+	
+	
+	/**
+	 * 审核业绩报告通过
+	 * @throws PermissionDeniedException 
+	 */
+	@RequestMapping(value="/yjReport_audited/{id}", method=RequestMethod.GET)
+	public @ResponseBody boolean yjReportAudited(@PathVariable int id, HttpServletRequest request) throws PermissionDeniedException {
+		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
+		
+		List<Integer> frzIdList = this.departmentService.getAllFzrEmpIdList();
+		if(!frzIdList.contains(empId)) {
+			throw new PermissionDeniedException("你没有权限访问此功能！");
+		}
+		
+		this.employeeService.auditedYjReport(id);
 		
 		return true;
 	}

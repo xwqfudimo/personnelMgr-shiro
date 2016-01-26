@@ -14,54 +14,54 @@ import com.xwq.util.Pagination;
 @Service("kaoqinService")
 public class KaoqinServiceImpl implements KaoqinService {
 	@Autowired
-	private KaoqinDao kaoqingDao;
+	private KaoqinDao kaoqinDao;
 
 	@Override
 	public void add(Kaoqin t) {
-		this.kaoqingDao.add(t);
+		this.kaoqinDao.add(t);
 	}
 
 	@Override
 	public void delete(int id) {
-		this.kaoqingDao.delete(id);
+		this.kaoqinDao.delete(id);
 	}
 
 	@Override
 	public void update(Kaoqin t) {
-		this.kaoqingDao.update(t);
+		this.kaoqinDao.update(t);
 	}
 
 	@Override
 	public Kaoqin get(int id) {
-		return this.kaoqingDao.get(id);
+		return this.kaoqinDao.get(id);
 	}
 
 	@Override
 	public List<Kaoqin> getListByEmpId(int empId, String filter) {
 		List<Kaoqin> result = null;
 		if(filter == null || "this-month".equals(filter)) {
-			String hql = "from Kaoqing kq where kq.employee.id = ? and kq.date like ? order by kq.date desc";
+			String hql = "from Kaoqin kq where kq.employee.id = ? and kq.date like ? order by kq.date desc";
 			
-			int totalCount = Integer.parseInt(this.kaoqingDao.query("select count(*) " + hql, empId, DateUtil.getThisMonth() + "%").toString());
+			int totalCount = Integer.parseInt(this.kaoqinDao.query("select count(*) " + hql, empId, DateUtil.getThisMonth() + "%").toString());
 			Pagination.setTotalCount(totalCount);
 			
-			result = this.kaoqingDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId, DateUtil.getThisMonth() + "%");
+			result = this.kaoqinDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId, DateUtil.getThisMonth() + "%");
 		}
 		else if("last-month".equals(filter)) {
-			String hql = "from Kaoqing kq where kq.employee.id = ? and kq.date like ? order by kq.date desc";
+			String hql = "from Kaoqin kq where kq.employee.id = ? and kq.date like ? order by kq.date desc";
 			
-			int totalCount = Integer.parseInt(this.kaoqingDao.query("select count(*) " + hql, empId, DateUtil.getLastMonth() + "%").toString());
+			int totalCount = Integer.parseInt(this.kaoqinDao.query("select count(*) " + hql, empId, DateUtil.getLastMonth() + "%").toString());
 			Pagination.setTotalCount(totalCount);
 			
-			result = this.kaoqingDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId, DateUtil.getLastMonth() + "%");
+			result = this.kaoqinDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId, DateUtil.getLastMonth() + "%");
 		}
 		else {
-			String hql = "from Kaoqing kq where kq.employee.id = ? order by kq.date desc";
+			String hql = "from Kaoqin kq where kq.employee.id = ? order by kq.date desc";
 			
-			int totalCount = Integer.parseInt(this.kaoqingDao.query("select count(*) " + hql, empId).toString());
+			int totalCount = Integer.parseInt(this.kaoqinDao.query("select count(*) " + hql, empId).toString());
 			Pagination.setTotalCount(totalCount);
 			
-			result = this.kaoqingDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId);
+			result = this.kaoqinDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId);
 		}
 			
 		return result;

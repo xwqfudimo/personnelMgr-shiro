@@ -23,7 +23,7 @@
                 	<br><br>
                 	<div>
                 		<div class="pxtop">本月完成情况：</div>
-                		<div class="pxtop"><textarea name="finish_state" class="common-textarea" cols="50" rows="8"></textarea></div>
+                		<div class="pxtop"><textarea name="finish_situation" class="common-textarea" cols="50" rows="8"></textarea></div>
                 	</div>
                 	<br>
                 	<div>

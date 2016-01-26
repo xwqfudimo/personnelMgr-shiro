@@ -20,4 +20,8 @@ public interface BaseDao<T> {
 	public List sqlQueryList(String sql, Object...params);
 	public List sqlQueryListByPage(String sql, int offset, int pageSize, Object...params);
 	public Object sqlQuery(String sql, Object...params);
+	
+	
+	public int getTotalCountByEmpIds(String hql, String paramName, List<Integer> empIds);
+	public List<T> getByEmpIds(String hql, int offset, int pageSize, String paramName, List<Integer> empIds);
 }

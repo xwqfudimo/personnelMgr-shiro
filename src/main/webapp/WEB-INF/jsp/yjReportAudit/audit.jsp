@@ -5,7 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>查看业绩报告</title>
+<title>审核业绩报告</title>
+ <script type="text/javascript" src="${ctxPath }/resources/js/layer/layer.js"></script>
+ <link rel="stylesheet" type="text/css" href="${ctxPath }/resources/css/btn_style.css">
+ <style type="text/css">
+ 	a:hover {text-decoration: none; color: #e8f0de;}
+ </style>
 </head>
 <body>
     <div class="main-wrap">
@@ -15,7 +20,7 @@
         
         <div class="result-wrap">
             <div class="result-title">
-                <h1>查看业绩报告</h1>
+                <h1>审核业绩报告</h1>
             </div>
             <div class="result-content">
                 <ul class="sys-info-list">
@@ -31,22 +36,34 @@
                     <li>
                         <label class="res-lab">审批状态</label>
                         <span class="res-info">
-              					<c:choose>
-              						<c:when test="${report.audited == true }"><span class="approve">✔已审核</span></c:when>
-              						<c:otherwise>未审核</c:otherwise>
-              					</c:choose>
+                        	<c:choose>
+	                        	<c:when test="${report.audited == false }">
+	              					<a href="#" class="button green" onclick="approve(${report.id})">✔审核通过</a>
+	              				</c:when>
+	              				<c:otherwise>
+	              					<span class="approve">✔已审核</span>
+	              				</c:otherwise>
+              				</c:choose>	
                         </span>
                     </li>
-                    
-                    <c:if test="${report.audited == true }">
-	                    <li>
-	                        <label class="res-lab">审核人</label><span class="res-info">${report.auditPerson }</span>
-	                    </li>
-                    </c:if>
                 </ul>
             </div>
         </div>
  
     </div>
+<script>
+function approve(id) {
+	 layer.confirm('确定业绩报告审核通过吗？', {title: '提示', btn:['确定', '取消']}, function(){
+        var url = '${ctxPath }/yjReport_audited/'+ id;
+        $.get(url, function(result) {
+       	 if(result) {
+       		 layer.msg('操作成功！', {time:2000});
+                window.location.reload();
+       	 }
+        });
+    });
+}
+</script>    
+    
 </body>
 </html>

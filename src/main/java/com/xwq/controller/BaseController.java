@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import com.xwq.exception.PermissionDeniedException;
 import com.xwq.model.Menu;
 import com.xwq.service.DepartmentService;
 import com.xwq.service.EmployeeService;
@@ -20,6 +21,7 @@ import com.xwq.service.PrivilegeService;
 import com.xwq.service.QingjiaService;
 import com.xwq.service.RoleService;
 import com.xwq.service.UserService;
+import com.xwq.vo.DeptFzrVo;
 
 @Controller
 public class BaseController {
@@ -168,5 +170,25 @@ public class BaseController {
 		buffer.append("]");
 		
 		return buffer.toString();
+	}
+	
+	
+	protected int getFzrDeptId(int empId) throws PermissionDeniedException {
+		//判断登录用户是否具有审批的资格(部门经理、总经理)
+		List<DeptFzrVo> deptList = this.departmentService.getDeptFzrIds();
+		
+		boolean flag = false;  
+		int deptId = -1;
+		for(DeptFzrVo vo : deptList) {
+			if(vo.getFzrEmpId() == empId) {
+				flag = true;
+				deptId = vo.getDeptId();
+				break;
+			}
+		}
+		
+		if(!flag) throw new PermissionDeniedException("你没有权限访问此功能！");
+		
+		return deptId;
 	}
 }

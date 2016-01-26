@@ -19,24 +19,20 @@
         
       	<div class="result-wrap">
       		<div class="result-title">
-                <h1>我的业绩报告</h1>
+                <h1>业绩报告审核</h1>
             </div>
             <form method="get">
-                <div class="result-title">
-                    <div class="result-list">
-                        <a href="${ctxPath }/yjReport_add"><i class="icon-font"></i>新增业绩报告</a>
-                    </div>
-                </div>
                 <div class="result-content">
-                	<div class="list-title">我的月业绩报告列表：</div>
+                	<div class="list-title">业绩报告审核列表：</div>
                 	<div class="result-bar">
                 		筛选：
-	                	<input type="radio" class="common-radio" name="audited"  value="all"  <c:if test="${audited == 'all' }">checked="checked"</c:if>>全部&nbsp;
-	                	<input type="radio" class="common-radio" name="audited" value="yes"  <c:if test="${audited == 'yes' }">checked="checked"</c:if>><span class="approve">✔已审核</span>&nbsp;
-	                	<input type="radio" class="common-radio" name="audited" value="no"  <c:if test="${audited == 'no' }">checked="checked"</c:if>>未审核
+	                	<input type="radio" class="common-radio" name="filter"  value="all"  <c:if test="${filter == 'all' }">checked="checked"</c:if>>全部&nbsp;
+	                	<input type="radio" class="common-radio" name="filter" value="yes"  <c:if test="${filter == 'yes' }">checked="checked"</c:if>><span class="approve">✔已审核</span>&nbsp;
+	                	<input type="radio" class="common-radio" name="filter" value="no"  <c:if test="${filter == 'no' }">checked="checked"</c:if>>未审核
                 	</div>  
                     <table class="result-tab grid-data" width="100%">
                         <tr>
+                        	<th width="100px">提交人</th>
                             <th style="text-align:left;">标题</th>
                             <th width="200px">提交日期</th>
                             <th width="200px">是否审核</th>
@@ -45,7 +41,8 @@
 
                    		<c:forEach items="${yjList }" var="yj">
                    			<tr>
-                   				<td style="text-align:left;"><a target="_blank" href="${ctxPath}/yjReport/${yj.id}" class="title_a">${yj.title }</a></td>
+                   				<td>${yj.empName }</td>
+                   				<td style="text-align:left;"><a target="_blank" href="${ctxPath}/yjReport_audit/${yj.id}" class="title_a">${yj.title }</a></td>
                    				<td>${yj.submitDate }</td>
                    				<td>
                    					<c:choose>
@@ -58,11 +55,8 @@
                    					</c:choose>
                    				</td>
                    				<td>
-                   					<a class="link-update" target="_blank" href="${ctxPath}/yjReport/${yj.id}">查看</a>
-                   					
                    					<c:if test="${yj.audited == false }">
-                   					 	<a class="link-update" href="${ctxPath}/yjReport_edit/${yj.id}">修改</a>
-                                    	<a class="link-del" href="javascript:void(0)" onclick="del(${yj.id})">删除</a>
+                   						<a class="link-update" target="_blank" href="${ctxPath}/yjReport_audit/${yj.id}">审核</a>
                    					</c:if>
                                 </td>
                    			</tr>
@@ -93,17 +87,6 @@ $(document).ready(function(){
 	});
 });
 
-function del(id) {
-	 layer.confirm('确定删除数据吗？', {title: '提示', btn:['确定', '取消']}, function(){
-       var url = '${ctxPath }/yjReport_del/'+ id;
-       $.get(url, function(result) {
-      	 if(result) {
-      		 layer.msg('删除成功！', {time:2000});
-             window.location.reload();
-      	 }
-       });
-   });
-}
 </script>    
     
 <script type="text/javascript" src="${ctxPath }/resources/pagination/pagination.js"></script>        

@@ -184,5 +184,30 @@ public class EmployeeServiceImpl implements EmployeeService {
 		String hql = "select e.id from Employee e where e.department.id = ?";
 		return this.employeeDao.queryList(hql, deptId);
 	}
+
+	@Override
+	public List<YjReport> getYjReportListByEmpIds(List<Integer> empIdList, String filter) {
+		String hql = "";
+		if(filter == null || "all".equals(filter)) {
+			hql = " from YjReport yj where yj.employee.id in (:ids)";
+		}
+		else if("yes".equals(filter)) {
+			hql = " from YjReport yj where yj.employee.id in (:ids) and yj.audited = 1";
+		}
+		else {
+			hql = " from YjReport yj where yj.employee.id in (:ids) and yj.audited = 0";
+		}
+		
+		int totalCount = this.yjReportDao.getTotalCountByEmpIds("select count(*) " + hql, "ids", empIdList);
+		Pagination.setTotalCount(totalCount);
+		
+		return this.yjReportDao.getByEmpIds(hql, Pagination.getOffset(), Pagination.getPageSize(), "ids", empIdList);
+	}
+
+	@Override
+	public void auditedYjReport(int id) {
+		String hql = "update YjReport set audited = true where id = ?";
+		this.yjReportDao.execute(hql, id);
+	}
 	
 }

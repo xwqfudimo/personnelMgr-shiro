@@ -33,18 +33,22 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 				String logStr = logText.value();
 				
 				if(logStr != null) {
-					String username = request.getSession().getAttribute("loginUser").toString();
-					String url = request.getRequestURI();
-					url = url.replace(request.getContextPath(), "");
-					String param = JsonUtil.toJson(request.getParameterMap());
+					Object usernameObj = request.getSession().getAttribute("loginUser");
 					
-					Log log = new Log();
-					log.setUname(username);
-					log.setLogMsg(logStr);
-					log.setUrl(url);
-					log.setParam(param);
-					log.setRecordTime(DateUtil.getCurrentTime());
-					this.logService.addLog(log);
+					if(usernameObj != null) {
+						String username = usernameObj.toString();
+						String url = request.getRequestURI();
+						url = url.replace(request.getContextPath(), "");
+						String param = JsonUtil.toJson(request.getParameterMap());
+						
+						Log log = new Log();
+						log.setUname(username);
+						log.setLogMsg(logStr);
+						log.setUrl(url);
+						log.setParam(param);
+						log.setRecordTime(DateUtil.getCurrentTime());
+						this.logService.addLog(log);
+					}
 				}
 			}
 		}

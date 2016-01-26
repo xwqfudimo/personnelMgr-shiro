@@ -18,7 +18,6 @@ import com.xwq.enums.AuditStatus;
 import com.xwq.exception.PermissionDeniedException;
 import com.xwq.model.Jiaban;
 import com.xwq.util.DateUtil;
-import com.xwq.vo.DeptFzrVo;
 
 @Controller
 public class JiabanController extends BaseController {
@@ -158,20 +157,7 @@ public class JiabanController extends BaseController {
 		
 		String filter = request.getParameter("filter");
 		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
-		//判断登录用户是否具有审批的资格(部门经理、总经理)
-		List<DeptFzrVo> deptList = this.departmentService.getDeptFzrIds();
-		
-		boolean flag = false;  
-		int deptId = 0;
-		for(DeptFzrVo vo : deptList) {
-			if(vo.getFzrEmpId() == empId) {
-				flag = true;
-				deptId = vo.getDeptId();
-				break;
-			}
-		}
-		
-		if(!flag) throw new PermissionDeniedException("你没有权限访问此功能！");
+		int deptId = super.getFzrDeptId(empId);
 		
 		//具有审批资格，获取deptId指定的部门中的员工id列表
 		List<Integer> empIdList = this.employeeService.getEmpIdsByDeptId(deptId);

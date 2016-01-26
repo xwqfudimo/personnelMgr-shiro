@@ -2,7 +2,7 @@ package com.xwq.util;
 
 public class Pagination {
 	//每页显示数量
-	private static ThreadLocal<Integer> pageSize = new ThreadLocal<Integer>();
+	private static int pageSize;
 	//开始位置
 	private static ThreadLocal<Integer> offset = new ThreadLocal<Integer>();
 	//当前页码
@@ -13,13 +13,10 @@ public class Pagination {
 	private static int pageCount;
 	
 	public static int getPageSize() {
-		return pageSize.get();
+		return pageSize;
 	}
 	public static void setPageSize(int pageSize) {
-		Pagination.pageSize.set(pageSize);
-	}
-	public static void removePagesize() {
-		Pagination.pageSize.remove();
+		Pagination.pageSize = pageSize;
 	}
 	public static int getOffset() {
 		return offset.get();
@@ -33,7 +30,7 @@ public class Pagination {
 	public static void setPageIndex(int pageIndex) {
 		Pagination.pageIndex = pageIndex;
 		
-		Pagination.offset.set((Pagination.pageIndex-1) * Pagination.pageSize.get());
+		Pagination.offset.set((Pagination.pageIndex-1) * Pagination.pageSize);
 	}
 	
 	public static int getPageIndex() {
@@ -45,11 +42,11 @@ public class Pagination {
 	public static void setTotalCount(int totalCount) {
 		Pagination.totalCount.set(totalCount);
 		
-		if(totalCount % pageSize.get() == 0) {
-			Pagination.pageCount = totalCount / pageSize.get();
+		if(totalCount % Pagination.pageSize == 0) {
+			Pagination.pageCount = totalCount / Pagination.pageSize;
 		}
 		else {
-			Pagination.pageCount = totalCount / pageSize.get() + 1;
+			Pagination.pageCount = totalCount / Pagination.pageSize + 1;
 		}
 	}
 	public static void removeTotatlCount() {
