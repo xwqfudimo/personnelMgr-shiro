@@ -172,7 +172,7 @@ public class BaseController {
 		return buffer.toString();
 	}
 	
-	
+	//根据负责人id返回部门id
 	protected int getFzrDeptId(int empId) throws PermissionDeniedException {
 		//判断登录用户是否具有审批的资格(部门经理、总经理)
 		List<DeptFzrVo> deptList = this.departmentService.getDeptFzrIds();
@@ -190,5 +190,15 @@ public class BaseController {
 		if(!flag) throw new PermissionDeniedException("你没有权限访问此功能！");
 		
 		return deptId;
+	}
+	
+	/**
+	 * 更新当前登录用户的权限url列表
+	 * @param request
+	 */
+	protected void updatePrivilegeUrlList(HttpServletRequest request) {
+		String username = request.getSession().getAttribute("loginUser").toString();
+		List<String> privilegeUriList = this.privilegeService.getAllPrivilegeUrlByUsername(username);
+		request.getSession().getServletContext().setAttribute("privilegeUriList", privilegeUriList);
 	}
 }

@@ -65,6 +65,7 @@
     		<mvc:mapping path="/yjReportAudit"/>
     		<mvc:mapping path="/kaoqinMgr"/>
     		<mvc:mapping path="/salaryMgr"/>
+    		<mvc:mapping path="/dataBackupRestore"/>
     		
     		<bean class="com.xwq.interceptor.PaginationInterceptor">
     			<property name="pageSize" value="15"/>

@@ -26,7 +26,7 @@ public interface EmployeeService {
 	public YjReport getYjReport(int id);
 	public void updateYjReport(YjReport report);
 	public void deleteYjReport(int id);
-	public void auditedYjReport(int id);
+	public void auditedYjReport(int id, String auditPerson);
 	
 	public List<Salary> listSalaryByEmpId(int empId);
 	public Salary getSalary(int id);

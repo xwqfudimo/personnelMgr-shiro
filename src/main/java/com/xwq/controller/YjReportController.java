@@ -197,13 +197,15 @@ public class YjReportController extends BaseController {
 	@RequestMapping(value="/yjReport_audited/{id}", method=RequestMethod.GET)
 	public @ResponseBody boolean yjReportAudited(@PathVariable int id, HttpServletRequest request) throws PermissionDeniedException {
 		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
+		String empName = request.getSession().getAttribute("empName").toString();
 		
 		List<Integer> frzIdList = this.departmentService.getAllFzrEmpIdList();
 		if(!frzIdList.contains(empId)) {
 			throw new PermissionDeniedException("你没有权限访问此功能！");
 		}
 		
-		this.employeeService.auditedYjReport(id);
+		this.employeeService.auditedYjReport(id, empName);
+		
 		
 		return true;
 	}

@@ -63,6 +63,11 @@
 	</servlet-mapping>
 	
 	
+	<listener>
+		<listener-class>com.xwq.listener.SpringContext</listener-class>
+	</listener>
+	
+	
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>

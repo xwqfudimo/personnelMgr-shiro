@@ -205,9 +205,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public void auditedYjReport(int id) {
-		String hql = "update YjReport set audited = true where id = ?";
-		this.yjReportDao.execute(hql, id);
+	public void auditedYjReport(int id, String auditPerson) {
+		String hql = "update YjReport set audited = true, auditPerson = ? where id = ?";
+		this.yjReportDao.execute(hql, auditPerson, id);
 	}
 
 	@Override

@@ -12,9 +12,9 @@ import com.xwq.util.Pagination;
  * 分页拦截器
  */
 public class PaginationInterceptor extends HandlerInterceptorAdapter {
-	private int pageSize;
+	private String pageSize;
 	
-	public void setPageSize(int pageSize) {
+	public void setPageSize(String pageSize) {
 		this.pageSize = pageSize;
 	}
 
@@ -23,7 +23,7 @@ public class PaginationInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		int pageIndex = request.getParameter("pageIndex") == null? 1 : Integer.parseInt(request.getParameter("pageIndex"));
 		
-		Pagination.setPageSize(pageSize);
+		Pagination.setPageSize(Integer.parseInt(pageSize));
 		Pagination.setPageIndex(pageIndex);
 		Pagination.setTotalCount(0);
 		

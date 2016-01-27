@@ -101,7 +101,7 @@ public class LoginController {
 					}
 					
 					
-					//将用户所拥有权限的uri存到WebDataContext工具类中
+					//将用户所拥有权限的uri存到session中
 					List<String> privilegeUriList = this.privilegeService.getAllPrivilegeUrlByUsername(username);
 					request.getSession().getServletContext().setAttribute("privilegeUriList", privilegeUriList);
 					

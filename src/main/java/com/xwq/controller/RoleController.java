@@ -109,6 +109,8 @@ public class RoleController extends BaseController {
 				rps.add(rp);
 			}
 			this.privilegeService.batchAddRolePrivilege(rps);
+			
+			updatePrivilegeUrlList(request);
 		}
 		
 		return "redirect:/roleMgr";
@@ -219,6 +221,8 @@ public class RoleController extends BaseController {
 				rps.add(rp);
 			}
 			this.privilegeService.batchAddRolePrivilege(rps);
+			
+			updatePrivilegeUrlList(request);
 		}
 		
 		return "redirect:/roleMgr";

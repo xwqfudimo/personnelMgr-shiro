@@ -46,6 +46,11 @@
               				</c:choose>	
                         </span>
                     </li>
+                    <c:if test="${report.audited == true }">
+                    	 <li>
+	                        <label class="res-lab">审核人</label><span class="res-info">${report.auditPerson }</span>
+	                    </li>
+                    </c:if>
                 </ul>
             </div>
         </div>
