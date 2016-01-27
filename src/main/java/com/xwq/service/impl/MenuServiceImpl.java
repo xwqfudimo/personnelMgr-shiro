@@ -18,6 +18,9 @@ public class MenuServiceImpl implements MenuService {
 	@Autowired
 	private RoleMenuDao roleMenuDao;
 
+	/**
+	 * 查询指定用户名的菜单树
+	 */
 	@Override
 	public List<Menu> listByUsername(String username) {
 		String hql = "select mu from Menu mu, User u, Role r, UserRole ur, RoleMenu rm where u.id = ur.userId AND r.id = ur.roleId AND r.id = rm.roleId AND mu.id = rm.menuId AND u.username = ? order by mu.sort";
@@ -41,7 +44,9 @@ public class MenuServiceImpl implements MenuService {
 		return menus;
 	}
 
-	//查询菜单名
+	/**
+	 * 查询菜单名
+	 */
 	@Override
 	public String getMenuNameByHref(String href) {
 		href = "/" + href;
@@ -49,7 +54,9 @@ public class MenuServiceImpl implements MenuService {
 		return this.menuDao.query(hql, href).toString();
 	}
 
-	//菜单树
+	/**
+	 * 查询全部菜单树
+	 */
 	@Override
 	public List<Menu> listTree() {
 		List<Menu> list = this.menuDao.getList("from Menu order by sort");
@@ -96,6 +103,9 @@ public class MenuServiceImpl implements MenuService {
 		this.menuDao.add(menu);
 	}
 
+	/**
+	 * 删除指定父菜单id下的所有子菜单
+	 */
 	@Override
 	public void deleteByPid(int pid) {
 		String hql = "delete from Menu m where m.parent.id = ?";

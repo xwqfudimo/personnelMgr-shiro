@@ -6,9 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Email;
 
 import com.xwq.enums.Gender;
 
@@ -20,6 +23,8 @@ public class Employee {
 	@Id
 	@GeneratedValue
 	private int id;
+	
+	@NotNull(message="员工姓名不能为空")
 	private String name;
 	@ManyToOne
 	@JoinColumn(name="dept_id")
@@ -28,6 +33,7 @@ public class Employee {
 	@Type(type="com.xwq.enums.MyEnumType", 
 			parameters={@Parameter(name="enumClass", value="com.xwq.enums.Gender")})
 	private Gender sex;
+	@Past
 	private String birthdate;
 	private String nationality;
 	//政治面貌
@@ -39,6 +45,8 @@ public class Employee {
 	//学历
 	private String xl;
 	private String phone;
+	
+	@Email(message="email地址格式不正确")
 	private String email;
 	//身份证号码
 	private String card;

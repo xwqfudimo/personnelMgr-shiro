@@ -20,6 +20,9 @@ public class LogServiceImpl implements LogService {
 		this.logDao.add(log);
 	}
 
+	/**
+	 * 分页查询日志列表
+	 */
 	@Override
 	public List<Log> listByPage(String search) {
 		String hql = " from Log where logMsg like ? order by recordTime desc";

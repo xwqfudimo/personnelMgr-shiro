@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
  * 角色
@@ -13,6 +14,8 @@ public class Role {
 	@Id
 	@GeneratedValue
 	private int id;
+	
+	@NotNull(message="角色名称不能为空")
 	private String name;
 	@Column(name="role_desc")
 	private String desc;

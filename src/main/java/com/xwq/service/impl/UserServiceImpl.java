@@ -39,21 +39,33 @@ public class UserServiceImpl implements UserService {
 		return this.userDao.get(id);
 	}
 
+	/**
+	 * 查询用户是否存在
+	 */
 	@Override
 	public boolean userIsExist(String username) {
 		return this.userDao.userIsExist(username);
 	}
 
+	/**
+	 * 根据用户名查询密码
+	 */
 	@Override
 	public String getPwdByUsername(String username) {
 		return this.userDao.getPwdByUsername(username);
 	}
 
+	/**
+	 * 根据用户名查询用户
+	 */
 	@Override
 	public User getByUsername(String username) {
 		return this.userDao.getByUsername(username);
 	}
 
+	/**
+	 * 更新指定用户名的密码
+	 */
 	@Override
 	public boolean updatePassword(String username, String newPwd) {
 		String hql = "update User set password = ? where username = ?";
@@ -63,6 +75,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 
+	/**
+	 * 分页查询用户列表
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserVo> list(String search) {

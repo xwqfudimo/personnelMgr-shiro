@@ -11,6 +11,7 @@ import com.xwq.model.Department;
 import com.xwq.service.DepartmentService;
 import com.xwq.util.Pagination;
 import com.xwq.vo.DeptFzrVo;
+import com.xwq.vo.DeptListVo;
 import com.xwq.vo.DeptVo;
 
 @Service("departmentService")
@@ -38,6 +39,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 		return this.departmentDao.get(id);
 	}
 
+	/**
+	 * 获取包含属性id,name的部门列表
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<DeptVo> getDeptList() {
@@ -56,16 +60,34 @@ public class DepartmentServiceImpl implements DepartmentService {
 		return voList;
 	}
 
+	/**
+	 * 分页查询部门列表
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Department> list(String search) {
+	public List<DeptListVo> list(String search) {
 		int totalCount = Integer.parseInt(this.departmentDao.query("select count(*) from Department where name like ?", "%"+search+"%").toString());
 		Pagination.setTotalCount(totalCount);
 		
-		List<Department> deptList = this.departmentDao.getListByPage("select d from Department d left join d.fzr where d.name like ?", Pagination.getOffset(), Pagination.getPageSize(), "%"+search+"%");
+		List<Object[]> objsList = this.departmentDao.queryListByPage("select d, e.name as ename, e.phone as ephone from Department d left join d.fzr e where d.name like ?", Pagination.getOffset(), Pagination.getPageSize(), "%"+search+"%");
 		
-		return deptList;
+		List<DeptListVo> voList = new ArrayList<DeptListVo>();
+		for(Object[] objs : objsList) {
+			DeptListVo vo = new DeptListVo();
+			Department dept = (Department) objs[0];
+			vo.setDept(dept);
+			vo.setEname(objs[1].toString());
+			vo.setEphone(objs[2].toString());
+			
+			voList.add(vo);
+		}
+		
+		return voList;
 	}
 
+	/**
+	 * 获取部门id及其负责人empId列表
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<DeptFzrVo> getDeptFzrIds() {

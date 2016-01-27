@@ -2,10 +2,12 @@ package com.xwq.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  * 部门
@@ -15,11 +17,14 @@ public class Department {
 	@Id
 	@GeneratedValue
 	private int id;
+	
+	@NotNull(message="部门名称不能为空")
 	private String name;
+	
 	@Column(name="emp_num")
 	private int empNum;
 	//部门负责人
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="fzr_emp_id")
 	private Employee fzr;
 	private int sort;

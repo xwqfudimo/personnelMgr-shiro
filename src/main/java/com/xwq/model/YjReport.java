@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * 业绩报告
  */
@@ -25,6 +27,8 @@ public class YjReport {
 	private String empName;
 	@Column(name="dept_name")
 	private String deptName;
+	
+	@NotEmpty(message="业绩报告标题不能为空")
 	private String title;
 	@Column(name="finish_situation")
 	private String finishSituation;

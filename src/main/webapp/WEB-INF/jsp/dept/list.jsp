@@ -51,16 +51,16 @@
                             <th width="200px">操作</th>
                         </tr>
 
-                   		<c:forEach items="${depts }" var="dept">
+                   		<c:forEach items="${deptVos }" var="vo">
                    			<tr>
-                   				<td>${dept.name }</td>
-                   				<td>${dept.empNum }</td>
-                   				<td>${dept.fzr.name}</td>
-                   				<td>${dept.fzr.phone }</td>
-                   				<td>${dept.sort }</td>
+                   				<td>${vo.dept.name }</td>
+                   				<td>${vo.dept.empNum }</td>
+                   				<td>${vo.ename}</td>
+                   				<td>${vo.ephone }</td>
+                   				<td>${vo.dept.sort }</td>
                    				<td>
-                  					<a class="link-update" href="${ctxPath }/dept_edit/${dept.id}">修改</a>
-                                   	<a class="link-del" href="javascript:void(0)" onclick="del(${dept.id})">删除</a>
+                  					<a class="link-update" href="${ctxPath }/dept_edit/${vo.dept.id}">修改</a>
+                                   	<a class="link-del" href="javascript:void(0)" onclick="del(${vo.dept.id})">删除</a>
                                 </td>
                    			</tr>
                    		</c:forEach>

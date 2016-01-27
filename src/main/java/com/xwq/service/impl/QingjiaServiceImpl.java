@@ -36,6 +36,9 @@ public class QingjiaServiceImpl implements QingjiaService {
 		return this.qingjiaDao.get(id);
 	}
 
+	/**
+	 * 查询指定员工id的请假申请列表
+	 */
 	@Override
 	public List<Qingjia> getListByEmpId(int empId, String filter) {
 		String hql = "";
@@ -58,6 +61,9 @@ public class QingjiaServiceImpl implements QingjiaService {
 		return this.qingjiaDao.getListByPage(hql, Pagination.getOffset(), Pagination.getPageSize(), empId);
 	}
 
+	/**
+	 * 查询指定员工id列表的请假申请列表
+	 */
 	@Override
 	public List<Qingjia> getListByEmpIds(List<Integer> empIdList, String filter) {
 		String hql = "";
@@ -80,6 +86,9 @@ public class QingjiaServiceImpl implements QingjiaService {
 		return this.qingjiaDao.getByEmpIds(hql, Pagination.getOffset(), Pagination.getPageSize(), "ids", empIdList);
 	}
 
+	/**
+	 * 审批请假申请
+	 */
 	@Override
 	public void updateQingjiaAuditStatus(int id, AuditStatus status, String auditPerson) {
 		String hql = "update Qingjia set auditStatus = ?, auditPerson = ? where id = ?";

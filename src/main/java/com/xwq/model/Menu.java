@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 /**
  * 菜单
@@ -19,6 +20,8 @@ public class Menu {
 	@Id
 	@GeneratedValue
 	private int id;
+	
+	@NotNull(message="菜单名称不能为空")
 	private String name;
 	private int level;
 	

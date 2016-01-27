@@ -36,6 +36,9 @@ public class KaoqinServiceImpl implements KaoqinService {
 		return this.kaoqinDao.get(id);
 	}
 
+	/**
+	 * 查询指定员工id的考勤记录列表
+	 */
 	@Override
 	public List<Kaoqin> getListByEmpId(int empId, String filter) {
 		List<Kaoqin> result = null;

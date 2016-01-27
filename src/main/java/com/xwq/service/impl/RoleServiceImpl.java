@@ -43,14 +43,18 @@ public class RoleServiceImpl implements RoleService {
 		return this.roleDao.get(id);
 	}
 
-	//根据用户id查询用户所拥有的角色
+	/**
+	 * 根据用户id查询用户所拥有的角色
+	 */
 	@Override
 	public List<Role> listByUserId(int userId) {
 		String hql = "select r from Role r, User u, UserRole ur where u.id = ur.userId AND r.id = ur.roleId AND u.id = ?";
 		return this.roleDao.getList(hql, userId);
 	}
 
-	//新增用户-角色关联
+	/**
+	 * 新增用户-角色关联
+	 */
 	@Override
 	public void addUserRoles(int userId, int... roleIds) {
 		for(int rid : roleIds) {
@@ -62,7 +66,9 @@ public class RoleServiceImpl implements RoleService {
 		}
 	}
 
-	//删除用户-角色关联
+	/**
+	 * 删除用户-角色关联
+	 */
 	@Override
 	public void deleteUserRole(int userId, int roleId) {
 		String hql = "delete from UserRole ur where ur.userId = ? and ur.roleId = ?";
@@ -85,12 +91,18 @@ public class RoleServiceImpl implements RoleService {
 		return this.roleDao.getListByPage("from Role", Pagination.getOffset(), Pagination.getPageSize());
 	}
 
+	/**
+	 * 删除指定用户id的所有用户-角色关联
+	 */
 	@Override
 	public void deleteAllUserRole(int userId) {
 		String hql = "delete from UserRole where userId = ?";
 		this.roleDao.execute(hql, userId);
 	}
 
+	/**
+	 * 批量添加角色-菜单关联
+	 */
 	@Override
 	public void batchAddRoleMenu(List<RoleMenu> rms) {
 		this.roleMenuDao.batchAdd(rms);

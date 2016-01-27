@@ -54,12 +54,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return this.employeeDao.get(id);
 	}
 
+	/**
+	 * 查询带有部门信息的员工列表
+	 */
 	@Override
 	public List<Employee> getEmpsWithDept() {
 		String hql = "from Employee e join fetch e.department";
 		return this.employeeDao.getList(hql);
 	}
 
+	/**
+	 * 根据姓名模糊查询员工
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<EmpVo> getEmpsByName(String empName) {
@@ -78,6 +84,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return emps;
 	}
 
+	/**
+	 * 查询指定员工id的业绩报告列表
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<YjReportVo> getYjReportListByEmpId(int empId, String filter) {
@@ -131,6 +140,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		this.yjReportDao.delete(id);
 	}
 
+	/**
+	 * 查询包含id,name属性的所有员工列表
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<EmpVo> getAllEmpVo() {
@@ -149,6 +161,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return empVoList;
 	}
 
+	/**
+	 * 分页查询员工列表
+	 */
 	@Override
 	public List<Employee> list(String search) {
 		int totalCount = Integer.parseInt(this.employeeDao.query("select count(*) from Employee where name like ?", "%"+search+"%").toString());
@@ -185,6 +200,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return this.employeeDao.queryList(hql, deptId);
 	}
 
+	/**
+	 * 查询指定员工id列表的所有业绩报告列表
+	 */
 	@Override
 	public List<YjReport> getYjReportListByEmpIds(List<Integer> empIdList, String filter) {
 		String hql = "";
@@ -204,12 +222,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return this.yjReportDao.getByEmpIds(hql, Pagination.getOffset(), Pagination.getPageSize(), "ids", empIdList);
 	}
 
+	/**
+	 * 审核业绩报告
+	 */
 	@Override
 	public void auditedYjReport(int id, String auditPerson) {
 		String hql = "update YjReport set audited = true, auditPerson = ? where id = ?";
 		this.yjReportDao.execute(hql, auditPerson, id);
 	}
 
+	/**
+	 * 分页查询所有薪资列表
+	 */
 	@Override
 	public List<Salary> listAllSalaryByPage() {
 		String hql = " from Salary order by date desc";

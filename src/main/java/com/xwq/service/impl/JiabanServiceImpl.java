@@ -36,6 +36,9 @@ public class JiabanServiceImpl implements JiabanService {
 		return this.jiabanDao.get(id);
 	}
 
+	/**
+	 * 查询指定员工id的加班申请列表
+	 */
 	@Override
 	public List<Jiaban> getListByEmpId(int empId, String filter) {
 		String hql = "";
@@ -59,6 +62,9 @@ public class JiabanServiceImpl implements JiabanService {
 	}
 
 	
+	/**
+	 * 查询指定员工id列表的加班申请列表
+	 */
 	@Override
 	public List<Jiaban> getListByEmpIds(List<Integer> empIds, String filter) {
 		String hql = "";
@@ -81,6 +87,9 @@ public class JiabanServiceImpl implements JiabanService {
 		return this.jiabanDao.getByEmpIds(hql, Pagination.getOffset(), Pagination.getPageSize(), "ids", empIds);
 	}
 
+	/**
+	 * 审批加班申请
+	 */
 	@Override
 	public void updateJiabanAuditStatus(int id, AuditStatus status, String auditPerson) {
 		String hql = "update Jiaban set auditStatus = ?, auditPerson = ? where id = ?";

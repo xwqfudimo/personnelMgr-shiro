@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
  * 权限类
@@ -14,6 +15,8 @@ public class Privilege {
 	@GeneratedValue
 	private int id;
 	private String name;
+	
+	@NotNull(message="权限url不能为空")
 	private String uri;
 	@Column(name="group_name")
 	private String group;

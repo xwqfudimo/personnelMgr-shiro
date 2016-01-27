@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * 用户
  */
@@ -19,11 +21,16 @@ public class User {
 	@Id
 	@GeneratedValue
 	private int id;
+	
 	@OneToOne
 	@JoinColumn(name="emp_id")
 	private Employee employee;
+	
+	@NotEmpty(message="用户名不能为空")
 	@Column(name="username", unique=true)
 	private String username;
+	
+	@NotEmpty(message="密码不能为空")
 	private String password;
 	
 	@Transient

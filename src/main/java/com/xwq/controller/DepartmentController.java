@@ -15,6 +15,7 @@ import com.xwq.annotation.Auth;
 import com.xwq.annotation.LogText;
 import com.xwq.model.Department;
 import com.xwq.util.ParameterUtil;
+import com.xwq.vo.DeptListVo;
 import com.xwq.vo.EmpVo;
 
 @Controller
@@ -31,8 +32,8 @@ public class DepartmentController extends BaseController {
 		infoSetting(request, "deptMgr", model);
 		
 		String keyword = request.getParameter("keyword") == null? "" : request.getParameter("keyword");
-		List<Department> depts = this.departmentService.list(keyword);
-		model.addAttribute("depts", depts);
+		List<DeptListVo> deptVos = this.departmentService.list(keyword);
+		model.addAttribute("deptVos", deptVos);
 		
 		return "dept/list";
 	}

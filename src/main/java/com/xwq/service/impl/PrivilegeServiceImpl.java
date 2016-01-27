@@ -42,6 +42,9 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		return this.PrivilegeDao.get(id);
 	}
 
+	/**
+	 * 分页查询权限列表
+	 */
 	@Override
 	public List<Privilege> list(String search) {
 		int totalCount = Integer.parseInt(this.PrivilegeDao.query("select count(id) from Privilege where name like ?", "%"+search+"%").toString());
@@ -50,7 +53,9 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		return this.PrivilegeDao.getListByPage("from Privilege where name like ?", Pagination.getOffset(), Pagination.getPageSize(), "%"+search+"%");
 	}
 
-	//根据用户id查询用户所拥有的权限
+	/**
+	 * 根据用户id查询用户所拥有的权限
+	 */
 	@Override
 	public List<Privilege> listByUserId(int userId) {
 		String hql = "select pri from User u, Role r, Privilege pri, UserRole ur, RolePrivilege rp " + 
@@ -59,14 +64,18 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		return this.PrivilegeDao.getList(hql, userId);
 	}
 
-	//根据角色id查询角色所拥有的权限
+	/**
+	 * 根据角色id查询角色所拥有的权限
+	 */
 	@Override
 	public List<Privilege> listByRoleId(int roleId) {
 		String hql = "select pri from Role r, Privilege pri, RolePrivilege rp where r.id=rp.roleId AND pri.id=rp.privilegeId AND r.id = ?";
 		return this.PrivilegeDao.getList(hql, roleId);
 	}
 
-	//新增角色-权限关联
+	/**
+	 * 新增角色-权限关联
+	 */
 	@Override
 	public void addRolePrivilege(int roleId, int priId) {
 		RolePrivilege rr = new RolePrivilege();
@@ -76,14 +85,18 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		this.rolePrivilegeDao.add(rr);
 	}
 
-	//删除角色-权限关联
+	/**
+	 * 删除角色-权限关联
+	 */
 	@Override
 	public void deleteRolePrivilege(int roleId, int priId) {
 		String hql = "delete from RolePrivilege rp where rp.roleId=? and rp.privilegeId=?";
 		this.rolePrivilegeDao.execute(hql, roleId, priId);
 	}
 
-	//根据group分组查询权限列表,Map： key 分组名称，  value 相同分组权限列表
+	/**
+	 * 根据group分组查询权限列表,Map： key 分组名称，  value 相同分组权限列表
+	 */
 	@Override
 	public Map<String, List<Privilege>> listByGroup() {
 		List<Privilege> list = this.PrivilegeDao.getList("from Privilege");
@@ -106,11 +119,17 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		return map;
 	}
 
+	/**
+	 * 批量添加角色-权限关联
+	 */
 	@Override
 	public void batchAddRolePrivilege(List<RolePrivilege> rps) {
 		this.rolePrivilegeDao.batchAdd(rps);
 	}
 
+	/**
+	 * 分组查询指定角色id的权限列表
+	 */
 	@Override
 	public Map<String, List<Privilege>> listByGroupAndRoleId(int roleId) {
 		String hql = "select p from Privilege p, Role r, RolePrivilege rp where p.id=rp.privilegeId AND r.id=rp.roleId AND r.id=?";
