@@ -6,8 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${columnName }</title>
-    <script type="text/javascript" src="${ctxPath }/resources/js/layer/layer.js"></script>
-    
      <link rel="stylesheet" type="text/css" href="${ctxPath }/resources/pagination/css/pagination.css">
      <script type="text/javascript" src="${ctxPath }/resources/pagination/js/jquery.pagination.js"></script>
 </head>

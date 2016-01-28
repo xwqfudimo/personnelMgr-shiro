@@ -6,7 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${columnName }</title>
-    <script type="text/javascript" src="${ctxPath }/resources/js/layer/layer.js"></script>
 </head>
 <body>
     <!--/sidebar-->

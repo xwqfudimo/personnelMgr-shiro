@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.xwq.annotation.LogText;
+import com.xwq.constant.SystemConstants;
 import com.xwq.model.Log;
 import com.xwq.service.LogService;
 import com.xwq.util.DateUtil;
@@ -33,7 +34,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 				String logStr = logText.value();
 				
 				if(logStr != null) {
-					Object usernameObj = request.getSession().getAttribute("loginUser");
+					Object usernameObj = request.getSession().getAttribute(SystemConstants.SESSION_LOGIN_USER);
 					
 					if(usernameObj != null) {
 						String username = usernameObj.toString();

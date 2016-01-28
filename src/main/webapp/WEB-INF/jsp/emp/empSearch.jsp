@@ -14,7 +14,7 @@
     <script type="text/javascript" src="${ctxPath }/resources/zTree/js/jquery.ztree.core-3.5.js"></script>
 </head>
 <body>
-
+<jsp:include page="../sockclient.jsp"></jsp:include>
 <jsp:include page="../header.jsp"></jsp:include>
 
 <div class="container clearfix">

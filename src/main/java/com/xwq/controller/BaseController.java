@@ -6,9 +6,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import com.xwq.constant.SystemConstants;
 import com.xwq.exception.PermissionDeniedException;
 import com.xwq.model.Menu;
 import com.xwq.service.DepartmentService;
@@ -22,6 +24,7 @@ import com.xwq.service.QingjiaService;
 import com.xwq.service.RoleService;
 import com.xwq.service.UserService;
 import com.xwq.vo.DeptFzrVo;
+import com.xwq.websocket.SystemWebSocketHandler;
 
 @Controller
 public class BaseController {
@@ -57,6 +60,12 @@ public class BaseController {
 		String columnName = menuNameMap.get(href);
 		model.addAttribute("columnName", columnName);
 	}
+	
+	
+	@Bean
+    public SystemWebSocketHandler systemWebSocketHandler() {
+        return new SystemWebSocketHandler();
+    }
 	
 	/**
 	 * 全部菜单树json
@@ -197,7 +206,7 @@ public class BaseController {
 	 * @param request
 	 */
 	protected void updatePrivilegeUrlList(HttpServletRequest request) {
-		String username = request.getSession().getAttribute("loginUser").toString();
+		String username = request.getSession().getAttribute(SystemConstants.SESSION_LOGIN_USER).toString();
 		List<String> privilegeUriList = this.privilegeService.getAllPrivilegeUrlByUsername(username);
 		request.getSession().getServletContext().setAttribute("privilegeUriList", privilegeUriList);
 	}

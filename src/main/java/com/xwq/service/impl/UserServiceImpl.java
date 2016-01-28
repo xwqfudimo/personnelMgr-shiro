@@ -119,4 +119,13 @@ public class UserServiceImpl implements UserService {
 		return userList;
 	}
 
+	/**
+	 * 根据员工名查询用户名
+	 */
+	@Override
+	public String getUsernameByEmpName(String empName) {
+		String hql = "select u.username from User u, Employee e where u.employee.id = e.id and e.name = ?";
+		return this.userDao.query(hql, empName).toString();
+	}
+
 }

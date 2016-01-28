@@ -1,12 +1,13 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"  
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee   
-          http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"  
-          version="2.5">  
+          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"  
+          version="3.0">  
     
     <filter>
     	<filter-name>encodingFilter</filter-name>
     	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    	<async-supported>true</async-supported>
     	<init-param>  
            <param-name>encoding</param-name>  
            <param-value>UTF-8</param-value>  
@@ -22,6 +23,7 @@
     <filter>
     	<filter-name>openSessionInViewFilter</filter-name>
     	<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+    	<async-supported>true</async-supported>
     </filter>
     
     <filter-mapping>
@@ -32,6 +34,7 @@
     <filter>
     	<filter-name>sitemesh</filter-name>
     	<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
+    	<async-supported>true</async-supported>
     </filter>
     
     <filter-mapping>
@@ -56,6 +59,7 @@
 			<param-value>classpath:springmvc.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>

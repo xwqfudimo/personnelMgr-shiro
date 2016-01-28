@@ -5,7 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import com.xwq.constant.Constant;
+import com.xwq.constant.SystemConstants;
 import com.xwq.dao.RolePrivilegeDao;
 import com.xwq.model.RolePrivilege;
 
@@ -22,7 +22,7 @@ public class RoleResourceDaoImpl extends BaseDaoImpl<RolePrivilege> implements
 		
 		for(int i=0; i<rps.size(); i++) {
 			session.save(rps.get(i));
-			if(i % Constant.BATCH_SIZE == 0) {
+			if(i % SystemConstants.BATCH_SIZE == 0) {
 				session.flush();
 				session.clear();
 			}

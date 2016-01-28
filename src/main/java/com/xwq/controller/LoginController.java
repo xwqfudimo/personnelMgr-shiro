@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.xwq.annotation.LogText;
+import com.xwq.constant.SystemConstants;
 import com.xwq.model.Menu;
 import com.xwq.service.MenuService;
 import com.xwq.service.PrivilegeService;
@@ -70,7 +71,7 @@ public class LoginController {
 			if(this.userService.userIsExist(username)) {
 				String pwd = this.userService.getPwdByUsername(username);
 				if(pwd.equals(DigestUtils.md5Hex(password))) { //登录成功
-					request.getSession().setAttribute("loginUser", username); //注意：直接用api操作session时， 就不能再用@SessionAttributes注解了
+					request.getSession().setAttribute(SystemConstants.SESSION_LOGIN_USER, username); //注意：直接用api操作session时， 就不能再用@SessionAttributes注解了
 					
 					//将菜单名存入application中
 					List<Menu> menuList = this.menuService.getAllMenuByUsername(username);
@@ -121,7 +122,7 @@ public class LoginController {
 	 */
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("loginUser");
+		session.removeAttribute(SystemConstants.SESSION_LOGIN_USER);
 		session.invalidate();
 
 		return "redirect:/login";

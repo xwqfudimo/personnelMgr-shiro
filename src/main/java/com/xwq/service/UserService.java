@@ -16,4 +16,5 @@ public interface UserService {
 	public String getPwdByUsername(String username);
 	public User getByUsername(String username);
 	public boolean updatePassword(String username, String newPwd);
+	public String getUsernameByEmpName(String empName);
 }

@@ -19,10 +19,9 @@
 	<script type="text/javascript" src="${ctxPath }/resources/zTree/js/jquery.ztree.exedit-3.5.js"></script>
 	
 	<script type="text/javascript" src="${ctxPath }/resources/js/jquery-1.11.3.min.js"></script> 
-	<script type="text/javascript" src="${ctxPath }/resources/js/layer/layer.js"></script>
 </head>
 <body>
-
+<jsp:include page="../sockclient.jsp"></jsp:include>
 <jsp:include page="../header.jsp"></jsp:include>
 
 <div class="container clearfix">

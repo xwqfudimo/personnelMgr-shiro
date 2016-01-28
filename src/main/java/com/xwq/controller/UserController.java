@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
 import com.xwq.annotation.LogText;
+import com.xwq.constant.SystemConstants;
 import com.xwq.model.Employee;
 import com.xwq.model.Role;
 import com.xwq.model.User;
@@ -201,7 +202,7 @@ public class UserController extends BaseController {
 		
 		if(oldPwd != null && !"".equals(oldPwd.trim()) && newPwd != null && !"".equals(newPwd.trim()) && newPwd2 != null && !"".equals(newPwd2.trim())) {
 			if(newPwd.equals(newPwd2)) {
-				String username = request.getSession().getAttribute("loginUser").toString();
+				String username = request.getSession().getAttribute(SystemConstants.SESSION_LOGIN_USER).toString();
 				String password = this.userService.getPwdByUsername(username);
 				
 				

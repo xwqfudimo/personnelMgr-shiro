@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.socket.TextMessage;
 
 import com.xwq.annotation.Auth;
 import com.xwq.annotation.LogText;
@@ -206,6 +207,12 @@ public class YjReportController extends BaseController {
 		
 		this.employeeService.auditedYjReport(id, empName);
 		
+		//发送提醒消息
+		YjReport report = this.employeeService.getYjReport(id);
+		String username = this.userService.getUsernameByEmpName( report.getEmpName() );
+		String text = "你的标题为" + report.getTitle() + "的业绩报告已被审核通过！<a id='see' target='_blank' href='" + request.getContextPath() + "/yjReport/" + id + "'>查看详情</a>";
+		TextMessage msg = new TextMessage(text);
+		systemWebSocketHandler().sendMessageToUser(username, msg);
 		
 		return true;
 	}

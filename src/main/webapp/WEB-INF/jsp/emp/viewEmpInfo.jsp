@@ -65,9 +65,6 @@
                     <li>
                         <label class="res-lab">自我介绍</label><span class="res-info">${emp.selfIntro }</span>
                     </li>
-                    <li>
-                        <label class="res-lab">简历</label><span class="res-info">${emp.resume }</span>
-                    </li>
                 </ul>
             </div>
         </div>

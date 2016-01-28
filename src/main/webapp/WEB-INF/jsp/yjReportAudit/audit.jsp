@@ -6,7 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>审核业绩报告</title>
- <script type="text/javascript" src="${ctxPath }/resources/js/layer/layer.js"></script>
  <link rel="stylesheet" type="text/css" href="${ctxPath }/resources/css/btn_style.css">
  <style type="text/css">
  	a:hover {text-decoration: none; color: #e8f0de;}

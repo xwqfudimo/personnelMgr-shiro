@@ -5,7 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import com.xwq.constant.Constant;
+import com.xwq.constant.SystemConstants;
 import com.xwq.dao.RoleMenuDao;
 import com.xwq.model.RoleMenu;
 
@@ -19,7 +19,7 @@ public class RoleMenuDaoImpl extends BaseDaoImpl<RoleMenu> implements RoleMenuDa
 		Session session = this.getSession();
 		for(int i=0; i<rms.size(); i++) {
 			session.save(rms.get(i));
-			if(i % Constant.BATCH_SIZE == 0) {
+			if(i % SystemConstants.BATCH_SIZE == 0) {
 				session.flush();
 				session.clear();
 			}

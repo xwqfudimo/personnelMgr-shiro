@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.socket.TextMessage;
 
 import com.xwq.annotation.Auth;
 import com.xwq.annotation.LogText;
@@ -183,6 +184,13 @@ public class QingjiaController extends BaseController {
 	public @ResponseBody boolean qingjiaApprovalApprove(@PathVariable int id, HttpServletRequest request) throws PermissionDeniedException {
 		approvalqingjia(request, id, AuditStatus.APPROVE);
 		
+		//发送提醒消息
+		Qingjia qj = this.qingjiaService.get(id);
+		String username = this.userService.getUsernameByEmpName( qj.getEmpName() );
+		String text = "✔你在" + qj.getSubmitTime() + "的请假申请已被批准！<a id='see' target='_blank' href='" + request.getContextPath() + "/qingjiaApply/" + id + "'>查看详情</a>";
+		TextMessage msg = new TextMessage(text);
+		systemWebSocketHandler().sendMessageToUser(username, msg);
+		
 		return true;
 	}
 	
@@ -198,6 +206,13 @@ public class QingjiaController extends BaseController {
 	@RequestMapping("/qingjiaApproval_against/{id}")
 	public @ResponseBody boolean qingjiaApprovalAgainst(@PathVariable int id, HttpServletRequest request) throws PermissionDeniedException {
 		approvalqingjia(request, id, AuditStatus.AGAINST);
+		
+		//发送提醒消息
+		Qingjia qj = this.qingjiaService.get(id);
+		String username = this.userService.getUsernameByEmpName( qj.getEmpName() );
+		String text = "✘你在" + qj.getSubmitTime() + "的请假申请没有被批准！<a id='see' target='_blank' href='" + request.getContextPath() + "/qingjiaApply/" + id + "'>查看详情</a>";
+		TextMessage msg = new TextMessage(text);
+		systemWebSocketHandler().sendMessageToUser(username, msg);
 		
 		return true;
 	}

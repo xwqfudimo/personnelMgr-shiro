@@ -10,6 +10,7 @@
 		<pattern>/menu*</pattern>
 		<pattern>/role_add</pattern>
 		<pattern>/role_edit/*</pattern>
+		<pattern>/message*</pattern>
 	</excludes>
 	<decorator name="default" page="/WEB-INF/jsp/decorator.jsp">
 		<pattern>/*</pattern>

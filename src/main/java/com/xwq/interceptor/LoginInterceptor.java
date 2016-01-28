@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.xwq.constant.SystemConstants;
+
 /**
  * 登录检测拦截器
  */
@@ -14,7 +16,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		
-		if(request.getSession().getAttribute("loginUser") == null) {
+		if(request.getSession().getAttribute(SystemConstants.SESSION_LOGIN_USER) == null) {
 			response.sendRedirect(request.getContextPath() + "/login");
 			return false;
 		}

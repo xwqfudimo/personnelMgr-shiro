@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.xwq.constant.SystemConstants;
 import com.xwq.model.Employee;
 import com.xwq.model.User;
 import com.xwq.service.MenuService;
@@ -32,7 +33,7 @@ public class IndexController {
 	@RequestMapping(value={"/", "/index"})
 	public String index(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
-		String username = session.getAttribute("loginUser").toString();
+		String username = session.getAttribute(SystemConstants.SESSION_LOGIN_USER).toString();
 		
 		User user = this.userService.getByUsername(username);
 		Employee emp = user.getEmployee();
