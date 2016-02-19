@@ -18,46 +18,24 @@
 		</property>
 	</bean>
 	
-	<bean id="roleOrFilter" class="com.xwq.shiro.CustomRolesAuthorizationFilter"></bean>
+	<bean id="accessFilter" class="com.xwq.shiro.AccessFilter"></bean>
 	
-	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" depends-on="roleOrFilter">
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login" />
 		<property name="successUrl" value="/index" />
 		<property name="unauthorizedUrl" value="/permDedy"/>
 		<property name="filters">  
             <map>  
-                <entry key="anyRoles" value-ref="roleOrFilter"/>
+                <entry key="accessFilter" value-ref="accessFilter"/>
             </map>
         </property>  
 		<property name="filterChainDefinitions">
 			<value>
 				/resources/** = anon
-				
-				/viewEmpInfo = authc,anyRoles[administrator,employee,hr]
-				/empSearch = authc,anyRoles[administrator,employee,hr]
-				/modifyPwd = authc,anyRoles[administrator,employee,hr]
-				/jiabanApply = authc,anyRoles[administrator,employee,hr]
-				/qingjiaApply = authc,anyRoles[administrator,employee,hr]
-				/viewKaoqinList = authc,anyRoles[administrator,employee,hr]
-				/viewSalaryList = authc,anyRoles[administrator,employee,hr]
-				/yjReport = authc,anyRoles[administrator,employee,hr]
-				
-				/userMgr = authc,anyRoles[administrator,hr]
-				/menuMgr = authc,roles[administrator]
-				/roleMgr = authc,roles[administrator]
-				/authMgr = authc,roles[administrator]
-				/syslog = authc,roles[administrator]
-				/dataBackupRestore = authc,roles[administrator]
-				
-				/deptMgr = authc,anyRoles[administrator,hr]
-				/empMgr = authc,anyRoles[administrator,hr]
-				/kaoqinMgr = authc,anyRoles[administrator,hr]
-				/salaryMgr = authc,anyRoles[administrator,hr]
-				
-				/jiabanApproval = authc,perms[jiaban:approval]
-				/qingjiaApproval = authc,perms[qingjia:approval]
-				/yjReportAudit = authc,perms[yjReport:audit]
+				/loginSubmit = anon
+				/logout = logout
+				/** = authc,accessFilter				
 			</value>
 		</property>
 	</bean>

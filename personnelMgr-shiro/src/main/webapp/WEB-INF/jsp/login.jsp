@@ -13,7 +13,7 @@
     <h1>人事管理系统</h1>
     <div class="adming_login_border">
         <div class="admin_input">
-            <form method="post">
+            <form method="post" action="${ctxPath }/loginSubmit">
                 <ul class="admin_items">
                     <li>
                         <label for="username">用户名：</label>

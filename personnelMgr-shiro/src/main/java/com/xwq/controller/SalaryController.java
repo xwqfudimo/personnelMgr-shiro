@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xwq.annotation.Auth;
 import com.xwq.annotation.LogText;
+import com.xwq.exception.PermissionDeniedException;
 import com.xwq.model.Employee;
 import com.xwq.model.Salary;
 import com.xwq.vo.EmpVo;
@@ -42,13 +43,20 @@ public class SalaryController extends BaseController {
 	 * @param request
 	 * @param model
 	 * @return
+	 * @throws PermissionDeniedException 
 	 */
 	@RequestMapping("/salary/{id}")
-	public String view(@PathVariable int id, HttpServletRequest request, Model model) {
+	public String view(@PathVariable int id, HttpServletRequest request, Model model) throws PermissionDeniedException {
 		infoSetting(request, "viewSalaryList", model);
 		
+		int empId = Integer.parseInt(request.getSession().getAttribute("empId").toString());
 		Salary salary = this.employeeService.getSalary(id);
-		model.addAttribute("salary", salary);
+		int eid = salary.getEmployee().getId();
+		if(empId == eid) {
+			model.addAttribute("salary", salary);
+		} else {
+			throw new PermissionDeniedException("你无权访问该功能！");
+		}
 		
 		return "salary/show";
 	}

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.xwq.annotation.LogText;
 import com.xwq.constant.SystemConstants;
 import com.xwq.model.Menu;
+import com.xwq.model.Privilege;
 import com.xwq.service.MenuService;
 import com.xwq.service.PrivilegeService;
 import com.xwq.service.UserService;
@@ -64,11 +66,12 @@ public class LoginController {
 	 * @return
 	 */
 	@LogText("登录系统")
-	@RequestMapping(value="/login", method=RequestMethod.POST)
+	@RequestMapping(value="/loginSubmit", method=RequestMethod.POST)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String rememberMe =request.getParameter("rememberMe");
+		
 		
 		if(ParameterUtil.parameterOK(username, password)) {
 			if(this.userService.userIsExist(username)) {
@@ -80,8 +83,8 @@ public class LoginController {
 				
 				try {
 					currentUser.login(token); //无异常表示登录成功
-					
-					request.getSession().setAttribute(SystemConstants.SESSION_LOGIN_USER, username); //注意：直接用api操作session时， 就不能再用@SessionAttributes注解了
+//					session.setAttribute(SystemConstants.SESSION_LOGIN_USER, username);
+					request.getSession().setAttribute(SystemConstants.SESSION_LOGIN_USER, username);
 					
 					//将菜单名存入application中
 					List<Menu> menuList = this.menuService.getAllMenuByUsername(username);
@@ -112,9 +115,21 @@ public class LoginController {
 					}
 					
 					
-					//将用户所拥有权限的uri存到session中
-					List<String> privilegeUriList = this.privilegeService.getAllPrivilegeUrlByUsername(username);
-					request.getSession().getServletContext().setAttribute("privilegeUriList", privilegeUriList);
+					//将权限url Map放入到application中
+					List<Privilege> permList = this.privilegeService.list();
+					Map<String, String> permUrlMap = new HashMap<String,String>();
+					for(Privilege p : permList) {
+						String url = p.getUri();
+						if(url.contains(",")) {
+							for(String str : url.split(",")) {
+								permUrlMap.put(str, p.getPermission());
+							}
+						}
+						else {
+							permUrlMap.put(url, p.getPermission());
+						}
+					}
+					request.getSession().getServletContext().setAttribute("permUrlMap", permUrlMap);
 					
 					return "redirect:/index";
 				} catch (AuthenticationException e) {

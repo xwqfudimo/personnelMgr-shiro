@@ -42,6 +42,11 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		return this.PrivilegeDao.get(id);
 	}
 
+	@Override
+	public List<Privilege> list() {
+		return this.PrivilegeDao.getList("from Privilege");
+	}
+	
 	/**
 	 * 分页查询权限列表
 	 */
